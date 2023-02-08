@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../core/utils/menu_items.dart';
-import '../../core/widgets/cus_popup_menu.dart';
+import 'app_bar/profile_appbar.dart';
+import 'app_bar/reels_appbar.dart';
+import 'app_bar/search_appbar.dart';
+import 'app_bar/shop_appbar.dart';
 
 import '../../controller/app_layout_controller.dart';
-import '../../core/constants/constants.dart';
 import '../../core/widgets/cus_bottom_nav.dart';
 import '../home/home_view.dart';
 import '../profile/profile_view.dart';
 import '../reel/reel_view.dart';
 import '../search/search_view.dart';
 import '../shop/shop_view.dart';
+import 'app_bar/home_appbar.dart';
 
 class AppLayoutView extends StatelessWidget {
   AppLayoutView({super.key});
@@ -28,39 +30,28 @@ class AppLayoutView extends StatelessWidget {
       ProfileView(),
     ];
 
+    /// switch app bar when bottom item is tapped
+    Widget getAppBar(pageIndex) {
+      switch (pageIndex) {
+        case 0:
+          return const HomeAppBar();
+        case 1:
+          return const SearchAppBar();
+        case 2:
+          return const ReelsAppBar();
+        case 3:
+          return const ShopAppBar();
+        default:
+          return const ProfileAppBar();
+      }
+    }
+
     return GetBuilder<AppLayoutController>(
       builder: (_) => Scaffold(
-        appBar: AppBar(
-          elevation: 0.0,
-          title: Row(
-            children: [
-              Image.asset(
-                Const.instragramLogoIcon,
-                height: 115,
-                width: 115,
-              ),
-              const Icon(Icons.expand_more_outlined, size: 20)
-            ],
-          ),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Image.asset(
-                Const.instragramAddIcon,
-                height: 25,
-                width: 25,
-              ),
-            ),
-            const Icon(Icons.favorite_outline, size: 30),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Image.asset(
-                Const.instragramChatIcon,
-                height: 25,
-                width: 25,
-              ),
-            ),
-          ],
+        extendBodyBehindAppBar: appLayoutCtrl.pageIndex != 2 ? false : true,
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(kToolbarHeight),
+          child: getAppBar(appLayoutCtrl.pageIndex),
         ),
         bottomNavigationBar: CusDefaultBottomNav(
           currentIndex: appLayoutCtrl.pageIndex,
@@ -72,27 +63,3 @@ class AppLayoutView extends StatelessWidget {
     );
   }
 }
-
-    // CustomPopUpMenu(
-    //             itemBuilder: MenuItems.homeMenuItems.map((item) {
-    //               return PopupMenuItem<MenuItemModel>(
-    //                 value: item,
-    //                 child: Row(
-    //                   children: [
-    //                     Text(item.text),
-    //                     const SizedBox(width: 12),
-    //                     Icon(item.icon),
-    //                   ],
-    //                 ),
-    //               );
-    //             }).toList(),
-    //             onSelected: (value) async {
-    //               switch (value) {
-    //                 case MenuItems.following:
-    //                   // logOutUser(context);
-    //                   break;
-
-    //                 default:
-    //               }
-    //             },
-    //           )

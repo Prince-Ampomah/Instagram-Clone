@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:instagram_clone/core/constants/constants.dart';
 
 class CustomBottomNavigation extends StatelessWidget {
   const CustomBottomNavigation({
@@ -117,6 +118,8 @@ List<BottomNavigationBarItem> navItems = const [
     tooltip: 'Search',
   ),
   BottomNavigationBarItem(
+      // icon: Image.asset(Const.instragramVideoIcon),
+      // activeIcon: Image.asset(Const.instragramVideoIcon),
       icon: Icon(
         // FontAwesomeIcons.clapperboard,
         Icons.movie_outlined,

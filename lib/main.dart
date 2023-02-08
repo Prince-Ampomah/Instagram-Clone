@@ -1,6 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:instagram_clone/view/camera/camera.dart';
+import 'package:instagram_clone/view/messages/messages.dart';
 import 'core/theme/theme.dart';
 import 'firebase_options.dart';
 
@@ -22,8 +24,15 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Instagram Clone',
-      theme: AppTheme.lightTheme,
-      home: AppLayoutView(),
+      theme: AppTheme.lightTheme(context),
+      home: PageView(
+        reverse: false,
+        children: [
+          AppLayoutView(),
+          const Messages(),
+          const Camera(),
+        ],
+      ),
     );
   }
 }
