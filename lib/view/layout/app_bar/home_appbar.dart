@@ -13,6 +13,7 @@ class HomeAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      automaticallyImplyLeading: false,
       scrolledUnderElevation: 0.0,
       title: CustomPopUpMenu(
         offset: const Offset(0, 80),

@@ -8,10 +8,14 @@ class ReelsAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      automaticallyImplyLeading: false,
       elevation: 0.0,
       scrolledUnderElevation: 0,
       backgroundColor: Colors.transparent,
-      title: const Text('Reels'),
+      title: const Text(
+        'Reels',
+        style: TextStyle(color: Colors.white),
+      ),
       actions: [
         Padding(
           padding: const EdgeInsets.all(8.0),
@@ -19,6 +23,7 @@ class ReelsAppBar extends StatelessWidget {
             onPressed: () {},
             icon: const Icon(
               Icons.camera_alt_outlined,
+              color: Colors.white,
             ),
           ),
         )

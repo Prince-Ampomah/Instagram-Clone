@@ -103,32 +103,31 @@ class CusDefaultBottomNav extends StatelessWidget {
 
 List<BottomNavigationBarItem> navItems = const [
   BottomNavigationBarItem(
-      icon: Icon(Icons.home_outlined),
-      activeIcon: Icon(Icons.home),
-      label: '',
-      tooltip: 'Home'),
+    icon: Icon(Icons.home_outlined),
+    activeIcon: Icon(Icons.home),
+    label: '',
+    tooltip: 'Home',
+  ),
   BottomNavigationBarItem(
     icon: Icon(
-        // FontAwesomeIcons.magnifyingGlass,
-        Icons.search_outlined),
+      Icons.search_outlined,
+    ),
     activeIcon: Icon(
-        // FontAwesomeIcons.magnifyingGlass,
-        Icons.search),
+      Icons.search,
+    ),
     label: '',
     tooltip: 'Search',
   ),
   BottomNavigationBarItem(
-      // icon: Image.asset(Const.instragramVideoIcon),
-      // activeIcon: Image.asset(Const.instragramVideoIcon),
-      icon: Icon(
-        // FontAwesomeIcons.clapperboard,
-        Icons.movie_outlined,
-      ),
-      activeIcon: Icon(
-          // FontAwesomeIcons.clapperboard,
-          Icons.movie),
-      label: '',
-      tooltip: 'Reel'),
+    icon: Icon(
+      Icons.movie_outlined,
+    ),
+    activeIcon: Icon(
+      Icons.movie,
+    ),
+    label: '',
+    tooltip: 'Reel',
+  ),
   BottomNavigationBarItem(
       icon: Icon(
         // FontAwesomeIcons.bagShopping,

@@ -49,6 +49,9 @@ class AppLayoutView extends StatelessWidget {
     return GetBuilder<AppLayoutController>(
       builder: (_) => Scaffold(
         extendBodyBehindAppBar: appLayoutCtrl.pageIndex != 2 ? false : true,
+        backgroundColor: appLayoutCtrl.pageIndex != 2
+            ? Theme.of(context).scaffoldBackgroundColor
+            : Colors.transparent.withOpacity(0.2),
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(kToolbarHeight),
           child: getAppBar(appLayoutCtrl.pageIndex),

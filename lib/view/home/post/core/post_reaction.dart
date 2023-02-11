@@ -1,8 +1,8 @@
-import 'dart:math' as math;
+// import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../../../../core/constants/constants.dart';
 import '../../../../core/widgets/cus_rich_text.dart';
 
 class PostReactions extends StatelessWidget {
@@ -21,23 +21,32 @@ class PostReactions extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  const Icon(
-                    Icons.favorite_outline,
-                    size: 30,
-                  ),
-                  const SizedBox(width: 15),
-                  Transform(
-                    alignment: Alignment.center,
-                    transform: Matrix4.rotationY(math.pi),
-                    child: const Icon(
-                      FontAwesomeIcons.comment,
-                      size: 25,
+                  // const Icon(
+                  //   Icons.favorite_outline,
+                  //   size: 30,
+                  // ),
+                  SizedBox(
+                    height: 27,
+                    child: Image.asset(
+                      Const.instragramfavoriteIcon,
+                      color: Colors.black,
                     ),
                   ),
                   const SizedBox(width: 15),
-                  const Icon(
-                    Icons.near_me_outlined,
-                    size: 30,
+                  SizedBox(
+                    height: 22,
+                    child: Image.asset(
+                      Const.instragramCommentIcon,
+                      color: Colors.black,
+                    ),
+                  ),
+                  const SizedBox(width: 15),
+                  SizedBox(
+                    height: 22,
+                    child: Image.asset(
+                      Const.instragramSendIcon,
+                      color: Colors.black,
+                    ),
                   ),
                 ],
               ),

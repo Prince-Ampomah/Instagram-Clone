@@ -8,31 +8,48 @@ class SearchAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-        scrolledUnderElevation: 0.0,
-        title: Container(
-          width: double.infinity,
-          margin: const EdgeInsets.symmetric(horizontal: 8),
-          padding: const EdgeInsets.symmetric(
-            horizontal: 15,
-            vertical: 5,
+      automaticallyImplyLeading: false,
+      scrolledUnderElevation: 0.0,
+      title: const SearchWidget(),
+    );
+  }
+}
+
+class SearchWidget extends StatelessWidget {
+  const SearchWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      // width: double.infinity,
+      // margin: const EdgeInsets.symmetric(horizontal: 0),
+      padding: const EdgeInsets.symmetric(
+        horizontal: 15,
+        vertical: 5,
+      ),
+      decoration: BoxDecoration(
+        color: Colors.grey[100],
+        borderRadius: BorderRadius.circular(5),
+      ),
+      child: Row(
+        children: [
+          const Icon(
+            Icons.search_outlined,
+            size: 20,
+            color: Color(0xFF515151),
           ),
-          decoration: BoxDecoration(
-            color: const Color(0xFFF4F4F4),
-            borderRadius: BorderRadius.circular(5),
+          const SizedBox(width: 15),
+          Text(
+            'search',
+            style: Theme.of(context)
+                .textTheme
+                .titleMedium!
+                .copyWith(color: Colors.grey),
           ),
-          child: Row(
-            children: [
-              const Icon(
-                Icons.search_outlined,
-                size: 20,
-              ),
-              const SizedBox(width: 15),
-              Text(
-                'search',
-                style: Theme.of(context).textTheme.titleSmall,
-              ),
-            ],
-          ),
-        ));
+        ],
+      ),
+    );
   }
 }

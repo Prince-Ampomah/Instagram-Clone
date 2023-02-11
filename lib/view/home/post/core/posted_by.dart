@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/constants/constants.dart';
+import '../../../../core/widgets/cus_circular_image.dart';
 
 class PostedBy extends StatelessWidget {
   const PostedBy({
@@ -15,17 +16,7 @@ class PostedBy extends StatelessWidget {
         children: [
           Row(
             children: [
-              Container(
-                height: 35,
-                width: 35,
-                margin: const EdgeInsets.all(8.0),
-                decoration:
-                    BoxDecoration(shape: BoxShape.circle, border: Border.all()),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(70),
-                  child: Image.asset(Const.userImage),
-                ),
-              ),
+              const CircularImageContainer(),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
