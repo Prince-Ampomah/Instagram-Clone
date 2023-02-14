@@ -7,8 +7,7 @@ class AppTheme {
       useMaterial3: true,
       colorSchemeSeed: AppColors.whiteColor,
       brightness: Brightness.light,
-      textTheme: GoogleFonts.interTextTheme(Theme.of(context).textTheme),
-      // Theme.of(context).textTheme
+      textTheme: GoogleFonts.interTextTheme(AppTheme.textStyle(context)),
     );
   }
 
@@ -17,17 +16,20 @@ class AppTheme {
       useMaterial3: true,
       colorSchemeSeed: AppColors.whiteColor,
       brightness: Brightness.dark,
-      textTheme: GoogleFonts.interTextTheme(Theme.of(context).textTheme),
-      // Theme.of(context).textTheme
+      textTheme: GoogleFonts.interTextTheme(AppTheme.textStyle(context)),
+      // AppTheme.textStyle(context)
     );
   }
+
+  static TextTheme textStyle(BuildContext context) =>
+      Theme.of(context).textTheme;
 
   // static ThemeData lightTheme = ThemeData(
   //   useMaterial3: true,
   //   colorSchemeSeed: AppColors.whiteColor,
   //   brightness: Brightness.light,
-  //   // textTheme: GoogleFonts.interTextTheme(Theme.of(context).textTheme),
-  //   // Theme.of(context).textTheme
+  //   // textTheme: GoogleFonts.interTextTheme(AppTheme.textStyle(context)),
+  //   // AppTheme.textStyle(context)
   // );
   // static ThemeData darkTheme = ThemeData(
   //   useMaterial3: true,
@@ -43,6 +45,7 @@ class AppColors {
   static const buttonColor = Color(0xFF0094F6);
   static const textFieldColor = Color(0xFFF7F7F7);
   static const deepButtonColor = Color(0xFF003050);
+  static const errorColor = Color(0xFFDF5E55);
 
   static const storyBorderColors = [
     Color(0xFFfeda75),

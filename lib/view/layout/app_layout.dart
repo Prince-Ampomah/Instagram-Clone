@@ -5,7 +5,7 @@ import 'app_bar/reels_appbar.dart';
 import 'app_bar/search_appbar.dart';
 import 'app_bar/shop_appbar.dart';
 
-import '../../controller/app_layout_controller.dart';
+import '../../controller/app_layout_controller/app_layout_controller.dart';
 import '../../core/widgets/cus_bottom_nav.dart';
 import '../home/home_view.dart';
 import '../profile/profile_view.dart';

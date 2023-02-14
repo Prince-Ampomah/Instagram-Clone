@@ -210,7 +210,7 @@ class ReelUserProfile extends StatelessWidget {
                       Text(
                         'sarkcess music prod...',
                         style:
-                            Theme.of(context).textTheme.labelMedium!.copyWith(
+                            AppTheme.textStyle(context).labelMedium!.copyWith(
                                   color: AppColors.whiteColor,
                                 ),
                       )

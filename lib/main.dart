@@ -2,11 +2,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:instagram_clone/view/authentication/sign_up_view/sign_up_name_and_password_view.dart';
 
+import 'controller/auth_controller/auth_controller.dart';
+import 'controller/auth_controller/auth_listener.dart';
 import 'core/theme/theme.dart';
 import 'firebase_options.dart';
-import 'view/authentication/sign_in_view/sign_in_view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,6 +19,8 @@ void main() async {
   ));
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  Get.put(AuthController());
+
   runApp(const MyApp());
 }
 
@@ -32,16 +34,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Instagram Clone',
       theme: AppTheme.lightTheme(context),
-      home: const SignInView(),
-
-      // PageView(
-      //   reverse: false,
-      //   children: [
-      //     AppLayoutView(),
-      //     const Messages(),
-      //     const Camera(),
-      //   ],
-      // ),
+      home: const AuthListener(),
     );
   }
 }

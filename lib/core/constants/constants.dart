@@ -1,6 +1,6 @@
 import 'package:logger/logger.dart';
 
-Logger log = Logger();
+Logger logger = Logger();
 
 class Const {
   // app bar icons
@@ -27,4 +27,16 @@ class Const {
   static const String reelImage = 'assets/images/reel_image.jpg';
 
   static const String loadingGif = 'assets/gif/spinner.gif';
+  static const String loadingGif1 = 'assets/gif/loading.gif';
+
+  // hive type ids to avoid traversing through all model
+  static const int hiveTypeId0 = 0; // used for user model
+  static const int hiveTypeId1 = 1;
+  static const int hiveTypeId2 = 2;
+  static const int hiveTypeId3 = 3;
+
+  //hive box names
+  static const String userBoxName = 'userBox';
+
+  //flutter packages pub run build_runner build
 }

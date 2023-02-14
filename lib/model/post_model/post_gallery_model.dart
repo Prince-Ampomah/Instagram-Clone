@@ -1,11 +1,11 @@
-import '../user_model.dart';
+import '../user_model/user_model.dart';
 
 class PostGalleryModel {
-  final String? caption;
-  final List<dynamic> media;
-  final UserModel? userModel;
-  final LikesModel? likesModel;
-  final CommentModel? commentModel;
+  String? caption;
+  List<dynamic> media;
+  UserModel? userModel;
+  LikesModel? likesModel;
+  CommentModel? commentModel;
 
   PostGalleryModel({
     required this.media,
@@ -17,7 +17,7 @@ class PostGalleryModel {
 }
 
 class LikesModel {
-  final int likes;
+  int likes;
 
   LikesModel({
     required this.likes,
@@ -25,9 +25,9 @@ class LikesModel {
 }
 
 class CommentModel {
-  final String? userHandle;
-  final String? userProfileImage;
-  final DateTime? dateTime;
+  String? userHandle;
+  String? userProfileImage;
+  DateTime? dateTime;
 
   CommentModel({
     this.userHandle,

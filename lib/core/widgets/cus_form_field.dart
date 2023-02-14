@@ -101,12 +101,11 @@ class CustomFormField extends StatelessWidget {
         filled: filled,
         fillColor: fillColor,
         border: border,
-        errorBorder:
-            const OutlineInputBorder(borderSide: BorderSide(color: Colors.red)),
-        enabledBorder: const OutlineInputBorder(),
-        disabledBorder: const OutlineInputBorder(),
-        focusedBorder: const OutlineInputBorder(),
-        focusedErrorBorder: const OutlineInputBorder(),
+        errorBorder: errorBorder,
+        enabledBorder: enabledBorder,
+        disabledBorder: disabledBorder,
+        focusedBorder: focusedBorder,
+        focusedErrorBorder: focusedErrorBorder,
       ),
     );
   }

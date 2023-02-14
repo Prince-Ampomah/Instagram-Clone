@@ -62,7 +62,7 @@ class MainButton extends StatelessWidget {
                         //   size: 20.0,
                         // ),
                         SizedBox(
-                          height: 40,
+                          height: 20,
                           child: Image.asset(Const.loadingGif),
                         ),
                         const SizedBox(width: 10),
@@ -108,7 +108,7 @@ class MainButton extends StatelessWidget {
               icon: Icon(iconData),
               label: isLoading != null && isLoading!
                   ? SizedBox(
-                      height: 40,
+                      height: 20,
                       child: Image.asset(Const.loadingGif),
                     )
                   // const SpinKitFadingCircle(

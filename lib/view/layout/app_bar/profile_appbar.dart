@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../core/constants/constants.dart';
+import '../../../core/theme/theme.dart';
 import '../../../core/widgets/cus_bottom_sheet.dart';
 
 class ProfileAppBar extends StatelessWidget {
@@ -18,7 +19,7 @@ class ProfileAppBar extends StatelessWidget {
         children: [
           Text(
             'iamprinceampomah',
-            style: Theme.of(context).textTheme.titleMedium!.copyWith(
+            style: AppTheme.textStyle(context).titleMedium!.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
           ),

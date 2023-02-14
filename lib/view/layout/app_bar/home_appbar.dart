@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:instagram_clone/controller/auth_controller/auth_controller.dart';
 
 import '../../../core/constants/constants.dart';
 import '../../../core/theme/theme.dart';
@@ -37,6 +38,7 @@ class HomeAppBar extends StatelessWidget {
         onSelected: (value) async {
           switch (value) {
             case MenuItems.following:
+              AuthController.instance.signOutUser();
               break;
 
             default:

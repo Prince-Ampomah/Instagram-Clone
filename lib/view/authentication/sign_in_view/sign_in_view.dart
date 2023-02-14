@@ -1,16 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:instagram_clone/core/constants/constants.dart';
-import 'package:instagram_clone/core/theme/theme.dart';
-import 'package:instagram_clone/core/widgets/cus_form_field.dart';
-import 'package:instagram_clone/core/widgets/cus_main_button.dart';
-import 'package:instagram_clone/core/widgets/cus_rich_text.dart';
-import 'package:instagram_clone/view/authentication/sign_up_view/sign_up_view.dart';
-import 'package:instagram_clone/view/layout/app_layout.dart';
+import 'package:instagram_clone/core/utils/helper_functions.dart';
 
-class SignInView extends StatelessWidget {
+import '../../../controller/auth_controller/auth_controller.dart';
+import '../../../controller/auth_controller/password_visibility_controller.dart';
+import '../../../core/constants/constants.dart';
+import '../../../core/theme/theme.dart';
+import '../../../core/utils/form_validator.dart';
+import '../../../core/widgets/cus_form_field.dart';
+import '../../../core/widgets/cus_main_button.dart';
+import '../../../core/widgets/cus_rich_text.dart';
+import '../password_reset_view/password_reset_view.dart';
+import '../sign_up_view/sign_up_view.dart';
+
+class SignInView extends StatefulWidget {
   const SignInView({super.key});
+
+  @override
+  State<SignInView> createState() => _SignInViewState();
+}
+
+class _SignInViewState extends State<SignInView> {
+  String? email, password;
+
+  final formKey = GlobalKey<FormState>();
+
+  final passwordController = Get.put(PasswordVisibilityController());
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +60,7 @@ class SignInView extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Form(
+                    key: formKey,
                     child: Column(
                       children: [
                         // logo
@@ -55,54 +77,77 @@ class SignInView extends StatelessWidget {
                           hintText: 'Email',
                           filled: true,
                           fillColor: AppColors.textFieldColor,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5),
-                          ),
+                          autofillHints: const [AutofillHints.email],
+                          textInputAction: TextInputAction.next,
+                          textCapitalization: TextCapitalization.none,
+                          validator: FormValidator.validateEmail,
+                          onSaved: (value) {
+                            email = value!.trim();
+                            return null;
+                          },
                         ),
 
                         const SizedBox(height: 20),
-                        CustomFormField(
-                          hintText: 'Password',
-                          filled: true,
-                          fillColor: AppColors.textFieldColor,
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5)),
-                          suffixIcon: IconButton(
-                            onPressed: () {},
-                            icon: const Icon(
-                              Icons.visibility_off,
-                              size: 20,
-                              color: AppColors.greyColor,
-                            ),
-                          ),
+
+                        GetBuilder<PasswordVisibilityController>(
+                          builder: (passwordController) {
+                            return CustomFormField(
+                              hintText: 'Password',
+                              filled: true,
+                              isPasswordField: passwordController.showPassword
+                                  ? true
+                                  : false,
+                              fillColor: AppColors.textFieldColor,
+                              textInputAction: TextInputAction.done,
+                              textCapitalization: TextCapitalization.none,
+                              validator: FormValidator.emptyFieldValidator,
+                              onSaved: (value) {
+                                password = value!.trim();
+                                return null;
+                              },
+                              suffixIcon: IconButton(
+                                onPressed: () =>
+                                    passwordController.togglePassword(),
+                                icon: Icon(
+                                  passwordController.showPassword
+                                      ? Icons.visibility_off
+                                      : Icons.visibility,
+                                  size: 20,
+                                  color: AppColors.greyColor,
+                                ),
+                              ),
+                            );
+                          },
                         ),
+
                         const SizedBox(height: 20),
 
                         // login button
-                        MainButton(
-                          onPressed: () {
-                            Get.off(AppLayoutView());
+                        GetX<AuthController>(
+                          builder: (controller) {
+                            return MainButton(
+                              onPressed: signUp,
+                              title: 'Log in',
+                              isLoading: controller.isLoading.value,
+                            );
                           },
-                          title: 'Log in',
                         ),
 
                         const SizedBox(height: 20),
 
                         // forget password help
                         GestureDetector(
-                          onTap: () {},
+                          onTap: () => Get.to(() => const PasswordResetView()),
                           child: CustomRichText(
                             text1: 'Forget your login details? ',
                             text2: 'Get help logging in.',
-                            text1Style: Theme.of(context)
-                                .textTheme
+                            text1Style: AppTheme.textStyle(context)
                                 .titleSmall!
                                 .copyWith(
                                   color: AppColors.greyColor,
                                   fontSize: 11,
                                 ),
-                            text2Style: Theme.of(context)
-                                .textTheme
+                            text2Style: AppTheme.textStyle(context)
                                 .titleSmall!
                                 .copyWith(
                                   color: AppColors.deepButtonColor,
@@ -120,7 +165,7 @@ class SignInView extends StatelessWidget {
                             const Expanded(child: Divider()),
                             const SizedBox(width: 10),
                             Text('OR',
-                                style: Theme.of(context).textTheme.labelMedium),
+                                style: AppTheme.textStyle(context).labelMedium),
                             const SizedBox(width: 10),
                             const Expanded(child: Divider()),
                           ],
@@ -129,7 +174,9 @@ class SignInView extends StatelessWidget {
 
                         // facebook widget
                         MainButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            onLoading(context, 'Loading');
+                          },
                           iconData: FontAwesomeIcons.facebook,
                           title: 'Contiue as Prince Ampomah',
                           bgColor: Colors.blue.shade700,
@@ -147,20 +194,25 @@ class SignInView extends StatelessWidget {
                       const Divider(),
                       const SizedBox(height: 10),
                       GestureDetector(
-                        onTap: () => Get.to(const SignUpView()),
-                        child: CustomRichText(
-                          text1: 'Don\'t have an account? ',
-                          text2: 'Sign up.',
-                          text1Style:
-                              Theme.of(context).textTheme.titleSmall!.copyWith(
-                                    color: AppColors.greyColor,
-                                    fontSize: 11,
-                                  ),
-                          text2Style:
-                              Theme.of(context).textTheme.titleSmall!.copyWith(
-                                    color: AppColors.deepButtonColor,
-                                    fontSize: 11,
-                                  ),
+                        onTap: () => Get.to(() => const SignUpView()),
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: CustomRichText(
+                            text1: 'Don\'t have an account? ',
+                            text2: 'Sign up.',
+                            text1Style: AppTheme.textStyle(context)
+                                .titleSmall!
+                                .copyWith(
+                                  color: AppColors.greyColor,
+                                  fontSize: 11,
+                                ),
+                            text2Style: AppTheme.textStyle(context)
+                                .titleSmall!
+                                .copyWith(
+                                  color: AppColors.deepButtonColor,
+                                  fontSize: 11,
+                                ),
+                          ),
                         ),
                       ),
                     ],
@@ -172,5 +224,12 @@ class SignInView extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  signUp() async {
+    if (formKey.currentState!.validate()) {
+      formKey.currentState!.save();
+      await AuthController.instance.signUserIn(email!, password!);
+    }
   }
 }

@@ -1,7 +1,7 @@
 class StoryModel {
-  final String? userProfileImage;
-  final String? userHandle;
-  final DateTime? timePosted;
+  String? userProfileImage;
+  String? userHandle;
+  DateTime? timePosted;
 
   StoryModel({
     this.userProfileImage,

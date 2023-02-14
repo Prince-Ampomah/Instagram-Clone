@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:instagram_clone/controller/auth_controller/auth_controller.dart';
+import 'package:instagram_clone/core/utils/utils.dart';
 import 'package:instagram_clone/view/authentication/sign_up_view/sign_up_name_and_password_view.dart';
 
 import '../../../core/theme/theme.dart';
+import '../../../core/utils/form_validator.dart';
+import '../../../core/utils/helper_functions.dart';
 import '../../../core/widgets/cus_circular_image.dart';
 import '../../../core/widgets/cus_form_field.dart';
 import '../../../core/widgets/cus_main_button.dart';
@@ -22,6 +27,11 @@ class _SignUpViewState extends State<SignUpView>
   late TabController tabController;
   ScrollController scrollController = ScrollController();
 
+  final phoneNumberController = TextEditingController();
+  final emailController = TextEditingController();
+
+  final formKey = GlobalKey<FormState>();
+
   @override
   void initState() {
     tabController = TabController(length: 2, vsync: this);
@@ -32,6 +42,8 @@ class _SignUpViewState extends State<SignUpView>
   void dispose() {
     tabController.dispose();
     scrollController.dispose();
+    phoneNumberController.dispose();
+    emailController.dispose();
     super.dispose();
   }
 
@@ -75,61 +87,74 @@ class _SignUpViewState extends State<SignUpView>
                 ],
               ),
               Expanded(
-                child: TabBarView(
-                  physics: const BouncingScrollPhysics(),
-                  controller: tabController,
-                  children: [
-                    SingleChildScrollView(
-                      child: Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: Column(
-                          children: [
-                            CustomFormField(
-                              hintText: 'Phone Number',
-                              filled: true,
-                              fillColor: AppColors.textFieldColor,
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5),
+                child: Form(
+                  key: formKey,
+                  child: TabBarView(
+                    physics: const BouncingScrollPhysics(),
+                    controller: tabController,
+                    children: [
+                      SingleChildScrollView(
+                        child: Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: Column(
+                            children: [
+                              CustomFormField(
+                                controller: phoneNumberController,
+                                hintText: 'Phone Number',
+                                filled: true,
+                                fillColor: AppColors.textFieldColor,
+                                keyboardType: TextInputType.phone,
+                                autofillHints: const [
+                                  AutofillHints.telephoneNumber
+                                ],
+                                onSaved: (value) {
+                                  phoneNumberController.text = value!.trim();
+                                  return null;
+                                },
                               ),
-                            ),
-                            const SizedBox(height: 20),
-
-                            // login button
-                            MainButton(
-                              onPressed: () {
-                                tabController.animateTo(1);
-                              },
-                              title: 'Next',
-                            ),
-                          ],
+                              const SizedBox(height: 20),
+                              MainButton(
+                                onPressed: () {
+                                  tabController.animateTo(1);
+                                },
+                                title: 'Next',
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Column(
-                        children: [
-                          CustomFormField(
-                            hintText: 'Email',
-                            filled: true,
-                            fillColor: AppColors.textFieldColor,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                          ),
-                          const SizedBox(height: 20),
+                      SingleChildScrollView(
+                        child: Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: Column(
+                            children: [
+                              CustomFormField(
+                                controller: emailController,
+                                hintText: 'Email',
+                                filled: true,
+                                fillColor: AppColors.textFieldColor,
+                                autofillHints: const [AutofillHints.email],
+                                textInputAction: TextInputAction.next,
+                                textCapitalization: TextCapitalization.none,
+                                validator: FormValidator.validateEmail,
+                                onSaved: (value) {
+                                  emailController.text = value!.trim();
+                                  return null;
+                                },
+                              ),
+                              const SizedBox(height: 20),
 
-                          // login button
-                          MainButton(
-                            onPressed: () {
-                              Get.to(const CreateNameAndPasswordView());
-                            },
-                            title: 'Next',
+                              // login button
+                              MainButton(
+                                onPressed: validateForm,
+                                title: 'Next',
+                              ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               Padding(
@@ -140,20 +165,23 @@ class _SignUpViewState extends State<SignUpView>
                     const Divider(),
                     const SizedBox(height: 10),
                     GestureDetector(
-                      onTap: () => Get.to(const SignInView()),
-                      child: CustomRichText(
-                        text1: 'Already have an account? ',
-                        text2: 'Log in.',
-                        text1Style:
-                            Theme.of(context).textTheme.titleSmall!.copyWith(
-                                  color: AppColors.greyColor,
-                                  fontSize: 11,
-                                ),
-                        text2Style:
-                            Theme.of(context).textTheme.titleSmall!.copyWith(
-                                  color: AppColors.deepButtonColor,
-                                  fontSize: 11,
-                                ),
+                      onTap: () => Get.off(() => const SignInView()),
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: CustomRichText(
+                          text1: 'Already have an account? ',
+                          text2: 'Log in.',
+                          text1Style:
+                              AppTheme.textStyle(context).titleSmall!.copyWith(
+                                    color: AppColors.greyColor,
+                                    fontSize: 11,
+                                  ),
+                          text2Style:
+                              AppTheme.textStyle(context).titleSmall!.copyWith(
+                                    color: AppColors.deepButtonColor,
+                                    fontSize: 11,
+                                  ),
+                        ),
                       ),
                     ),
                   ],
@@ -164,5 +192,18 @@ class _SignUpViewState extends State<SignUpView>
         ),
       ),
     );
+  }
+
+  validateForm() {
+    if (formKey.currentState!.validate()) {
+      formKey.currentState!.save();
+
+      AuthController.instance.userModel.phoneNumber =
+          phoneNumberController.text;
+      AuthController.instance.userModel.email = emailController.text;
+      Get.to(() => const CreateNameAndPasswordView());
+    } else {
+      showToast(msg: 'Email is required');
+    }
   }
 }
