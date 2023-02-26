@@ -6,6 +6,7 @@ import '../../../controller/auth_controller/auth_controller.dart';
 import '../../../core/theme/theme.dart';
 import '../../../core/widgets/cus_appbar.dart';
 import '../../../core/widgets/cus_main_button.dart';
+import '../../../repository/respository_implementation/auth_implementation.dart';
 
 class VerifyUserEmailView extends StatefulWidget {
   const VerifyUserEmailView({
@@ -97,8 +98,7 @@ class _VerifyUserEmailViewState extends State<VerifyUserEmailView> {
             ),
             const SizedBox(height: 20),
             MainButton(
-              onPressed: () async =>
-                  await AuthController.instance.deleteUserFromAuth(),
+              onPressed: () async => await firebaseAuth.currentUser!.delete(),
               title: 'Cancel',
               bgColor: const Color(0xFF505050),
             ),

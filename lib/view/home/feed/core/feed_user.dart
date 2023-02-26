@@ -3,10 +3,14 @@ import 'package:flutter/material.dart';
 import '../../../../core/constants/constants.dart';
 import '../../../../core/widgets/cus_circular_image.dart';
 
-class PostedBy extends StatelessWidget {
-  const PostedBy({
+class FeedUser extends StatelessWidget {
+  const FeedUser({
     super.key,
+    this.image,
+    this.userHandle,
   });
+
+  final String? image, userHandle;
 
   @override
   Widget build(BuildContext context) {
@@ -16,13 +20,15 @@ class PostedBy extends StatelessWidget {
         children: [
           Row(
             children: [
-              const CircularImageContainer(),
+              CircularImageContainer(
+                image: image,
+              ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     children: [
-                      const Text('citi973fm'),
+                      Text(userHandle ?? 'citi973fm'),
                       const SizedBox(width: 5),
                       Image.asset(
                         Const.instragramVerifiedIcon,

@@ -1,15 +1,20 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:instagram_clone/core/constants/constants.dart';
-import 'package:instagram_clone/core/utils/utils.dart';
-import 'package:instagram_clone/model/user_model/user_model.dart';
+import 'package:hive/hive.dart';
 
-import '../../core/theme/theme.dart';
+import '../../core/constants/constants.dart';
+import '../../core/services/hive_services.dart';
+import '../../core/utils/utils.dart';
+import '../../model/user_model/user_model.dart';
 import '../../repository/repository_abstract/auth_abstract.dart';
+import '../../repository/repository_abstract/database_abstract.dart';
 import '../../repository/respository_implementation/auth_implementation.dart';
+import '../../repository/respository_implementation/database_implementation.dart';
+import '../../view/authentication/email_verification/email_verification_view.dart';
+import '../../view/layout/app_layout.dart';
 
 class AuthController extends GetxController {
   //auth controller instance
@@ -21,19 +26,35 @@ class AuthController extends GetxController {
 
   late UserCredential userCredential;
 
-  // Rx<UserModel> userModel = UserModel().obs;
   UserModel userModel = UserModel();
 
-  // late Rx<User?> _user;
+  Box<UserModel> userBox = HiveServices.getUserBox();
 
   // initalize the auth abstract class to its implementation
   final AuthContract _authContract = Authimplementation();
+  final FirestoreDB _firestoreDB = FirestoreDBImpl();
 
   signUserIn(String email, String password) async {
     try {
       isLoading(true);
       userCredential =
           await _authContract.signInWithEmailAndPassword(email, password);
+
+      if (userCredential.user!.uid.isNotEmpty) {
+        String userId = userCredential.user!.uid;
+        DocumentSnapshot doc =
+            await _firestoreDB.getDocById(Const.usersCollection, userId);
+
+        if (doc.exists) {
+          UserModel userModel =
+              UserModel.fromJson(doc.data() as Map<String, dynamic>);
+
+          await userBox.put(Const.currentUser, userModel);
+
+          Get.off(() => AppLayoutView());
+        }
+      }
+
       isLoading(false);
     } catch (e) {
       isLoading(false);
@@ -48,44 +69,19 @@ class AuthController extends GetxController {
       userCredential =
           await _authContract.signUpWithEmailAndPassword(email, password);
 
-      // if (!userCredential.user!.emailVerified) {
-      //   await firebaseAuth.currentUser!.sendEmailVerification();
-      //   timer = Timer.periodic(const Duration(seconds: 3), (_) async {
-      //     await firebaseAuth.currentUser!.reload();
-      //     logger.d(firebaseAuth.currentUser);
-      //     if (userCredential.user!.emailVerified) timer?.cancel();
-      //   });
+      Get.off(() => const EmailVerificationView());
 
-      //   // Future.delayed(const Duration(seconds: 10)).then((value) async {
-      //   //   await firebaseAuth.currentUser!.reload();
-      //   //   logger.d(firebaseAuth.currentUser);
-      //   // });
-      // }
-
-      // logger.d(userCredential);
-      // if (userCredential.user != null && !userCredential.user!.emailVerified) {
-      //   Get.defaultDialog(
-      //     title: 'Email Verification',
-      //     content: const Text(
-      //       'A verification link has been sent to the email you provided',
-      //     ),
-      //     onConfirm: () async {
-      //       userCredential.user!.sendEmailVerification().then((value) {
-      //         print(userCredential.user!.emailVerified);
-      //         firebaseAuth.currentUser!.reload();
-      //         Get.back();
-      //       });
-      //     },
-      //     onCancel: () => Get.back(),
-      //     barrierDismissible: false,
-      //   );
-      // }
-      // if (user != null && !user.emailVerified) {
-      //   await user.sendEmailVerification();
-      // }
       isLoading(false);
     } catch (e) {
       isLoading(false);
+      Utils.showErrorMessage(e.toString());
+    }
+  }
+
+  resetUserPassword(String email) async {
+    try {
+      await _authContract.resetPassword(email);
+    } catch (e) {
       Utils.showErrorMessage(e.toString());
     }
   }
@@ -109,7 +105,7 @@ class AuthController extends GetxController {
   }
 }
 
-
+  // late Rx<User?> _user;
 /**
  *   @override
   void onReady() {
@@ -136,4 +132,45 @@ class AuthController extends GetxController {
   }
 
 
+ */
+
+
+/**
+ * 
+      if (!userCredential.user!.emailVerified) {
+        await firebaseAuth.currentUser!.sendEmailVerification();
+        timer = Timer.periodic(const Duration(seconds: 3), (_) async {
+          await firebaseAuth.currentUser!.reload();
+          logger.d(firebaseAuth.currentUser);
+          if (userCredential.user!.emailVerified) timer?.cancel();
+        });
+
+        // Future.delayed(const Duration(seconds: 10)).then((value) async {
+        //   await firebaseAuth.currentUser!.reload();
+        //   logger.d(firebaseAuth.currentUser);
+        // });
+      }
+
+      logger.d(userCredential);
+      if (userCredential.user != null && !userCredential.user!.emailVerified) {
+        Get.defaultDialog(
+          title: 'Email Verification',
+          content: const Text(
+            'A verification link has been sent to the email you provided',
+          ),
+          onConfirm: () async {
+            userCredential.user!.sendEmailVerification().then((value) {
+              print(userCredential.user!.emailVerified);
+              firebaseAuth.currentUser!.reload();
+              Get.back();
+            });
+          },
+          onCancel: () => Get.back(),
+          barrierDismissible: false,
+        );
+      }
+      if (user != null && !user.emailVerified) {
+        await user.sendEmailVerification();
+      }
+     
  */

@@ -2,6 +2,8 @@ import 'package:hive/hive.dart';
 import 'package:instagram_clone/core/constants/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+part 'user_model.g.dart';
+
 @HiveType(typeId: Const.hiveTypeId0)
 class UserModel {
   @HiveField(0)
@@ -34,8 +36,6 @@ class UserModel {
     this.userHandle,
     this.createdAt,
   });
-
-  // : assert(userId != null)
 
   Map<String, dynamic> toJson() {
     Map<String, dynamic> map = {};

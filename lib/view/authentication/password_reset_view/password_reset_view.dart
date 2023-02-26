@@ -1,17 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:instagram_clone/core/theme/theme.dart';
-import 'package:instagram_clone/core/widgets/cus_appbar.dart';
-import 'package:instagram_clone/core/widgets/cus_form_field.dart';
-import 'package:instagram_clone/core/widgets/cus_main_button.dart';
-import 'package:instagram_clone/core/widgets/cus_rich_text.dart';
+import 'package:instagram_clone/core/utils/form_validator.dart';
+import '../../../controller/auth_controller/auth_controller.dart';
+import '../../../core/theme/theme.dart';
+import '../../../core/utils/helper_functions.dart';
+import '../../../core/widgets/cus_appbar.dart';
+import '../../../core/widgets/cus_form_field.dart';
+import '../../../core/widgets/cus_main_button.dart';
+import '../../../core/widgets/cus_rich_text.dart';
 
-class PasswordResetView extends StatelessWidget {
+class PasswordResetView extends StatefulWidget {
   const PasswordResetView({super.key});
 
   @override
+  State<PasswordResetView> createState() => _PasswordResetViewState();
+}
+
+class _PasswordResetViewState extends State<PasswordResetView> {
+  String? email;
+  final formKey = GlobalKey<FormState>();
+
+  @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+
     return Scaffold(
       appBar: CustomAppBar(
         implyLeading: true,
@@ -21,8 +34,8 @@ class PasswordResetView extends StatelessWidget {
             .copyWith(fontWeight: FontWeight.bold, fontSize: 18),
       ),
       body: SizedBox(
-        height: Get.height,
-        width: Get.width,
+        height: size.height,
+        width: size.width,
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
@@ -42,15 +55,41 @@ class PasswordResetView extends StatelessWidget {
                       .copyWith(color: AppColors.greyColor),
                 ),
                 const SizedBox(height: 30),
-                const CustomFormField(
-                  hintText: 'Email',
-                  filled: true,
-                  fillColor: AppColors.textFieldColor,
-                ),
-                const SizedBox(height: 20),
-                MainButton(
-                  onPressed: () {},
-                  title: 'Reset password',
+                Form(
+                  key: formKey,
+                  child: Column(
+                    children: [
+                      CustomFormField(
+                        hintText: 'Email',
+                        filled: true,
+                        fillColor: AppColors.textFieldColor,
+                        autofillHints: const [AutofillHints.email],
+                        textInputAction: TextInputAction.done,
+                        textCapitalization: TextCapitalization.none,
+                        validator: FormValidator.validateEmail,
+                        onSaved: (value) {
+                          email = value!.trim();
+
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: 20),
+                      GetX<AuthController>(
+                        builder: (controller) {
+                          return MainButton(
+                            onPressed: controller.isLoading.value
+                                ? null
+                                : resetPassword,
+                            title: 'Reset password',
+                            isLoading: controller.isLoading.value,
+                            bgColor: controller.isLoading.value
+                                ? null
+                                : AppColors.buttonColor,
+                          );
+                        },
+                      ),
+                    ],
+                  ),
                 ),
                 const SizedBox(height: 20),
                 Row(
@@ -64,6 +103,7 @@ class PasswordResetView extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 20),
+
                 // facebook widget
                 MainButton(
                   onPressed: () {},
@@ -77,5 +117,15 @@ class PasswordResetView extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  resetPassword() async {
+    if (formKey.currentState!.validate()) {
+      formKey.currentState!.save();
+
+      await AuthController.instance.resetUserPassword(email!);
+    } else {
+      showToast(msg: 'Email is required');
+    }
   }
 }

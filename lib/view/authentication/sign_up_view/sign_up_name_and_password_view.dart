@@ -116,6 +116,7 @@ class _CreateNameAndPasswordViewState extends State<CreateNameAndPasswordView> {
                       }
                     },
                     title: 'Continue',
+                    bgColor: AppColors.buttonColor,
                   ),
                 ],
               ),

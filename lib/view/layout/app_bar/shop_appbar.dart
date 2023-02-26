@@ -51,7 +51,7 @@ class ShopAppBar extends StatelessWidget {
           onPressed: () {
             Get.bottomSheet(
               Container(
-                height: 300,
+                height: 900,
                 decoration: const BoxDecoration(
                   color: AppColors.whiteColor,
                   borderRadius: BorderRadius.only(

@@ -114,10 +114,9 @@ class _SignUpViewState extends State<SignUpView>
                               ),
                               const SizedBox(height: 20),
                               MainButton(
-                                onPressed: () {
-                                  tabController.animateTo(1);
-                                },
+                                onPressed: () => tabController.animateTo(1),
                                 title: 'Next',
+                                bgColor: AppColors.buttonColor,
                               ),
                             ],
                           ),
@@ -148,6 +147,7 @@ class _SignUpViewState extends State<SignUpView>
                               MainButton(
                                 onPressed: validateForm,
                                 title: 'Next',
+                                bgColor: AppColors.buttonColor,
                               ),
                             ],
                           ),
@@ -163,11 +163,11 @@ class _SignUpViewState extends State<SignUpView>
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     const Divider(),
-                    const SizedBox(height: 10),
-                    GestureDetector(
+                    const SizedBox(height: 5),
+                    InkWell(
                       onTap: () => Get.off(() => const SignInView()),
                       child: Padding(
-                        padding: const EdgeInsets.all(10.0),
+                        padding: const EdgeInsets.all(16.0),
                         child: CustomRichText(
                           text1: 'Already have an account? ',
                           text2: 'Log in.',

@@ -38,7 +38,6 @@ class HomeAppBar extends StatelessWidget {
         onSelected: (value) async {
           switch (value) {
             case MenuItems.following:
-              AuthController.instance.signOutUser();
               break;
 
             default:

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:instagram_clone/view/profile/profile_view_activity.dart';
 
 import '../../../core/constants/constants.dart';
 import '../../../core/theme/theme.dart';
@@ -41,25 +42,7 @@ class ProfileAppBar extends StatelessWidget {
         ),
         GestureDetector(
           onTap: () {
-            Get.bottomSheet(
-              CustomBottomSheetContainer(
-                child: Expanded(
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    physics: const ClampingScrollPhysics(),
-                    itemCount: 15,
-                    itemBuilder: (BuildContext context, int index) {
-                      return ListTile(
-                        onTap: () {},
-                        minLeadingWidth: 20,
-                        leading: const Icon(Icons.settings),
-                        title: Text('Text Item $index'),
-                      );
-                    },
-                  ),
-                ),
-              ),
-            );
+            Get.bottomSheet(const ProfileActivity());
           },
           child: const Padding(
             padding: EdgeInsets.all(8.0),

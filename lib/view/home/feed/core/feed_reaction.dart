@@ -1,19 +1,26 @@
 // import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:instagram_clone/model/feed_model/like_model.dart';
 
 import '../../../../core/constants/constants.dart';
 import '../../../../core/widgets/cus_rich_text.dart';
 
-class PostReactions extends StatelessWidget {
-  const PostReactions({
+class FeedReaction extends StatelessWidget {
+  const FeedReaction({
     super.key,
+    required this.likeModel,
+    this.caption,
+    this.userHandle,
   });
+
+  final LikeModel likeModel;
+  final String? caption, userHandle;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.fromLTRB(8, 8, 8, 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -59,13 +66,15 @@ class PostReactions extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           Row(
-            children: const [Text('Liked by Elvis and 10,971')],
+            children: [
+              Text('Liked by Elvis and ${likeModel.likes}'),
+            ],
           ),
           const SizedBox(height: 8),
-          const CustomRichText(
-            text1: 'citi973fm ',
-            text2: 'Let us build an instagram together Fellas!',
-            text1Style: TextStyle(
+          CustomRichText(
+            text1: '$userHandle ',
+            text2: caption ?? '',
+            text1Style: const TextStyle(
               fontWeight: FontWeight.bold,
               color: Colors.black,
             ),

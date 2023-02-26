@@ -17,11 +17,12 @@ class CustomBottomSheetContainer extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return Container(
       height: size.height * height!,
+      width: size.width,
       decoration: const BoxDecoration(
         color: AppColors.whiteColor,
         borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(10),
-          topRight: Radius.circular(10),
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
         ),
       ),
       child: Column(

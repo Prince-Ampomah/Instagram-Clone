@@ -6,4 +6,8 @@ abstract class AuthContract {
 
   Future<UserCredential> signInWithEmailAndPassword(
       String email, String password);
+
+  Future<void> resetPassword(String email);
+
+  Future<void> confirmPasswordReset(String code, String newPassword);
 }

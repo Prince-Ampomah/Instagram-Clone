@@ -13,6 +13,7 @@ class ProfileView extends StatelessWidget {
       headerSliverBuilder: (context, bool innerBoxIsScrolled) {
         return [
           SliverAppBar(
+            automaticallyImplyLeading: false,
             flexibleSpace: const ProfileViewInfo(),
             expandedHeight: size.height * 0.48,
             collapsedHeight: size.height * 0.48,

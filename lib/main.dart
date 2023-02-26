@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 
 import 'controller/auth_controller/auth_controller.dart';
 import 'controller/auth_controller/auth_listener.dart';
+import 'core/services/hive_helper_function.dart';
 import 'core/theme/theme.dart';
 import 'firebase_options.dart';
 
@@ -19,6 +20,10 @@ void main() async {
   ));
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  // set up hive services before inject controller since hive service is initialize in the auth controller
+  await initHiveServices();
+
   Get.put(AuthController());
 
   runApp(const MyApp());

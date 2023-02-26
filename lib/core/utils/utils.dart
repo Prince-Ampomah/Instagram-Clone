@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import '../theme/theme.dart';
 
 class Utils {
-  static showErrorMessage(String message) {
+  static showErrorMessage(String message, {String title = 'Error'}) {
     Get.snackbar(
       'Error',
       message,
@@ -12,10 +12,10 @@ class Utils {
       duration: const Duration(seconds: 3),
       backgroundColor: AppColors.errorColor,
       colorText: Colors.white,
-      titleText: const Text(
-        'Error',
+      titleText: Text(
+        title,
         textAlign: TextAlign.center,
-        style: TextStyle(color: Colors.white),
+        style: const TextStyle(color: Colors.white),
       ),
       messageText: Text(
         message,

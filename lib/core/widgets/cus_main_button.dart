@@ -7,7 +7,7 @@ class MainButton extends StatelessWidget {
     Key? key,
     this.onPressed,
     required this.title,
-    this.bgColor = Colors.blue,
+    this.bgColor,
     this.foregroundColor = Colors.white,
     this.textColor,
     this.iconData,
@@ -21,8 +21,7 @@ class MainButton extends StatelessWidget {
   }) : super(key: key);
 
   final String title, isLoadingText;
-  final Color foregroundColor;
-  final Color? bgColor, textColor;
+  final Color? foregroundColor, bgColor, textColor;
   final IconData? iconData;
   final bool? isLoading, disabled;
   final double? fontSize, letterSpacing, borderRadius;
@@ -38,8 +37,8 @@ class MainButton extends StatelessWidget {
               onPressed: onPressed,
               style: ButtonStyle(
                 foregroundColor:
-                    MaterialStateProperty.all<Color>(foregroundColor),
-                backgroundColor: MaterialStateProperty.all<Color>(bgColor!),
+                    MaterialStateProperty.all<Color?>(foregroundColor),
+                backgroundColor: MaterialStateProperty.all<Color?>(bgColor),
                 padding: MaterialStateProperty.all(
                   const EdgeInsets.symmetric(
                     horizontal: 14,
@@ -57,13 +56,9 @@ class MainButton extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        // const SpinKitFadingCircle(
-                        //   color: Colors.white,
-                        //   size: 20.0,
-                        // ),
                         SizedBox(
-                          height: 20,
-                          child: Image.asset(Const.loadingGif),
+                          height: 18,
+                          child: Image.asset(Const.loadingGif1),
                         ),
                         const SizedBox(width: 10),
                         Text(
@@ -91,8 +86,8 @@ class MainButton extends StatelessWidget {
               onPressed: onPressed,
               style: ButtonStyle(
                 foregroundColor:
-                    MaterialStateProperty.all<Color>(foregroundColor),
-                backgroundColor: MaterialStateProperty.all<Color>(bgColor!),
+                    MaterialStateProperty.all<Color?>(foregroundColor),
+                backgroundColor: MaterialStateProperty.all<Color?>(bgColor),
                 padding: MaterialStateProperty.all(
                   const EdgeInsets.symmetric(
                     horizontal: 14,
@@ -108,13 +103,9 @@ class MainButton extends StatelessWidget {
               icon: Icon(iconData),
               label: isLoading != null && isLoading!
                   ? SizedBox(
-                      height: 20,
-                      child: Image.asset(Const.loadingGif),
+                      height: 18,
+                      child: Image.asset(Const.loadingGif1),
                     )
-                  // const SpinKitFadingCircle(
-                  //     color: Colors.white,
-                  //     size: 20.0,
-                  //   )
                   : Text(
                       title,
                       style: TextStyle(

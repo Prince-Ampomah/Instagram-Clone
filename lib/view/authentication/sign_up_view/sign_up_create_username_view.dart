@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:instagram_clone/controller/auth_controller/auth_controller.dart';
-import 'package:instagram_clone/core/utils/form_validator.dart';
-import 'package:instagram_clone/core/utils/helper_functions.dart';
-import 'package:instagram_clone/view/authentication/email_verification/email_verification_view.dart';
+import '../../../controller/auth_controller/auth_controller.dart';
+import '../../../core/utils/form_validator.dart';
+import '../../../core/utils/helper_functions.dart';
 
-import '../../../core/constants/constants.dart';
 import '../../../core/theme/theme.dart';
 import '../../../core/widgets/cus_form_field.dart';
 import '../../../core/widgets/cus_main_button.dart';
@@ -67,25 +65,17 @@ class _CreateUsernameViewState extends State<CreateUsernameView> {
                     },
                   ),
                   const SizedBox(height: 20),
-                  MainButton(
-                    onPressed: () async {
-                      if (formKey.currentState!.validate()) {
-                        formKey.currentState!.save();
-
-                        // register user
-                        // Get.to(() => const CreateUsernameView());
-
-                        await AuthController.instance.signUserUp(
-                          AuthController.instance.userModel.email!,
-                          widget.password,
-                        );
-
-                        Get.off(() => const EmailVerificationView());
-                      } else {
-                        showToast(msg: 'Username is required');
-                      }
+                  GetX<AuthController>(
+                    builder: (controller) {
+                      return MainButton(
+                        onPressed: controller.isLoading.value ? null : register,
+                        title: 'Register',
+                        isLoading: controller.isLoading.value,
+                        bgColor: controller.isLoading.value
+                            ? null
+                            : AppColors.buttonColor,
+                      );
                     },
-                    title: 'Continue',
                   ),
                 ],
               ),
@@ -94,5 +84,19 @@ class _CreateUsernameViewState extends State<CreateUsernameView> {
         ),
       ),
     );
+  }
+
+  register() {
+    if (formKey.currentState!.validate()) {
+      formKey.currentState!.save();
+
+      // register user
+      AuthController.instance.signUserUp(
+        AuthController.instance.userModel.email!,
+        widget.password,
+      );
+    } else {
+      showToast(msg: 'Username is required');
+    }
   }
 }

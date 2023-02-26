@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import '../constants/constants.dart';
-import '../widgets/cus_circular_progressbar.dart';
+import '../theme/theme.dart';
 
 void showToast({required String msg}) {
   Fluttertoast.showToast(msg: msg);
@@ -18,10 +18,10 @@ void sendToPage(BuildContext context, Widget newPage,
   );
 }
 
-onLoading(BuildContext context, String message, {TextStyle? style}) {
+onLoading(BuildContext context, String message, {bool isDimissible = true}) {
   return showDialog(
     context: context,
-    barrierDismissible: true,
+    barrierDismissible: isDimissible,
     builder: (BuildContext context) {
       return Dialog(
         insetPadding: EdgeInsets.zero,
@@ -33,24 +33,17 @@ onLoading(BuildContext context, String message, {TextStyle? style}) {
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const SizedBox(
-                height: 30,
-              ),
               SizedBox(
                 height: 25,
                 child: Image.asset(Const.loadingGif1),
               ),
-              const SizedBox(
-                width: 10,
-              ),
+              const SizedBox(width: 10),
               Text(
                 message,
                 textAlign: TextAlign.center,
-                style: style,
+                style: AppTheme.textStyle(context).labelLarge,
               ),
-              const SizedBox(
-                width: 20,
-              ),
+              const SizedBox(width: 20),
             ],
           ),
         ),

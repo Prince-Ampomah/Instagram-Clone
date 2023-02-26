@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:instagram_clone/core/utils/helper_functions.dart';
@@ -8,6 +9,7 @@ import '../../../controller/auth_controller/password_visibility_controller.dart'
 import '../../../core/constants/constants.dart';
 import '../../../core/theme/theme.dart';
 import '../../../core/utils/form_validator.dart';
+import '../../../core/utils/utils.dart';
 import '../../../core/widgets/cus_form_field.dart';
 import '../../../core/widgets/cus_main_button.dart';
 import '../../../core/widgets/cus_rich_text.dart';
@@ -126,9 +128,13 @@ class _SignInViewState extends State<SignInView> {
                         GetX<AuthController>(
                           builder: (controller) {
                             return MainButton(
-                              onPressed: signUp,
+                              onPressed:
+                                  controller.isLoading.value ? null : signIn,
                               title: 'Log in',
                               isLoading: controller.isLoading.value,
+                              bgColor: controller.isLoading.value
+                                  ? null
+                                  : AppColors.buttonColor,
                             );
                           },
                         ),
@@ -136,23 +142,26 @@ class _SignInViewState extends State<SignInView> {
                         const SizedBox(height: 20),
 
                         // forget password help
-                        GestureDetector(
+                        InkWell(
                           onTap: () => Get.to(() => const PasswordResetView()),
-                          child: CustomRichText(
-                            text1: 'Forget your login details? ',
-                            text2: 'Get help logging in.',
-                            text1Style: AppTheme.textStyle(context)
-                                .titleSmall!
-                                .copyWith(
-                                  color: AppColors.greyColor,
-                                  fontSize: 11,
-                                ),
-                            text2Style: AppTheme.textStyle(context)
-                                .titleSmall!
-                                .copyWith(
-                                  color: AppColors.deepButtonColor,
-                                  fontSize: 11,
-                                ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: CustomRichText(
+                              text1: 'Forget your login details? ',
+                              text2: 'Get help logging in.',
+                              text1Style: AppTheme.textStyle(context)
+                                  .titleSmall!
+                                  .copyWith(
+                                    color: AppColors.greyColor,
+                                    fontSize: 11,
+                                  ),
+                              text2Style: AppTheme.textStyle(context)
+                                  .titleSmall!
+                                  .copyWith(
+                                    color: AppColors.deepButtonColor,
+                                    fontSize: 11,
+                                  ),
+                            ),
                           ),
                         ),
 
@@ -175,7 +184,11 @@ class _SignInViewState extends State<SignInView> {
                         // facebook widget
                         MainButton(
                           onPressed: () {
-                            onLoading(context, 'Loading');
+                            onLoading(
+                              context,
+                              'Loading',
+                              isDimissible: false,
+                            );
                           },
                           iconData: FontAwesomeIcons.facebook,
                           title: 'Contiue as Prince Ampomah',
@@ -192,11 +205,11 @@ class _SignInViewState extends State<SignInView> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       const Divider(),
-                      const SizedBox(height: 10),
-                      GestureDetector(
+                      const SizedBox(height: 5),
+                      InkWell(
                         onTap: () => Get.to(() => const SignUpView()),
                         child: Padding(
-                          padding: const EdgeInsets.all(10.0),
+                          padding: const EdgeInsets.all(16.0),
                           child: CustomRichText(
                             text1: 'Don\'t have an account? ',
                             text2: 'Sign up.',
@@ -226,10 +239,10 @@ class _SignInViewState extends State<SignInView> {
     );
   }
 
-  signUp() async {
+  signIn() {
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
-      await AuthController.instance.signUserIn(email!, password!);
+      AuthController.instance.signUserIn(email!, password!);
     }
   }
 }
