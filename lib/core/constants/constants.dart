@@ -40,4 +40,5 @@ class Const {
 
   // Firestore contants
   static const String usersCollection = 'users';
+  static const String postsCollection = 'posts';
 }

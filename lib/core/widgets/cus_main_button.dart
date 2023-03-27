@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:instagram_clone/core/widgets/cus_circular_progressbar.dart';
 
 import '../constants/constants.dart';
 
@@ -56,9 +57,15 @@ class MainButton extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        SizedBox(
+                        const SizedBox(
                           height: 18,
-                          child: Image.asset(Const.loadingGif1),
+                          width: 18,
+                          child: Center(
+                            child: CustomCircularProgressBar(
+                              bgColor: Colors.white,
+                              valueColor: Colors.blue,
+                            ),
+                          ),
                         ),
                         const SizedBox(width: 10),
                         Text(
@@ -102,9 +109,15 @@ class MainButton extends StatelessWidget {
               ),
               icon: Icon(iconData),
               label: isLoading != null && isLoading!
-                  ? SizedBox(
+                  ? const SizedBox(
                       height: 18,
-                      child: Image.asset(Const.loadingGif1),
+                      width: 18,
+                      child: Center(
+                        child: CustomCircularProgressBar(
+                          bgColor: Colors.white,
+                          valueColor: Colors.blue,
+                        ),
+                      ),
                     )
                   : Text(
                       title,

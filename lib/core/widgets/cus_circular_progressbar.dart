@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
 
 import '../constants/constants.dart';
-import '../theme/theme.dart';
-import 'dart:math' as math;
 
 class CustomCircularProgressBar extends StatelessWidget {
   const CustomCircularProgressBar({
     Key? key,
+    this.bgColor = Colors.grey,
+    this.valueColor = Colors.white,
   }) : super(key: key);
+
+  final Color? bgColor, valueColor;
 
   @override
   Widget build(BuildContext context) {
-    return const CircularProgressIndicator(
-      valueColor: AlwaysStoppedAnimation(AppColors.blackColor),
+    return CircularProgressIndicator(
+      backgroundColor: bgColor,
+      strokeWidth: 2.0,
+      valueColor: AlwaysStoppedAnimation(valueColor),
     );
   }
 }
@@ -22,12 +26,9 @@ class LoadingSpinner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RotatedBox(
-      quarterTurns: 2,
-      child: SizedBox(
-        height: 50,
-        child: Image.asset(Const.loadingGif),
-      ),
+    return SizedBox(
+      height: 50,
+      child: Image.asset(Const.loadingGif),
     );
   }
 }

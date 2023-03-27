@@ -28,8 +28,6 @@ class AuthController extends GetxController {
 
   UserModel userModel = UserModel();
 
-  Box<UserModel> userBox = HiveServices.getUserBox();
-
   // initalize the auth abstract class to its implementation
   final AuthContract _authContract = Authimplementation();
   final FirestoreDB _firestoreDB = FirestoreDBImpl();
@@ -49,6 +47,8 @@ class AuthController extends GetxController {
           UserModel userModel =
               UserModel.fromJson(doc.data() as Map<String, dynamic>);
 
+          Box<UserModel> userBox = HiveServices.getUserBox();
+
           await userBox.put(Const.currentUser, userModel);
 
           Get.off(() => AppLayoutView());
@@ -66,8 +66,7 @@ class AuthController extends GetxController {
     try {
       isLoading(true);
 
-      userCredential =
-          await _authContract.signUpWithEmailAndPassword(email, password);
+      await _authContract.signUpWithEmailAndPassword(email, password);
 
       Get.off(() => const EmailVerificationView());
 

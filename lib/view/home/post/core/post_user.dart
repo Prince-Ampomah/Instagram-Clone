@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../../../../core/constants/constants.dart';
 import '../../../../core/widgets/cus_circular_image.dart';
 
-class FeedUser extends StatelessWidget {
-  const FeedUser({
+class PostUser extends StatelessWidget {
+  const PostUser({
     super.key,
     this.image,
     this.userHandle,
@@ -55,7 +55,7 @@ class FeedUser extends StatelessWidget {
                   ),
                   const Text('sponsored'),
                 ],
-              )
+              ),
             ],
           ),
           const Spacer(),

@@ -99,4 +99,9 @@ class FirestoreDBImpl implements FirestoreDB {
       throw Exception(e);
     }
   }
+
+  // @override
+  static String generateFirestoreId(String collection) {
+    return FirebaseFirestore.instance.collection(collection).doc().id;
+  }
 }

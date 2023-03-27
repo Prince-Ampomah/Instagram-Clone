@@ -1,13 +1,13 @@
 // import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-import 'package:instagram_clone/model/feed_model/like_model.dart';
+import 'package:instagram_clone/model/post_model/like_model.dart';
 
 import '../../../../core/constants/constants.dart';
 import '../../../../core/widgets/cus_rich_text.dart';
 
-class FeedReaction extends StatelessWidget {
-  const FeedReaction({
+class PostReaction extends StatelessWidget {
+  const PostReaction({
     super.key,
     required this.likeModel,
     this.caption,

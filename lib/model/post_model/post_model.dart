@@ -5,21 +5,23 @@ import '../user_model/user_model.dart';
 import 'comment_model.dart';
 import 'like_model.dart';
 
-class FeedModel {
-  String id;
+class PostModel {
+  String? id;
   String? caption;
-  List<dynamic> media;
+  List<dynamic>? media;
   UserModel? userModel;
   LikeModel? likeModel;
   CommentModel? commentModel;
+  PostLocation? location;
 
-  FeedModel({
-    required this.id,
-    required this.media,
-    required this.userModel,
+  PostModel({
+    this.id,
+    this.media,
+    this.userModel,
     this.caption,
     this.likeModel,
     this.commentModel,
+    this.location,
   });
 
   Map<String, dynamic> toJson() {
@@ -31,24 +33,34 @@ class FeedModel {
     map['user'] = userModel!.toJson();
     map['likes'] = likeModel!.toJson();
     map['comments'] = commentModel!.toJson();
+    map['location'] = location!.toJson();
 
     return map;
   }
 
-  factory FeedModel.fromJson(Map<String, dynamic> json) {
-    return FeedModel(
-        id: json['id'],
-        caption: json['caption'],
-        media: json['media'],
-        userModel: UserModel.fromJson(json['user']),
-        likeModel: LikeModel.fromJson(json['likes']),
-        commentModel: CommentModel.fromJson(json['comments']));
+  factory PostModel.fromJson(Map<String, dynamic> json) {
+    return PostModel(
+      id: json['id'],
+      caption: json['caption'],
+      media: json['media'],
+      userModel: UserModel.fromJson(json['user']),
+      likeModel: LikeModel.fromJson(json['likes']),
+      commentModel: CommentModel.fromJson(json['comments']),
+      location: PostLocation.fromJson(json['location']),
+    );
   }
 
-  static List<FeedModel> feed = [
-    FeedModel(
+  static List<PostModel> posts = [
+    PostModel(
       id: '1',
-      media: [Const.princeImage],
+      media: [
+        Const.princeImage,
+        Const.instragramLogoIcon,
+        Const.instragramHomeIcon,
+        Const.princeImage,
+        Const.userImage,
+        Const.instragramSearchIcon,
+      ],
       userModel: UserModel(
         userHandle: 'sandisca_',
         userId: '1',
@@ -65,7 +77,7 @@ class FeedModel {
         dateTime: DateTime.now(),
       ),
     ),
-    FeedModel(
+    PostModel(
       id: '2',
       media: [
         Const.instragramLogoIcon,
@@ -82,7 +94,7 @@ class FeedModel {
         dateTime: DateTime.now(),
       ),
     ),
-    FeedModel(
+    PostModel(
       id: '2',
       media: [
         Const.userImage,
@@ -99,7 +111,7 @@ class FeedModel {
         dateTime: DateTime.now(),
       ),
     ),
-    FeedModel(
+    PostModel(
       id: '1',
       media: [
         Const.instragramSearchIcon,
@@ -121,4 +133,29 @@ class FeedModel {
       ),
     ),
   ];
+}
+
+class PostLocation {
+  String? address;
+  num? lat, lng;
+
+  PostLocation({this.address, this.lat, this.lng});
+
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> map = {};
+
+    map['address'] = address;
+    map['lat'] = lat;
+    map['lng'] = lng;
+
+    return map;
+  }
+
+  factory PostLocation.fromJson(Map<String, dynamic> json) {
+    return PostLocation(
+      address: json['address'],
+      lat: json['lat'],
+      lng: json['lng'],
+    );
+  }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:instagram_clone/core/services/hive_services.dart';
 import 'package:instagram_clone/core/utils/helper_functions.dart';
 import 'package:instagram_clone/view/authentication/sign_in_view/sign_in_view.dart';
 
@@ -16,6 +17,7 @@ class ProfileActivity extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomBottomSheetContainer(
+      height: 1.0,
       child: Expanded(
         child: ListView(
           shrinkWrap: true,
@@ -23,7 +25,8 @@ class ProfileActivity extends StatelessWidget {
             ActivityListItem(
               onTap: () async {
                 await AuthController.instance.signOutUser();
-                await AuthController.instance.userBox.delete(Const.currentUser);
+                await HiveServices.getUserBox().delete(Const.currentUser);
+
                 Get.offAll(() => const SignInView());
               },
               iconData: Icons.logout,
