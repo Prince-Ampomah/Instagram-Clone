@@ -3,7 +3,7 @@ import 'package:instagram_clone/model/post_model/post_model.dart';
 
 import 'core/post_reaction.dart';
 import 'core/post_user.dart';
-import 'image/post_image.dart';
+import 'core/post_image.dart';
 
 class PostItem extends StatelessWidget {
   const PostItem({
@@ -23,12 +23,11 @@ class PostItem extends StatelessWidget {
         ),
         PostImage(
           images: postModel!.media,
-          image: postModel!.media!.first,
         ),
         PostReaction(
-          likeModel: postModel!.likeModel!,
+          likeModel: postModel!.likeModel,
           userHandle: postModel!.userModel!.userHandle,
-          caption: postModel!.caption!,
+          caption: postModel!.caption,
         ),
       ],
     );

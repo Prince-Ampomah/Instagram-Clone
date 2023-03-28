@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:instagram_clone/core/widgets/cus_cached_image.dart';
 
 import '../../../../core/constants/constants.dart';
 import '../../../../core/widgets/cus_circular_image.dart';
@@ -20,15 +21,17 @@ class PostUser extends StatelessWidget {
         children: [
           Row(
             children: [
-              CircularImageContainer(
-                image: image,
-              ),
+              image != null
+                  ? CustomCachedImge(imageUrl: image!)
+                  : CircularImageContainer(
+                      image: image,
+                    ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     children: [
-                      Text(userHandle ?? 'citi973fm'),
+                      Text(userHandle ?? 'instagram handle'),
                       const SizedBox(width: 5),
                       Image.asset(
                         Const.instragramVerifiedIcon,
@@ -53,7 +56,7 @@ class PostUser extends StatelessWidget {
                       // )
                     ],
                   ),
-                  const Text('sponsored'),
+                  const Text('location'),
                 ],
               ),
             ],

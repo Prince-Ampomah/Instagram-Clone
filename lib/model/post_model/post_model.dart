@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:instagram_clone/controller/auth_controller/auth_controller.dart';
 
 import '../../core/constants/constants.dart';
@@ -13,6 +14,7 @@ class PostModel {
   LikeModel? likeModel;
   CommentModel? commentModel;
   PostLocation? location;
+  DateTime? timePosted;
 
   PostModel({
     this.id,
@@ -22,32 +24,36 @@ class PostModel {
     this.likeModel,
     this.commentModel,
     this.location,
+    this.timePosted,
   });
 
   Map<String, dynamic> toJson() {
     Map<String, dynamic> map = {};
 
     map['id'] = id;
-    map['capton'] = caption;
+    map['caption'] = caption;
     map['media'] = media;
     map['user'] = userModel!.toJson();
     map['likes'] = likeModel!.toJson();
     map['comments'] = commentModel!.toJson();
     map['location'] = location!.toJson();
+    map['timePosted'] = timePosted;
 
     return map;
   }
 
   factory PostModel.fromJson(Map<String, dynamic> json) {
     return PostModel(
-      id: json['id'],
-      caption: json['caption'],
-      media: json['media'],
-      userModel: UserModel.fromJson(json['user']),
-      likeModel: LikeModel.fromJson(json['likes']),
-      commentModel: CommentModel.fromJson(json['comments']),
-      location: PostLocation.fromJson(json['location']),
-    );
+        id: json['id'],
+        caption: json['caption'],
+        media: json['media'],
+        userModel: UserModel.fromJson(json['user']),
+        likeModel: LikeModel.fromJson(json['likes']),
+        commentModel: CommentModel.fromJson(json['comments']),
+        location: PostLocation.fromJson(json['location']),
+        timePosted: (json['timePosted'] is Timestamp)
+            ? json['timePosted'].toDate()
+            : json['timePosted']);
   }
 
   static List<PostModel> posts = [

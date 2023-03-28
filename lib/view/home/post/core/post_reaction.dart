@@ -9,12 +9,12 @@ import '../../../../core/widgets/cus_rich_text.dart';
 class PostReaction extends StatelessWidget {
   const PostReaction({
     super.key,
-    required this.likeModel,
+    this.likeModel,
     this.caption,
     this.userHandle,
   });
 
-  final LikeModel likeModel;
+  final LikeModel? likeModel;
   final String? caption, userHandle;
 
   @override
@@ -67,7 +67,9 @@ class PostReaction extends StatelessWidget {
           const SizedBox(height: 10),
           Row(
             children: [
-              Text('Liked by Elvis and ${likeModel.likes}'),
+              likeModel!.likes != null
+                  ? Text('Liked by Elvis and ${likeModel!.likes}')
+                  : const SizedBox(),
             ],
           ),
           const SizedBox(height: 8),

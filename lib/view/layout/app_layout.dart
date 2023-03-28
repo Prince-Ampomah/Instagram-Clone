@@ -15,10 +15,12 @@ import 'app_bar/search_appbar.dart';
 import 'app_bar/shop_appbar.dart';
 
 class AppLayoutView extends StatelessWidget {
-  AppLayoutView({super.key});
+  AppLayoutView({super.key, this.pageIndex});
 
   /// inject an [AppLayoutController] instance in memory
   final appLayoutCtrl = Get.put(AppLayoutController());
+
+  final int? pageIndex;
 
   @override
   Widget build(BuildContext context) {

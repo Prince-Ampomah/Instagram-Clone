@@ -3,6 +3,9 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:instagram_clone/view/home/home_view.dart';
+import 'package:instagram_clone/view/layout/app_layout.dart';
+import '../../core/utils/helper_functions.dart';
 import '../models_controller/models_controller.dart';
 import '../../core/constants/constants.dart';
 import '../../model/post_model/post_model.dart';
@@ -18,6 +21,8 @@ import '../../view/add_post/add_new_post.dart';
 
 class NewPostController extends GetxController {
   static NewPostController instance = Get.find<NewPostController>();
+
+  var isLoading = false.obs;
 
   List<dynamic> media = [];
 
@@ -45,8 +50,6 @@ class NewPostController extends GetxController {
   }
 
   pickMediaFromDevice() async {
-    // inject new post controller
-    // final newPostController = Get.put(NewPostController());
     List<dynamic> media = await _pickMediaFiles();
 
     if (media.isNotEmpty) {
@@ -54,7 +57,7 @@ class NewPostController extends GetxController {
     }
   }
 
-  addNewPost() async {
+  addNewPost(context) async {
     PostModel postModel = PostModel(
       id: postId,
       caption: captionController.text,
@@ -63,10 +66,12 @@ class NewPostController extends GetxController {
       commentModel: ModelController.instance.commentModel,
       likeModel: ModelController.instance.likeModel,
       location: ModelController.instance.postLocationModel,
+      timePosted: DateTime.now(),
     );
 
     try {
-      // upload to firestore database
+      Get.off(() => AppLayoutView(pageIndex: 0));
+      //   upload to firestore database
       await saveToDB(postModel);
 
       // upload media to frebase storage
@@ -74,7 +79,10 @@ class NewPostController extends GetxController {
 
       // update the media fields in firestore database
       await updateMediaUrl();
+
+      captionController.clear();
     } catch (e) {
+      Navigator.pop(context);
       Utils.showErrorMessage(e.toString());
     }
   }

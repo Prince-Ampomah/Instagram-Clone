@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:instagram_clone/controller/models_controller/models_controller.dart';
+import 'controller/post_controller/post_controller.dart';
 import 'core/constants/constants.dart';
 import 'core/services/hive_services.dart';
 import 'model/user_model/user_model.dart';
@@ -14,5 +15,6 @@ class AppState {
     Get.put(AuthController());
     Get.put(NewPostController());
     Get.put(ModelController());
+    Get.put(PostController());
   }
 }

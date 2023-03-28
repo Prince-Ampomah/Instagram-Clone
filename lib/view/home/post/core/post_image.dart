@@ -2,16 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:instagram_clone/controller/post_controller/post_image_controller.dart';
 import 'package:instagram_clone/core/theme/theme.dart';
+import 'package:instagram_clone/core/widgets/cus_cached_image.dart';
 
 class PostImage extends StatelessWidget {
   PostImage({
     super.key,
     this.images,
-    this.image,
   });
 
   final List<dynamic>? images;
-  final String? image;
 
   /// inject [PostImageController] dependecy
   final postImageController = Get.put(PostImageController());
@@ -23,34 +22,44 @@ class PostImage extends StatelessWidget {
     return GetBuilder<PostImageController>(
       builder: (controller) => Stack(
         children: [
-          images!.length != 1
-              ? SizedBox(
-                  height: size.height * 0.50,
-                  width: size.width,
-                  child: PageView.builder(
-                    scrollDirection: Axis.horizontal,
-                    onPageChanged: postImageController.onPageChanged,
-                    itemCount: images!.length,
-                    itemBuilder: (context, index) {
-                      String img = images![index];
-
-                      return Stack(
-                        children: [
-                          Image.asset(img),
-                          const Align(
-                            alignment: Alignment.center,
-                            child: Icon(
-                              Icons.favorite,
-                              size: 100,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ],
-                      );
-                    },
-                  ),
-                )
-              : Image.asset(images!.first),
+          SizedBox(
+            height: size.height * 0.50,
+            width: size.width,
+            child: PageView.builder(
+              scrollDirection: Axis.horizontal,
+              onPageChanged: postImageController.onPageChanged,
+              itemCount: images!.length,
+              itemBuilder: (context, index) {
+                if (images!.length != 1) {
+                  return Stack(
+                    children: [
+                      CustomCachedImge(
+                        imageUrl: images![index],
+                        width: size.width,
+                        shimmerHeight: size.height * 0.70,
+                        fit: BoxFit.fitHeight,
+                      ),
+                      const Align(
+                        alignment: Alignment.center,
+                        child: Icon(
+                          Icons.favorite,
+                          size: 100,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
+                  );
+                } else {
+                  return CustomCachedImge(
+                    imageUrl: images![index],
+                    width: size.width,
+                    shimmerHeight: size.height * 0.70,
+                    fit: BoxFit.fitHeight,
+                  );
+                }
+              },
+            ),
+          ),
 
           // image counter widget
           images!.length != 1

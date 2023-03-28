@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:instagram_clone/core/constants/constants.dart';
 
 import '../../controller/post_controller/new_post_controller.dart';
 import '../../core/theme/theme.dart';
@@ -23,7 +24,7 @@ class AddNewPost extends StatelessWidget {
             padding: const EdgeInsets.only(right: 10),
             child: IconButton(
               onPressed: () async {
-                await NewPostController.instance.addNewPost();
+                await NewPostController.instance.addNewPost(context);
               },
               icon: const Icon(
                 Icons.check,

@@ -21,22 +21,23 @@ class NewPostPreview extends StatelessWidget {
         title: 'Preview',
       ),
       body: SizedBox(
-          height: size.height,
-          width: size.width,
-          child: PageView.builder(
-            itemCount: NewPostController.instance.media.length,
-            itemBuilder: (context, index) {
-              if (NewPostController.instance.media.length != 1) {
-                return CustomCachedImge(
-                  imageUrl: NewPostController.instance.media[index],
-                );
-              } else {
-                return CustomCachedImge(
-                  imageUrl: NewPostController.instance.media[index],
-                );
-              }
-            },
-          )),
+        height: size.height,
+        width: size.width,
+        child: PageView.builder(
+          itemCount: NewPostController.instance.media.length,
+          itemBuilder: (context, index) {
+            if (NewPostController.instance.media.length != 1) {
+              return CustomCachedImge(
+                imageUrl: NewPostController.instance.media[index],
+              );
+            } else {
+              return CustomCachedImge(
+                imageUrl: NewPostController.instance.media[index],
+              );
+            }
+          },
+        ),
+      ),
     );
   }
 }
