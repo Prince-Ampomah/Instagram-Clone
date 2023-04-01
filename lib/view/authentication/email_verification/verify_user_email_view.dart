@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:instagram_clone/core/utils/utils.dart';
 
-import '../../../controller/auth_controller/auth_controller.dart';
 import '../../../core/theme/theme.dart';
 import '../../../core/widgets/cus_appbar.dart';
 import '../../../core/widgets/cus_main_button.dart';
@@ -98,7 +98,13 @@ class _VerifyUserEmailViewState extends State<VerifyUserEmailView> {
             ),
             const SizedBox(height: 20),
             MainButton(
-              onPressed: () async => await firebaseAuth.currentUser!.delete(),
+              onPressed: () async {
+                try {
+                  await firebaseAuth.currentUser!.delete();
+                } catch (e) {
+                  Utils.showErrorMessage(e.toString());
+                }
+              },
               title: 'Cancel',
               bgColor: const Color(0xFF505050),
             ),

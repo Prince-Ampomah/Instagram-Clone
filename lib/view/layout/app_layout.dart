@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'app_bar/profile_appbar.dart';
-import 'app_bar/reels_appbar.dart';
-import 'app_bar/search_appbar.dart';
-import 'app_bar/shop_appbar.dart';
 
 import '../../controller/app_layout_controller/app_layout_controller.dart';
 import '../../core/widgets/cus_bottom_nav.dart';
@@ -13,12 +9,18 @@ import '../reel/reel_view.dart';
 import '../search/search_view.dart';
 import '../shop/shop_view.dart';
 import 'app_bar/home_appbar.dart';
+import 'app_bar/profile_appbar.dart';
+import 'app_bar/reels_appbar.dart';
+import 'app_bar/search_appbar.dart';
+import 'app_bar/shop_appbar.dart';
 
 class AppLayoutView extends StatelessWidget {
-  AppLayoutView({super.key});
+  AppLayoutView({super.key, this.pageIndex});
 
   /// inject an [AppLayoutController] instance in memory
   final appLayoutCtrl = Get.put(AppLayoutController());
+
+  final int? pageIndex;
 
   @override
   Widget build(BuildContext context) {

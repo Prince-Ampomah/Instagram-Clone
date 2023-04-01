@@ -26,14 +26,13 @@ class _EmailVerificationViewState extends State<EmailVerificationView> {
 
   bool canResendLink = false;
 
-  Timer? timer;
+  late Timer? timer;
 
   FirestoreDB firestoreDB = FirestoreDBImpl();
 
   @override
   void initState() {
     super.initState();
-
     initEmailVerification();
   }
 
@@ -49,7 +48,7 @@ class _EmailVerificationViewState extends State<EmailVerificationView> {
     if (!isEmailVerified) await sendEmailVerification();
 
     timer = Timer.periodic(
-      const Duration(seconds: 4),
+      const Duration(seconds: 5),
       (_) => checkEmailVerification(),
     );
   }
@@ -74,18 +73,25 @@ class _EmailVerificationViewState extends State<EmailVerificationView> {
             firebaseAuth.currentUser!.uid;
         AuthController.instance.userModel.createdAt = DateTime.now();
 
+        UserModel userModel = UserModel(
+          userId: firebaseAuth.currentUser!.uid,
+          fullname: AuthController.instance.userModel.fullname,
+          userHandle: AuthController.instance.userModel.userHandle,
+          email: AuthController.instance.userModel.email,
+          isEmailVerified: isEmailVerified,
+          phoneNumber: AuthController.instance.userModel.phoneNumber,
+          createdAt: DateTime.now(),
+        );
+
         await firestoreDB.addDocWithId(
           Const.usersCollection,
           firebaseAuth.currentUser!.uid,
-          AuthController.instance.userModel.toJson(),
+          userModel.toJson(),
         );
 
         //save user data offline
-        var userBox = AuthController.instance.userBox;
-
-        await userBox.put(Const.currentUser, AuthController.instance.userModel);
-
-        userBox.get(Const.currentUser);
+        Box<UserModel> userBox = HiveServices.getUserBox();
+        await userBox.put(Const.currentUser, userModel);
       }
     } catch (e) {
       Utils.showErrorMessage(e.toString());
@@ -96,8 +102,6 @@ class _EmailVerificationViewState extends State<EmailVerificationView> {
   Widget build(BuildContext context) {
     return isEmailVerified
         ? AppLayoutView()
-        : VerifyUserEmailView(
-            resendSendEmailLink: sendEmailVerification,
-          );
+        : VerifyUserEmailView(resendSendEmailLink: sendEmailVerification);
   }
 }

@@ -13,8 +13,7 @@ class ProfileViewInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    UserModel? userInfo =
-        AuthController.instance.userBox.get(Const.currentUser);
+    UserModel? userInfo = HiveServices.getUserBox().get(Const.currentUser);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -85,7 +84,7 @@ class ProfileViewInfo extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: CustomRichText(
-            text1: '${userInfo?.fullname ?? 'fullname'}\n',
+            text1: '${userInfo?.fullname ?? 'full name'}\n',
             text2:
                 "A ship is safe in the harbor but that's not ships are for\nWilliam Shed.\nExplore🌍\nAnd\nConquer🙏\nHard work💯",
             text1Style: Theme.of(context)

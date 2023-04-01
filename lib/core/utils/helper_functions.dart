@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:instagram_clone/core/widgets/cus_circular_progressbar.dart';
 
 import '../constants/constants.dart';
 import '../theme/theme.dart';
@@ -33,11 +34,12 @@ onLoading(BuildContext context, String message, {bool isDimissible = true}) {
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 25,
-                child: Image.asset(Const.loadingGif1),
+                width: 25,
+                child: Center(child: CustomCircularProgressBar()),
               ),
-              const SizedBox(width: 10),
+              const SizedBox(width: 15),
               Text(
                 message,
                 textAlign: TextAlign.center,

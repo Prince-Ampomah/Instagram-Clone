@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:instagram_clone/core/widgets/cus_cached_image.dart';
 
 import '../../../../core/constants/constants.dart';
 import '../../../../core/widgets/cus_circular_image.dart';
 
-class FeedUser extends StatelessWidget {
-  const FeedUser({
+class PostUser extends StatelessWidget {
+  const PostUser({
     super.key,
     this.image,
     this.userHandle,
@@ -20,28 +21,32 @@ class FeedUser extends StatelessWidget {
         children: [
           Row(
             children: [
-              CircularImageContainer(
-                image: image,
-              ),
+              image != null
+                  ? CustomCachedImge(imageUrl: image!)
+                  : CircularImageContainer(image: image),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     children: [
-                      Text(userHandle ?? 'citi973fm'),
+                      Text(
+                        userHandle ?? 'instagram handle',
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
                       const SizedBox(width: 5),
                       Image.asset(
                         Const.instragramVerifiedIcon,
                         height: 15,
                         width: 15,
                       ),
-
                       // Container(
                       //   height: 15,
                       //   width: 15,
                       //   decoration: const BoxDecoration(
-                      //       color: Colors.blue,
-                      //       shape: BoxShape.circle),
+                      //       color: Colors.blue, shape: BoxShape.circle),
                       //   child: ClipRRect(
                       //     borderRadius: BorderRadius.circular(20),
                       //     child: const Icon(
@@ -53,9 +58,9 @@ class FeedUser extends StatelessWidget {
                       // )
                     ],
                   ),
-                  const Text('sponsored'),
+                  const Text('location'),
                 ],
-              )
+              ),
             ],
           ),
           const Spacer(),

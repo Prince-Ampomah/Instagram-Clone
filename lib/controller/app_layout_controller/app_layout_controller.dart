@@ -5,6 +5,7 @@ class AppLayoutController extends GetxController {
 
   changePageIndex(int index) {
     pageIndex = index;
+
     update();
   }
 }

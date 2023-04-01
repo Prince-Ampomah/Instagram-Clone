@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:instagram_clone/core/services/hive_services.dart';
 import 'package:instagram_clone/view/profile/profile_view_activity.dart';
 
 import '../../../core/constants/constants.dart';
 import '../../../core/theme/theme.dart';
-import '../../../core/widgets/cus_bottom_sheet.dart';
 
 class ProfileAppBar extends StatelessWidget {
   const ProfileAppBar({
@@ -19,7 +18,8 @@ class ProfileAppBar extends StatelessWidget {
       title: Row(
         children: [
           Text(
-            'iamprinceampomah',
+            HiveServices.getUserBox().get(Const.currentUser)!.userHandle ??
+                'userHandle',
             style: AppTheme.textStyle(context).titleMedium!.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
@@ -42,7 +42,9 @@ class ProfileAppBar extends StatelessWidget {
         ),
         GestureDetector(
           onTap: () {
-            Get.bottomSheet(const ProfileActivity());
+            showModalBottomSheet(
+                context: context,
+                builder: (context) => const ProfileActivity());
           },
           child: const Padding(
             padding: EdgeInsets.all(8.0),

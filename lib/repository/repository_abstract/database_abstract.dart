@@ -18,4 +18,6 @@ abstract class FirestoreDB {
       String collection, String docId, Map<String, dynamic> data);
 
   Future<void> deleteDoc(String collection, String docId);
+
+  // String generateFirestoreId(String collection);
 }

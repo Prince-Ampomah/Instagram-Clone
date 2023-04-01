@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
-import 'controller/auth_controller/auth_controller.dart';
-import 'controller/auth_controller/auth_listener.dart';
+import 'app_state.dart';
 import 'core/services/hive_helper_function.dart';
 import 'core/theme/theme.dart';
 import 'firebase_options.dart';
+import 'view/authentication/sign_in_view/sign_in_view.dart';
+import 'view/layout/app_layout.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,7 +25,7 @@ void main() async {
   // set up hive services before inject controller since hive service is initialize in the auth controller
   await initHiveServices();
 
-  Get.put(AuthController());
+  AppState.injectAllControllers();
 
   runApp(const MyApp());
 }
@@ -39,7 +40,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Instagram Clone',
       theme: AppTheme.lightTheme(context),
-      home: const AuthListener(),
+      home:
+          AppState.user?.userId != null ? AppLayoutView() : const SignInView(),
     );
   }
 }

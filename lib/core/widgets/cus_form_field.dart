@@ -37,6 +37,7 @@ class CustomFormField extends StatelessWidget {
     this.disabledBorder = const OutlineInputBorder(),
     this.focusedBorder = const OutlineInputBorder(),
     this.focusedErrorBorder = const OutlineInputBorder(),
+    this.maxLength,
   }) : super(key: key);
 
   final TextEditingController? controller;
@@ -44,7 +45,7 @@ class CustomFormField extends StatelessWidget {
   final TextInputType? keyboardType;
   final TextCapitalization textCapitalization;
   final TextInputAction? textInputAction;
-  final int? maxLines, minLines;
+  final int? maxLength, maxLines, minLines;
   final bool readOnly, isPasswordField, hasPrefixIcon, filled;
 
   final String? Function(String?)? onChanged,
@@ -79,6 +80,7 @@ class CustomFormField extends StatelessWidget {
       focusNode: focusNode,
       maxLines: maxLines,
       minLines: minLines,
+      maxLength: maxLength,
       readOnly: readOnly,
       obscureText: isPasswordField ? true : false,
       onChanged: onChanged ?? (value) {},

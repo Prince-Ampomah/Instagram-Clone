@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:instagram_clone/controller/auth_controller/auth_controller.dart';
+import 'package:get/get.dart';
 
+import '../../../controller/post_controller/new_post_controller.dart';
 import '../../../core/constants/constants.dart';
 import '../../../core/theme/theme.dart';
 import '../../../core/utils/menu_items.dart';
 import '../../../core/widgets/cus_popup_menu.dart';
 
 class HomeAppBar extends StatelessWidget {
-  const HomeAppBar({
-    super.key,
-  });
+  const HomeAppBar({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -56,12 +55,17 @@ class HomeAppBar extends StatelessWidget {
         ),
       ),
       actions: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Image.asset(
-            Const.instragramAddIcon,
-            height: 25,
-            width: 25,
+        GestureDetector(
+          onTap: () async {
+            await NewPostController.instance.pickMediaFromDevice();
+          },
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Image.asset(
+              Const.instragramAddIcon,
+              height: 25,
+              width: 25,
+            ),
           ),
         ),
         const Icon(Icons.favorite_outline, size: 30),
