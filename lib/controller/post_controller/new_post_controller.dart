@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 import 'package:instagram_clone/view/home/home_view.dart';
 import 'package:instagram_clone/view/layout/app_layout.dart';
 import '../../core/utils/helper_functions.dart';
@@ -35,6 +36,7 @@ class NewPostController extends GetxController {
   String postId = FirestoreDBImpl.generateFirestoreId(Const.postsCollection);
 
   UserModel? userModel = HiveServices.getUserBox().get(Const.currentUser);
+  Box<PostModel> postBox = HiveServices.getPosts();
 
   Future<List<dynamic>> _pickMediaFiles() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -63,8 +65,6 @@ class NewPostController extends GetxController {
       caption: captionController.text,
       media: media,
       userModel: userModel!,
-      commentModel: ModelController.instance.commentModel,
-      likeModel: ModelController.instance.likeModel,
       location: ModelController.instance.postLocationModel,
       timePosted: DateTime.now(),
     );
@@ -79,6 +79,9 @@ class NewPostController extends GetxController {
 
       // update the media fields in firestore database
       await updateMediaUrl();
+
+      // save the current post on local disks
+      await postBox.put(postId, postModel);
 
       captionController.clear();
     } catch (e) {

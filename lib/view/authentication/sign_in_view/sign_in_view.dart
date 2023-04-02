@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:instagram_clone/core/utils/helper_functions.dart';
 
 import '../../../controller/auth_controller/auth_controller.dart';
 import '../../../controller/auth_controller/password_visibility_controller.dart';
 import '../../../core/constants/constants.dart';
 import '../../../core/theme/theme.dart';
 import '../../../core/utils/form_validator.dart';
-import '../../../core/utils/utils.dart';
+import '../../../core/utils/helper_functions.dart';
 import '../../../core/widgets/cus_form_field.dart';
 import '../../../core/widgets/cus_main_button.dart';
 import '../../../core/widgets/cus_rich_text.dart';

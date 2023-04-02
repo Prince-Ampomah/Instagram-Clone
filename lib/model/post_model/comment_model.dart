@@ -1,31 +1,44 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CommentModel {
+  String? id, postId;
   String? userHandle;
   String? userProfileImage;
-  DateTime? dateTime;
+  String? message;
+  DateTime? time;
+  num? numberOfComments;
 
   CommentModel({
+    this.id,
+    this.postId,
     this.userHandle,
     this.userProfileImage,
-    this.dateTime,
+    this.time,
+    this.numberOfComments,
+    this.message,
   });
+
   Map<String, dynamic> toJson() {
     Map<String, dynamic> map = {};
 
+    map['id'] = id;
+    map['postId'] = postId;
+    map['numberOfComments'] = numberOfComments;
     map['userHandle'] = userHandle;
     map['profileImage'] = userProfileImage;
-    map['time'] = dateTime;
+    map['message'] = message;
+    map['time'] = time;
 
     return map;
   }
 
   factory CommentModel.fromJson(Map<String, dynamic> json) {
     return CommentModel(
+      numberOfComments: json['numberOfComments'],
       userHandle: json['userHandle'],
       userProfileImage: json['profileImage'],
-      dateTime:
-          (json['time'] is Timestamp) ? json['time'].toDate() : json['time'],
+      message: json['message'],
+      time: (json['time'] is Timestamp) ? json['time'].toDate() : json['time'],
     );
   }
 }

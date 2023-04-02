@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:instagram_clone/model/post_model/post_model.dart';
 
+import '../../../model/post_model/post_model.dart';
+import 'core/post_image.dart';
 import 'core/post_reaction.dart';
 import 'core/post_user.dart';
-import 'core/post_image.dart';
 
 class PostItem extends StatelessWidget {
   const PostItem({
@@ -21,14 +21,8 @@ class PostItem extends StatelessWidget {
           image: postModel!.userModel!.profileImage,
           userHandle: postModel!.userModel!.userHandle,
         ),
-        PostImage(
-          images: postModel!.media,
-        ),
-        PostReaction(
-          likeModel: postModel!.likeModel,
-          userHandle: postModel!.userModel!.userHandle,
-          caption: postModel!.caption,
-        ),
+        PostImage(images: postModel!.media),
+        PostReaction(postModel: postModel),
       ],
     );
   }

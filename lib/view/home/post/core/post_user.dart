@@ -23,28 +23,30 @@ class PostUser extends StatelessWidget {
             children: [
               image != null
                   ? CustomCachedImge(imageUrl: image!)
-                  : CircularImageContainer(
-                      image: image,
-                    ),
+                  : CircularImageContainer(image: image),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     children: [
-                      Text(userHandle ?? 'instagram handle'),
+                      Text(
+                        userHandle ?? 'instagram handle',
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
                       const SizedBox(width: 5),
                       Image.asset(
                         Const.instragramVerifiedIcon,
                         height: 15,
                         width: 15,
                       ),
-
                       // Container(
                       //   height: 15,
                       //   width: 15,
                       //   decoration: const BoxDecoration(
-                      //       color: Colors.blue,
-                      //       shape: BoxShape.circle),
+                      //       color: Colors.blue, shape: BoxShape.circle),
                       //   child: ClipRRect(
                       //     borderRadius: BorderRadius.circular(20),
                       //     child: const Icon(

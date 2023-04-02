@@ -2,16 +2,13 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:instagram_clone/app_state.dart';
-import 'package:instagram_clone/controller/post_controller/new_post_controller.dart';
-import 'package:instagram_clone/view/authentication/sign_in_view/sign_in_view.dart';
-import 'package:instagram_clone/view/layout/app_layout.dart';
 
-import 'controller/auth_controller/auth_controller.dart';
-import 'controller/auth_controller/auth_listener.dart';
+import 'app_state.dart';
 import 'core/services/hive_helper_function.dart';
 import 'core/theme/theme.dart';
 import 'firebase_options.dart';
+import 'view/authentication/sign_in_view/sign_in_view.dart';
+import 'view/layout/app_layout.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,9 +26,6 @@ void main() async {
   await initHiveServices();
 
   AppState.injectAllControllers();
-
-  // Get.put(AuthController());
-  // Get.put(NewPostController());
 
   runApp(const MyApp());
 }
