@@ -105,6 +105,18 @@ class LikeController extends GetxController {
     }
   }
 
+  void likeIconVisibiltyTimer() {
+    _showLikeIcon = true;
+
+    _likeIconTimer?.cancel();
+    _likeIconTimer = Timer(const Duration(milliseconds: 1000), () {
+      _showLikeIcon = false;
+      update();
+    });
+
+    update();
+  }
+
   addLikeToDB(String postId) async {
     try {
       LikeModel likeModel = LikeModel(

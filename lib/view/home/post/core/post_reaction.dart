@@ -1,24 +1,16 @@
 // import 'dart:math' as math;
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:instagram_clone/controller/post_controller/post_image_controller.dart';
 import 'package:instagram_clone/controller/post_controller/save_controller.dart';
-import 'package:instagram_clone/core/utils/helper_functions.dart';
-import 'package:instagram_clone/model/post_model/comment_model.dart';
-import 'package:instagram_clone/model/post_model/like_model.dart';
 import 'package:instagram_clone/view/comments/comment_view.dart';
 
 import '../../../../controller/post_controller/like_controller.dart';
 import '../../../../core/constants/constants.dart';
 import '../../../../core/services/hive_services.dart';
-import '../../../../core/theme/theme.dart';
 import '../../../../core/utils/date_time_convertor.dart';
 import '../../../../core/widgets/cus_rich_text.dart';
 import '../../../../model/post_model/post_model.dart';
-import '../../../../repository/repository_abstract/database_abstract.dart';
-import '../../../../repository/respository_implementation/database_implementation.dart';
 
 class PostReaction extends StatelessWidget {
   const PostReaction({super.key, this.postModel});
@@ -27,8 +19,6 @@ class PostReaction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(SavePostController());
-
     return Padding(
       padding: const EdgeInsets.fromLTRB(8, 8, 8, 20),
       child: Column(
@@ -59,28 +49,7 @@ class PostReaction extends StatelessWidget {
                 ],
               ),
               const Spacer(),
-              GetBuilder<SavePostController>(
-                builder: (controller) {
-                  return IconButton(
-                    onPressed: () {
-                      controller.toggleSaveState();
-                    },
-                    style: const ButtonStyle(
-                      splashFactory: NoSplash.splashFactory,
-                    ),
-                    icon: Icon(
-                      controller.isSaved
-                          ? Icons.bookmark
-                          : Icons.bookmark_border,
-                      size: 28,
-                    ),
-                  );
-                },
-              ),
-              // const Icon(
-              //   Icons.bookmark_border,
-              //   size: 28,
-              // ),
+              SavePostButton(postModel: postModel)
             ],
           ),
 
@@ -149,6 +118,34 @@ class PostReaction extends StatelessWidget {
         userHandle: postModel!.userModel!.userHandle,
         caption: postModel!.caption,
         timePosted: postModel!.timePosted,
+      ),
+    );
+  }
+}
+
+class SavePostButton extends StatelessWidget {
+  const SavePostButton({
+    super.key,
+    this.postModel,
+  });
+
+  final PostModel? postModel;
+
+  @override
+  Widget build(BuildContext context) {
+    String? userId = HiveServices.getUserBox().get(Const.currentUser)!.userId;
+    return IconButton(
+      onPressed: () {
+        SavePostController.instance.savePost(postModel!.id!);
+      },
+      style: const ButtonStyle(
+        splashFactory: NoSplash.splashFactory,
+      ),
+      icon: Icon(
+        postModel!.isSavedBy!.contains(userId)
+            ? Icons.bookmark
+            : Icons.bookmark_border,
+        size: 28,
       ),
     );
   }
