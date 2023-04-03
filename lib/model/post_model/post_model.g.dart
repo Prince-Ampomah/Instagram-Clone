@@ -25,14 +25,15 @@ class PostModelAdapter extends TypeAdapter<PostModel> {
       comment: fields[4] as num?,
       location: fields[6] as PostLocationModel?,
       timePosted: fields[7] as DateTime?,
-      isSaved: fields[8] as bool?,
+      isSavedBy: (fields[8] as List?)?.cast<dynamic>(),
+      isLikedBy: (fields[9] as List?)?.cast<dynamic>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, PostModel obj) {
     writer
-      ..writeByte(9)
+      ..writeByte(10)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -50,7 +51,9 @@ class PostModelAdapter extends TypeAdapter<PostModel> {
       ..writeByte(7)
       ..write(obj.timePosted)
       ..writeByte(8)
-      ..write(obj.isSaved);
+      ..write(obj.isSavedBy)
+      ..writeByte(9)
+      ..write(obj.isLikedBy);
   }
 
   @override

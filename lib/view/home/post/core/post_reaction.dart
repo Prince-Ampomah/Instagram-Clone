@@ -2,17 +2,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:instagram_clone/controller/post_controller/post_image_controller.dart';
 import 'package:instagram_clone/controller/post_controller/save_controller.dart';
-import 'package:instagram_clone/core/utils/helper_functions.dart';
-import 'package:instagram_clone/model/post_model/comment_model.dart';
-import 'package:instagram_clone/model/post_model/like_model.dart';
 import 'package:instagram_clone/view/comments/comment_view.dart';
 
 import '../../../../controller/post_controller/like_controller.dart';
 import '../../../../core/constants/constants.dart';
 import '../../../../core/services/hive_services.dart';
-import '../../../../core/theme/theme.dart';
 import '../../../../core/utils/date_time_convertor.dart';
 import '../../../../core/widgets/cus_rich_text.dart';
 import '../../../../model/post_model/post_model.dart';
@@ -24,7 +19,6 @@ class PostReaction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(SavePostController());
     return Padding(
       padding: const EdgeInsets.fromLTRB(8, 8, 8, 20),
       child: Column(
@@ -35,62 +29,33 @@ class PostReaction extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  const LikeButton(),
-                  23.pw,
-                  GestureDetector(
-                    onTap: sendToCommentView,
-                    child: SizedBox(
-                      height: 22,
-                      child: Image.asset(
-                        Const.instragramCommentIcon,
-                        color: Colors.black,
-                      ),
-                    ),
+                  LikeButton(
+                    postModel: postModel,
+                    postId: postModel!.id!,
                   ),
+                  23.pw,
+                  CommentButton(onTap: sendToCommentView),
                   23.pw,
                   const SendMessageButton(),
                 ],
               ),
               const Spacer(),
-              GetBuilder<SavePostController>(
-                builder: (controller) {
-                  return IconButton(
-                    onPressed: () {
-                      controller.toggleSaveState();
-                    },
-                    style: const ButtonStyle(
-                      splashFactory: NoSplash.splashFactory,
-                    ),
-                    icon: Icon(
-                      controller.isSaved
-                          ? Icons.bookmark
-                          : Icons.bookmark_border,
-                      size: 28,
-                    ),
-                  );
-                },
-              ),
-              // const Icon(
-              //   Icons.bookmark_border,
-              //   size: 28,
-              // ),
+              SavePostButton(postModel: postModel)
             ],
           ),
 
           10.ph,
 
           // users like widget
-          GetBuilder<LikeController>(
-            builder: (_) {
-              return Text(
-                // '${likeModel!.likes} Likes',
-                '${LikeController.instance.likeCount} Likes',
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
-              );
-            },
-          ),
+          if (postModel!.like != 0)
+            Text(
+              postModel!.like == 1
+                  ? '${postModel!.like} Like'
+                  : '${postModel!.like} Likes',
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
 
           8.ph,
 
@@ -149,32 +114,85 @@ class PostReaction extends StatelessWidget {
   }
 }
 
-class LikeButton extends StatelessWidget {
-  const LikeButton({
+class CommentButton extends StatelessWidget {
+  const CommentButton({
     super.key,
+    this.onTap,
   });
+
+  final Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<LikeController>(
-      builder: (likesController) {
-        return GestureDetector(
-          onTap: () {
-            likesController.toggleLikeState();
-            logger.d(likesController.likeCount);
-          },
-          onDoubleTap: () {
-            likesController.toggleLikeState();
-          },
-          child: Icon(
-            likesController.isLiked
-                ? Icons.favorite
-                : Icons.favorite_outline_rounded,
-            color: likesController.isLiked ? Colors.red : null,
-            size: 28,
-          ),
-        );
+    return GestureDetector(
+      onTap: onTap,
+      child: SizedBox(
+        height: 22,
+        child: Image.asset(
+          Const.instragramCommentIcon,
+          color: Colors.black,
+        ),
+      ),
+    );
+  }
+}
+
+class SavePostButton extends StatelessWidget {
+  const SavePostButton({
+    super.key,
+    this.postModel,
+  });
+
+  final PostModel? postModel;
+
+  @override
+  Widget build(BuildContext context) {
+    String? userId = HiveServices.getUserBox().get(Const.currentUser)!.userId;
+    return IconButton(
+      onPressed: () {
+        SavePostController.instance.savePost(postModel!.id!);
       },
+      style: const ButtonStyle(
+        splashFactory: NoSplash.splashFactory,
+      ),
+      icon: Icon(
+        postModel!.isSavedBy!.contains(userId)
+            ? Icons.bookmark
+            : Icons.bookmark_border,
+        size: 28,
+      ),
+    );
+  }
+}
+
+class LikeButton extends StatelessWidget {
+  const LikeButton({
+    super.key,
+    required this.postId,
+    this.postModel,
+  });
+
+  final String postId;
+  final PostModel? postModel;
+
+  @override
+  Widget build(BuildContext context) {
+    String? userId = HiveServices.getUserBox().get(Const.currentUser)!.userId;
+
+    return GestureDetector(
+      onTap: () async {
+        LikeController.instance.togglePostLike(postId);
+      },
+      onDoubleTap: () {
+        LikeController.instance.togglePostLike(postId);
+      },
+      child: Icon(
+        postModel!.isLikedBy!.contains(userId)
+            ? Icons.favorite
+            : Icons.favorite_outline_rounded,
+        color: postModel!.isLikedBy!.contains(userId) ? Colors.red : null,
+        size: 28,
+      ),
     );
   }
 }
@@ -195,35 +213,3 @@ class SendMessageButton extends StatelessWidget {
     );
   }
 }
-
-// class CommentButton extends StatelessWidget {
-//   const CommentButton({
-//     super.key,
-//     this.caption,
-//     this.userHandle,
-//     this.timePosted,
-//   });
-
-//   final String? caption, userHandle;
-//   final DateTime? timePosted;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return GestureDetector(
-//       onTap: () {
-//         Get.to(() => CommentView(
-//               userHandle: userHandle,
-//               caption: caption,
-//               timePosted: timePosted,
-//             ));
-//       },
-//       child: SizedBox(
-//         height: 22,
-//         child: Image.asset(
-//           Const.instragramCommentIcon,
-//           color: Colors.black,
-//         ),
-//       ),
-//     );
-//   }
-// }

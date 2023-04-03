@@ -33,6 +33,8 @@ class PostListItem extends StatelessWidget {
           PostModel postModel =
               PostModel.fromJson(postController.getPostList![index].data());
 
+          // HiveServices.getPosts().get(postModel.id);
+
           return PostItem(postModel: postModel);
         }
       },

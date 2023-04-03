@@ -1,17 +1,23 @@
 class LikeModel {
-  num? likes;
+  num? numberOflikes;
   String? id;
+  String? userId;
+  String? postId;
 
   LikeModel({
-    this.likes,
+    this.numberOflikes,
     this.id,
+    this.postId,
+    this.userId,
   });
 
   Map<String, dynamic> toJson() {
     Map<String, dynamic> map = {};
 
     map['id'] = id;
-    map['likes'] = likes;
+    map['postId'] = postId;
+    map['userId'] = userId;
+    map['numberOflikes'] = numberOflikes;
 
     return map;
   }
@@ -19,7 +25,9 @@ class LikeModel {
   factory LikeModel.fromJson(Map<String, dynamic> json) {
     return LikeModel(
       id: json['id'],
-      likes: json['likes'],
+      postId: json['postId'],
+      userId: json['userId'],
+      numberOflikes: json['numberOflikes'],
     );
   }
 }

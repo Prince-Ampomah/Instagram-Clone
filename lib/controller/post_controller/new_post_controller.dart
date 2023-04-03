@@ -3,22 +3,19 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hive/hive.dart';
-import 'package:instagram_clone/view/home/home_view.dart';
-import 'package:instagram_clone/view/layout/app_layout.dart';
-import '../../core/utils/helper_functions.dart';
-import '../models_controller/models_controller.dart';
-import '../../core/constants/constants.dart';
-import '../../model/post_model/post_model.dart';
 
+import '../../core/constants/constants.dart';
 import '../../core/services/hive_services.dart';
 import '../../core/utils/utils.dart';
+import '../../model/post_model/post_model.dart';
 import '../../model/user_model/user_model.dart';
 import '../../repository/repository_abstract/database_abstract.dart';
 import '../../repository/repository_abstract/storage_abstract.dart';
 import '../../repository/respository_implementation/database_implementation.dart';
 import '../../repository/respository_implementation/storage_implementation.dart';
 import '../../view/add_post/add_new_post.dart';
+import '../../view/layout/app_layout.dart';
+import '../models_controller/models_controller.dart';
 
 class NewPostController extends GetxController {
   static NewPostController instance = Get.find<NewPostController>();
@@ -36,7 +33,6 @@ class NewPostController extends GetxController {
   String postId = FirestoreDBImpl.generateFirestoreId(Const.postsCollection);
 
   UserModel? userModel = HiveServices.getUserBox().get(Const.currentUser);
-  Box<PostModel> postBox = HiveServices.getPosts();
 
   Future<List<dynamic>> _pickMediaFiles() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -79,9 +75,6 @@ class NewPostController extends GetxController {
 
       // update the media fields in firestore database
       await updateMediaUrl();
-
-      // save the current post on local disks
-      await postBox.put(postId, postModel);
 
       captionController.clear();
     } catch (e) {

@@ -34,7 +34,10 @@ class PostModel {
   DateTime? timePosted;
 
   @HiveField(8)
-  bool? isSaved;
+  List<dynamic>? isSavedBy;
+
+  @HiveField(9)
+  List<dynamic>? isLikedBy;
 
   PostModel({
     this.id,
@@ -45,7 +48,8 @@ class PostModel {
     this.comment = 0,
     this.location,
     this.timePosted,
-    this.isSaved = false,
+    this.isSavedBy = const [],
+    this.isLikedBy = const [],
   });
 
   Map<String, dynamic> toJson() {
@@ -59,7 +63,8 @@ class PostModel {
     map['comment'] = comment;
     map['location'] = location!.toJson();
     map['timePosted'] = timePosted;
-    map['isSaved'] = isSaved;
+    map['isSavedBy'] = isSavedBy;
+    map['isLikedBy'] = isLikedBy;
 
     return map;
   }
@@ -69,14 +74,15 @@ class PostModel {
       id: json['id'],
       caption: json['caption'],
       media: json['media'],
-      like: json['likes'],
+      like: json['like'],
       comment: json['comment'],
       userModel: UserModel.fromJson(json['user']),
       location: PostLocationModel.fromJson(json['location']),
       timePosted: (json['timePosted'] is Timestamp)
           ? json['timePosted'].toDate()
           : json['timePosted'],
-      isSaved: json['isSaved'],
+      isSavedBy: json['isSavedBy'],
+      isLikedBy: json['isLikedBy'],
     );
   }
 }

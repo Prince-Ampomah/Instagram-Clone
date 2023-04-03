@@ -82,6 +82,9 @@ dependencies:
   cached_network_image: ^3.2.3
   flutter_blurhash: ^0.7.0
 
+  # animation
+  flutter_animate: ^4.1.1+1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

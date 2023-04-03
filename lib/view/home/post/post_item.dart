@@ -21,7 +21,10 @@ class PostItem extends StatelessWidget {
           image: postModel!.userModel!.profileImage,
           userHandle: postModel!.userModel!.userHandle,
         ),
-        PostImage(images: postModel!.media),
+        PostImage(
+          images: postModel!.media,
+          postModel: postModel,
+        ),
         PostReaction(postModel: postModel),
       ],
     );
