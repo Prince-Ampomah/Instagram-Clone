@@ -34,16 +34,7 @@ class PostReaction extends StatelessWidget {
                     postId: postModel!.id!,
                   ),
                   23.pw,
-                  GestureDetector(
-                    onTap: sendToCommentView,
-                    child: SizedBox(
-                      height: 22,
-                      child: Image.asset(
-                        Const.instragramCommentIcon,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
+                  CommentButton(onTap: sendToCommentView),
                   23.pw,
                   const SendMessageButton(),
                 ],
@@ -118,6 +109,29 @@ class PostReaction extends StatelessWidget {
         userHandle: postModel!.userModel!.userHandle,
         caption: postModel!.caption,
         timePosted: postModel!.timePosted,
+      ),
+    );
+  }
+}
+
+class CommentButton extends StatelessWidget {
+  const CommentButton({
+    super.key,
+    this.onTap,
+  });
+
+  final Function()? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: SizedBox(
+        height: 22,
+        child: Image.asset(
+          Const.instragramCommentIcon,
+          color: Colors.black,
+        ),
       ),
     );
   }
@@ -199,35 +213,3 @@ class SendMessageButton extends StatelessWidget {
     );
   }
 }
-
-// class CommentButton extends StatelessWidget {
-//   const CommentButton({
-//     super.key,
-//     this.caption,
-//     this.userHandle,
-//     this.timePosted,
-//   });
-
-//   final String? caption, userHandle;
-//   final DateTime? timePosted;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return GestureDetector(
-//       onTap: () {
-//         Get.to(() => CommentView(
-//               userHandle: userHandle,
-//               caption: caption,
-//               timePosted: timePosted,
-//             ));
-//       },
-//       child: SizedBox(
-//         height: 22,
-//         child: Image.asset(
-//           Const.instragramCommentIcon,
-//           color: Colors.black,
-//         ),
-//       ),
-//     );
-//   }
-// }
