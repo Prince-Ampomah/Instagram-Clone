@@ -1,3 +1,4 @@
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:instagram_clone/core/widgets/cus_circular_progressbar.dart';
@@ -7,6 +8,25 @@ import '../theme/theme.dart';
 
 void showToast({required String msg}) {
   Fluttertoast.showToast(msg: msg);
+}
+
+Future<dynamic> showFlushBar(
+  BuildContext context, {
+  required String message,
+  String? title,
+  Color? bgColor = const Color(0xFF303030),
+  titleColor,
+  messageColor,
+}) async {
+  await Flushbar(
+    flushbarPosition: FlushbarPosition.TOP,
+    title: title,
+    message: message,
+    titleColor: titleColor,
+    messageColor: messageColor,
+    duration: const Duration(seconds: 3),
+    backgroundColor: bgColor!,
+  ).show(context);
 }
 
 void sendToPage(BuildContext context, Widget newPage,

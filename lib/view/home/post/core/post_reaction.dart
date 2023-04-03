@@ -1,5 +1,6 @@
 // import 'dart:math' as math;
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:instagram_clone/controller/post_controller/post_image_controller.dart';
@@ -16,6 +17,8 @@ import '../../../../core/theme/theme.dart';
 import '../../../../core/utils/date_time_convertor.dart';
 import '../../../../core/widgets/cus_rich_text.dart';
 import '../../../../model/post_model/post_model.dart';
+import '../../../../repository/repository_abstract/database_abstract.dart';
+import '../../../../repository/respository_implementation/database_implementation.dart';
 
 class PostReaction extends StatelessWidget {
   const PostReaction({super.key, this.postModel});
@@ -25,6 +28,7 @@ class PostReaction extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(SavePostController());
+
     return Padding(
       padding: const EdgeInsets.fromLTRB(8, 8, 8, 20),
       child: Column(
@@ -35,7 +39,10 @@ class PostReaction extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  const LikeButton(),
+                  LikeButton(
+                    postModel: postModel,
+                    postId: postModel!.id!,
+                  ),
                   23.pw,
                   GestureDetector(
                     onTap: sendToCommentView,
@@ -80,17 +87,15 @@ class PostReaction extends StatelessWidget {
           10.ph,
 
           // users like widget
-          GetBuilder<LikeController>(
-            builder: (_) {
-              return Text(
-                // '${likeModel!.likes} Likes',
-                '${LikeController.instance.likeCount} Likes',
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
-              );
-            },
-          ),
+          if (postModel!.like != 0)
+            Text(
+              postModel!.like == 1
+                  ? '${postModel!.like} Like'
+                  : '${postModel!.like} Likes',
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
 
           8.ph,
 
@@ -152,29 +157,31 @@ class PostReaction extends StatelessWidget {
 class LikeButton extends StatelessWidget {
   const LikeButton({
     super.key,
+    required this.postId,
+    this.postModel,
   });
+
+  final String postId;
+  final PostModel? postModel;
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<LikeController>(
-      builder: (likesController) {
-        return GestureDetector(
-          onTap: () {
-            likesController.toggleLikeState();
-            logger.d(likesController.likeCount);
-          },
-          onDoubleTap: () {
-            likesController.toggleLikeState();
-          },
-          child: Icon(
-            likesController.isLiked
-                ? Icons.favorite
-                : Icons.favorite_outline_rounded,
-            color: likesController.isLiked ? Colors.red : null,
-            size: 28,
-          ),
-        );
+    String? userId = HiveServices.getUserBox().get(Const.currentUser)!.userId;
+
+    return GestureDetector(
+      onTap: () async {
+        LikeController.instance.togglePostLike(postId);
       },
+      onDoubleTap: () {
+        LikeController.instance.togglePostLike(postId);
+      },
+      child: Icon(
+        postModel!.isLikedBy!.contains(userId)
+            ? Icons.favorite
+            : Icons.favorite_outline_rounded,
+        color: postModel!.isLikedBy!.contains(userId) ? Colors.red : null,
+        size: 28,
+      ),
     );
   }
 }

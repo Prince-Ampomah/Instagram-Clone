@@ -30,9 +30,10 @@ class CommentListItemView extends StatelessWidget {
             children: [
               commentModel.userProfileImage != null
                   ? CustomCachedImge(imageUrl: commentModel.userProfileImage!)
-                  : const CircularImageContainer(
-                      height: 0.04,
-                      width: 0.04,
+                  : CircularImageContainer(
+                      height: 0.045,
+                      width: 0.045,
+                      border: Border.all(width: .2),
                       image: Const.userImage,
                     ),
               const SizedBox(width: 20),

@@ -12,6 +12,7 @@ class CommentTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+
     return SizedBox(
       height: size.height * 0.16,
       child: Column(
@@ -30,6 +31,7 @@ class CommentTextField extends StatelessWidget {
                 Expanded(
                   child: TextFormField(
                     controller: CommentController.commentTextFieldController,
+                    focusNode: CommentController.commentTextFiedFocus,
                     maxLines: 50,
                     minLines: 1,
                     textInputAction: TextInputAction.send,

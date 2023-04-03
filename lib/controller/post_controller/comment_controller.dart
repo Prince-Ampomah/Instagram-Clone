@@ -3,12 +3,12 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:instagram_clone/core/utils/helper_functions.dart';
-import 'package:instagram_clone/model/post_model/comment_model.dart';
 
 import '../../core/constants/constants.dart';
 import '../../core/services/hive_services.dart';
+import '../../core/utils/helper_functions.dart';
 import '../../core/utils/utils.dart';
+import '../../model/post_model/comment_model.dart';
 import '../../model/user_model/user_model.dart';
 import '../../repository/repository_abstract/database_abstract.dart';
 import '../../repository/respository_implementation/database_implementation.dart';
@@ -18,6 +18,7 @@ class CommentController extends GetxController {
 
   static TextEditingController commentTextFieldController =
       TextEditingController();
+  static FocusNode commentTextFiedFocus = FocusNode();
 
   // initialize firestore db contract
   FirestoreDB firestoreDB = FirestoreDBImpl();
@@ -37,13 +38,14 @@ class CommentController extends GetxController {
       _setCommentList;
   String get getTextState => _setTextState;
 
-  CommentController() {
-    fetchComments();
-  }
+  // CommentController() {
+  //   fetchComments();
+  // }
 
   @override
   void dispose() {
     commentTextFieldController.dispose();
+    commentTextFiedFocus.dispose();
     cancelSubscription();
     super.dispose();
   }
@@ -73,8 +75,10 @@ class CommentController extends GetxController {
   }
 
   Future<void> sendComment() async {
+    // get the post id from local db
     String postId = HiveServices.getPostId();
-    if (commentTextFieldController.text.isNotEmpty) {
+
+    if (commentTextFieldController.text.trim().isNotEmpty) {
       CommentModel commentModel = CommentModel(
         id: FirestoreDBImpl.generateFirestoreId(Const.commentsCollection),
         postId: postId,
@@ -93,16 +97,26 @@ class CommentController extends GetxController {
             'time': FieldValue.serverTimestamp(),
           },
         );
+
         commentTextFieldController.clear();
-        await firestoreDB.updateDoc(Const.postsCollection, postId, {
-          'comment': FieldValue.increment(1),
-        });
+
+        updateCommentValue(postId);
       } catch (e) {
         Utils.showErrorMessage(e.toString());
       }
     } else {
       showToast(msg: 'Add a comment');
     }
+  }
+
+  updateCommentValue(String postId) async {
+    return await firestoreDB.updateDoc(
+      Const.postsCollection,
+      postId,
+      {
+        'comment': FieldValue.increment(1),
+      },
+    );
   }
 
   cancelSubscription() {
