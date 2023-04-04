@@ -16,8 +16,6 @@ class LikeController extends GetxController {
 
   FirestoreDB firestoreDB = FirestoreDBImpl();
 
-  String? userId = HiveServices.getUserBox().get(Const.currentUser)!.userId;
-
   bool _isLiked = false;
   int _likeCount = 0;
 
@@ -51,6 +49,8 @@ class LikeController extends GetxController {
   }
 
   togglePostLike(String postId) async {
+    String? userId = HiveServices.getUserBox().get(Const.currentUser)!.userId;
+
     // query the post from offline db
     PostModel? postModel = HiveServices.getPosts().get(postId);
 
@@ -79,6 +79,8 @@ class LikeController extends GetxController {
 
   likePostOnly(String postId) async {
     try {
+      String? userId = HiveServices.getUserBox().get(Const.currentUser)!.userId;
+
       // query the post from offline db
       PostModel? postModel = HiveServices.getPosts().get(postId);
 

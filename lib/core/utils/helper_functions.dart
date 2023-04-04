@@ -1,6 +1,7 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:instagram_clone/core/widgets/cus_circular_progressbar.dart';
 
 import '../theme/theme.dart';
@@ -71,4 +72,13 @@ onLoading(BuildContext context, String message, {bool isDimissible = true}) {
       );
     },
   );
+}
+
+Future<String> getImagePicker(imageSource) async {
+  final pickedFile = await ImagePicker().pickImage(source: imageSource);
+  String image = '';
+  if (pickedFile != null) {
+    image = pickedFile.path;
+  }
+  return image;
 }

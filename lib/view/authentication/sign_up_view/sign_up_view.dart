@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:instagram_clone/controller/auth_controller/auth_controller.dart';
+import 'package:instagram_clone/core/widgets/cus_image_picker.dart';
 import 'package:instagram_clone/view/authentication/sign_up_view/sign_up_name_and_password_view.dart';
 
+import '../../../core/constants/constants.dart';
 import '../../../core/theme/theme.dart';
 import '../../../core/utils/form_validator.dart';
 import '../../../core/utils/helper_functions.dart';
-import '../../../core/widgets/cus_circular_image.dart';
 import '../../../core/widgets/cus_form_field.dart';
 import '../../../core/widgets/cus_main_button.dart';
 import '../../../core/widgets/cus_rich_text.dart';
@@ -29,6 +31,17 @@ class _SignUpViewState extends State<SignUpView>
   final emailController = TextEditingController();
 
   final formKey = GlobalKey<FormState>();
+
+  String? profileImage;
+
+  void _getUserProfilePic(imageSource) async {
+    var imagePath = await getImagePicker(imageSource);
+    if (imagePath.isNotEmpty) {
+      setState(() {
+        profileImage = imagePath;
+      });
+    }
+  }
 
   @override
   void initState() {
@@ -58,13 +71,26 @@ class _SignUpViewState extends State<SignUpView>
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SizedBox(height: size.height * 0.13),
-              CircularImageContainer(
-                height: 0.2,
-                width: 0.2,
-                border: Border.all(
-                  width: 1.5,
-                ),
+              CustomImagePicker(
+                imagePath: profileImage,
+                height: 160,
+                width: 160,
+                placeHolder: Image.asset(Const.userImage),
+                borderRadius: BorderRadius.circular(100),
+                cameraOnTap: () {
+                  _getUserProfilePic(ImageSource.camera);
+                  Navigator.of(context).pop();
+                },
+                galleryOnTap: () {
+                  _getUserProfilePic(ImageSource.gallery);
+                  Navigator.of(context).pop();
+                },
               ),
+              // CircularImageContainer(
+              //   height: 0.2,
+              //   width: 0.2,
+              //   border: Border.all(width: 1.5),
+              // ),
               const SizedBox(height: 20),
               CustomTabBar(
                 tabController: tabController,
@@ -195,6 +221,10 @@ class _SignUpViewState extends State<SignUpView>
   validateForm() {
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
+
+      if (profileImage != null) {
+        AuthController.instance.userModel.profileImage = profileImage;
+      }
 
       AuthController.instance.userModel.phoneNumber =
           phoneNumberController.text;

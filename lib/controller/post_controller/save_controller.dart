@@ -15,8 +15,6 @@ class SavePostController extends GetxController {
 
   bool get isSaved => _isSaved;
 
-  String? userId = HiveServices.getUserBox().get(Const.currentUser)!.userId;
-
   FirestoreDB firestoreDB = FirestoreDBImpl();
 
   toggleSaveState() {
@@ -26,6 +24,8 @@ class SavePostController extends GetxController {
 
   savePost(String postId) async {
     try {
+      String? userId = HiveServices.getUserBox().get(Const.currentUser)!.userId;
+
       // query the post from offline db
       PostModel? postModel = HiveServices.getPosts().get(postId);
 

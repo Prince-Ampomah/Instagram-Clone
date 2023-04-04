@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/core/services/hive_services.dart';
+import 'package:instagram_clone/core/widgets/cus_cached_image.dart';
 import 'package:instagram_clone/model/user_model/user_model.dart';
 import '../../core/constants/constants.dart';
 import '../../core/widgets/cus_rich_text.dart';
@@ -22,16 +23,25 @@ class ProfileViewInfo extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
-                height: 65,
-                width: 65,
-                margin: const EdgeInsets.all(8.0),
-                decoration: const BoxDecoration(shape: BoxShape.circle),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(70),
-                  child: Image.asset(Const.userImage),
-                ),
-              ),
+              userInfo!.profileImage != null
+                  ? ClipRRect(
+                      borderRadius: BorderRadius.circular(100),
+                      child: CustomCachedImge(
+                        height: 75,
+                        width: 75,
+                        imageUrl: userInfo.profileImage!,
+                      ),
+                    )
+                  : Container(
+                      height: 65,
+                      width: 65,
+                      margin: const EdgeInsets.all(8.0),
+                      decoration: const BoxDecoration(shape: BoxShape.circle),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(70),
+                        child: Image.asset(Const.userImage),
+                      ),
+                    ),
               Row(
                 children: [
                   Column(
@@ -82,7 +92,7 @@ class ProfileViewInfo extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: CustomRichText(
-            text1: '${userInfo?.fullname ?? 'full name'}\n',
+            text1: '${userInfo.fullname ?? 'full name'}\n',
             text2:
                 "A ship is safe in the harbor but that's not ships are for\nWilliam Shed.\nExplore🌍\nAnd\nConquer🙏\nHard work💯",
             text1Style: Theme.of(context)

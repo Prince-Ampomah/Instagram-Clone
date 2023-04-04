@@ -35,14 +35,20 @@ class NewPostController extends GetxController {
   UserModel? userModel = HiveServices.getUserBox().get(Const.currentUser);
 
   Future<List<dynamic>> _pickMediaFiles() async {
-    var result = await FilePicker.platform.pickFiles(
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
       allowMultiple: true,
-      type: FileType.media, // will let you pick either video or images.
-      // allowedExtensions: ["png", "jpg", "jpeg", 'mp4', 'mkv'],
+      type: FileType.custom, // will let you pick either video or images.
+      allowedExtensions: [
+        "png",
+        "jpg",
+        "jpeg",
+      ], //["png", "jpg", "jpeg", 'mp4', 'mkv'],
     );
+
     if (result != null) {
       media.clear();
       media.addAll(result.paths);
+      // _TypeError (type 'List<String?>' is not a subtype of type 'Iterable<String>' of 'iterable')
     }
     return media;
   }
