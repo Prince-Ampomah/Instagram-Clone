@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'package:instagram_clone/core/services/hive_services.dart';
 import 'package:instagram_clone/model/user_model/user_model.dart';
-import '../../controller/auth_controller/auth_controller.dart';
 import '../../core/constants/constants.dart';
 import '../../core/widgets/cus_rich_text.dart';
 

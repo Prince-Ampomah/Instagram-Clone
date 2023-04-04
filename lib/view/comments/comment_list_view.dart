@@ -1,7 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:instagram_clone/controller/post_controller/comment_controller.dart';
 import 'package:instagram_clone/core/services/hive_services.dart';
 import 'package:instagram_clone/view/comments/comment_list_item_view.dart';
 

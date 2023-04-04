@@ -1,28 +1,30 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:instagram_clone/controller/models_controller/models_controller.dart';
-import 'package:instagram_clone/controller/post_controller/post_controller.dart';
 import 'package:instagram_clone/core/widgets/cus_circular_progressbar.dart';
 import 'package:instagram_clone/model/post_model/post_model.dart';
 import 'package:instagram_clone/view/home/post/post_item.dart';
 
-import '../../../core/services/hive_services.dart';
-
 class PostListItem extends StatelessWidget {
   const PostListItem({
     super.key,
-    required this.postController,
+    // this.postController,
+    this.snapshot,
   });
 
-  final PostController postController;
+  // final PostController? postController;
+
+  final AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>? snapshot;
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
-      itemCount: postController.getPostList!.length + 1,
+      itemCount: snapshot!.data!.docs.length + 1,
+      // postController!.getPostList!.length + 1,
       itemBuilder: (BuildContext context, int index) {
-        if (index == postController.getPostList!.length) {
+        // postController.getPostList!.length
+        if (index == snapshot!.data!.docs.length) {
           return const Padding(
             padding: EdgeInsets.only(bottom: 10),
             child: Center(
@@ -30,10 +32,9 @@ class PostListItem extends StatelessWidget {
             ),
           );
         } else {
+          // postController.getPostList![index].data()
           PostModel postModel =
-              PostModel.fromJson(postController.getPostList![index].data());
-
-          // HiveServices.getPosts().get(postModel.id);
+              PostModel.fromJson(snapshot!.data!.docs[index].data());
 
           return PostItem(postModel: postModel);
         }

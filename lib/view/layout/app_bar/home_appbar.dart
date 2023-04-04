@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 import '../../../controller/post_controller/new_post_controller.dart';
-import '../../../core/animation/like_icon_animation.dart';
 import '../../../core/constants/constants.dart';
 import '../../../core/theme/theme.dart';
 import '../../../core/utils/menu_items.dart';

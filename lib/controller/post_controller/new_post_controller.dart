@@ -35,7 +35,7 @@ class NewPostController extends GetxController {
   UserModel? userModel = HiveServices.getUserBox().get(Const.currentUser);
 
   Future<List<dynamic>> _pickMediaFiles() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
+    var result = await FilePicker.platform.pickFiles(
       allowMultiple: true,
       type: FileType.media, // will let you pick either video or images.
       // allowedExtensions: ["png", "jpg", "jpeg", 'mp4', 'mkv'],

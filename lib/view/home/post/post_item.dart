@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../../model/post_model/post_model.dart';
-import 'core/post_image.dart';
-import 'core/post_reaction.dart';
+import 'post_image.dart';
+import 'post_reaction.dart';
 import 'core/post_user.dart';
 
 class PostItem extends StatelessWidget {

@@ -4,13 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:instagram_clone/controller/post_controller/like_controller.dart';
 import 'package:instagram_clone/controller/post_controller/post_image_controller.dart';
-import 'package:instagram_clone/core/animation/like_icon_animation.dart';
 import 'package:instagram_clone/core/constants/constants.dart';
 import 'package:instagram_clone/core/theme/theme.dart';
 import 'package:instagram_clone/core/widgets/cus_cached_image.dart';
 import 'package:instagram_clone/model/post_model/post_model.dart';
 
-import '../../../../core/services/hive_services.dart';
+import '../../../core/services/hive_services.dart';
 
 class PostImage extends StatefulWidget {
   const PostImage({
@@ -124,39 +123,22 @@ class _PostImageState extends State<PostImage> with TickerProviderStateMixin {
 
                           // like button widget
                           // if (widget.postModel!.isLikedBy!.contains(userId))
-                          if (showLikeIcon)
-                            const Align(
-                              alignment: Alignment.center,
-                              child: Icon(
-                                Icons.favorite,
-                                size: 100,
-                                color: Colors.white,
-                              ),
-                            ),
 
-                          // if (widget.postModel!.isLikedBy!.contains(userId))
-                          //   GetBuilder<LikeController>(
-                          //     builder: (controller) {
-                          //       if (controller.showLikeIcon) {
-                          //         return Align(
-                          //           alignment: Alignment.center,
-                          //           child: AnimatedOpacity(
-                          //             opacity:
-                          //                 controller.showLikeIcon ? 1.0 : 0.0,
-                          //             duration:
-                          //                 const Duration(milliseconds: 1000),
-                          //             child: const Icon(
-                          //               Icons.favorite,
-                          //               size: 100,
-                          //               color: Colors.red,
-                          //             ),
-                          //           ),
-                          //         );
-                          //       } else {
-                          //         return const SizedBox();
-                          //       }
-                          //     },
-                          //   ),
+                          if (widget.postModel!.isLikedBy!.contains(userId) &&
+                              showLikeIcon)
+                            AnimatedBuilder(
+                              animation: _heartAnimationController,
+                              builder: (context, child) {
+                                return Align(
+                                  alignment: Alignment.center,
+                                  child: Icon(
+                                    Icons.favorite,
+                                    size: _heartAnimation.value,
+                                    color: Colors.white,
+                                  ),
+                                );
+                              },
+                            ),
                         ],
                       );
                     } else {
@@ -186,6 +168,7 @@ class _PostImageState extends State<PostImage> with TickerProviderStateMixin {
                                 );
                               },
                             ),
+
                           // Align(
                           //   alignment: Alignment.center,
                           //   child: AnimatedOpacity(

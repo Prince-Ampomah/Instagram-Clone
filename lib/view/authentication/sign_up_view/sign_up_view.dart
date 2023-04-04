@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:instagram_clone/controller/auth_controller/auth_controller.dart';
-import 'package:instagram_clone/core/utils/utils.dart';
 import 'package:instagram_clone/view/authentication/sign_up_view/sign_up_name_and_password_view.dart';
 
 import '../../../core/theme/theme.dart';

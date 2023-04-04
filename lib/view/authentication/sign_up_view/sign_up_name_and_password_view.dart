@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:instagram_clone/core/constants/constants.dart';
 import 'package:instagram_clone/core/utils/helper_functions.dart';
 
 import '../../../controller/auth_controller/auth_controller.dart';

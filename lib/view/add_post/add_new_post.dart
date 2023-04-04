@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:instagram_clone/core/constants/constants.dart';
 
 import '../../controller/post_controller/new_post_controller.dart';
 import '../../core/theme/theme.dart';

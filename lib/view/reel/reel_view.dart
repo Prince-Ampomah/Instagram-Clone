@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../core/theme/theme.dart';
 import '../../core/widgets/cus_circular_image.dart';
-import 'dart:math' as math;
 
 import '../../core/constants/constants.dart';
 

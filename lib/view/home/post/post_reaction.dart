@@ -2,15 +2,17 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:instagram_clone/controller/post_controller/save_controller.dart';
 import 'package:instagram_clone/view/comments/comment_view.dart';
+import 'package:instagram_clone/view/home/post/core/post_comment_button.dart';
+import 'package:instagram_clone/view/home/post/core/post_like_button.dart';
+import 'package:instagram_clone/view/home/post/core/post_save_button.dart';
+import 'package:instagram_clone/view/home/post/core/post_send_message_button.dart';
 
-import '../../../../controller/post_controller/like_controller.dart';
-import '../../../../core/constants/constants.dart';
-import '../../../../core/services/hive_services.dart';
-import '../../../../core/utils/date_time_convertor.dart';
-import '../../../../core/widgets/cus_rich_text.dart';
-import '../../../../model/post_model/post_model.dart';
+import '../../../core/constants/constants.dart';
+import '../../../core/services/hive_services.dart';
+import '../../../core/utils/date_time_convertor.dart';
+import '../../../core/widgets/cus_rich_text.dart';
+import '../../../model/post_model/post_model.dart';
 
 class PostReaction extends StatelessWidget {
   const PostReaction({super.key, this.postModel});
@@ -109,106 +111,6 @@ class PostReaction extends StatelessWidget {
         userHandle: postModel!.userModel!.userHandle,
         caption: postModel!.caption,
         timePosted: postModel!.timePosted,
-      ),
-    );
-  }
-}
-
-class CommentButton extends StatelessWidget {
-  const CommentButton({
-    super.key,
-    this.onTap,
-  });
-
-  final Function()? onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: SizedBox(
-        height: 22,
-        child: Image.asset(
-          Const.instragramCommentIcon,
-          color: Colors.black,
-        ),
-      ),
-    );
-  }
-}
-
-class SavePostButton extends StatelessWidget {
-  const SavePostButton({
-    super.key,
-    this.postModel,
-  });
-
-  final PostModel? postModel;
-
-  @override
-  Widget build(BuildContext context) {
-    String? userId = HiveServices.getUserBox().get(Const.currentUser)!.userId;
-    return IconButton(
-      onPressed: () {
-        SavePostController.instance.savePost(postModel!.id!);
-      },
-      style: const ButtonStyle(
-        splashFactory: NoSplash.splashFactory,
-      ),
-      icon: Icon(
-        postModel!.isSavedBy!.contains(userId)
-            ? Icons.bookmark
-            : Icons.bookmark_border,
-        size: 28,
-      ),
-    );
-  }
-}
-
-class LikeButton extends StatelessWidget {
-  const LikeButton({
-    super.key,
-    required this.postId,
-    this.postModel,
-  });
-
-  final String postId;
-  final PostModel? postModel;
-
-  @override
-  Widget build(BuildContext context) {
-    String? userId = HiveServices.getUserBox().get(Const.currentUser)!.userId;
-
-    return GestureDetector(
-      onTap: () async {
-        LikeController.instance.togglePostLike(postId);
-      },
-      onDoubleTap: () {
-        LikeController.instance.togglePostLike(postId);
-      },
-      child: Icon(
-        postModel!.isLikedBy!.contains(userId)
-            ? Icons.favorite
-            : Icons.favorite_outline_rounded,
-        color: postModel!.isLikedBy!.contains(userId) ? Colors.red : null,
-        size: 28,
-      ),
-    );
-  }
-}
-
-class SendMessageButton extends StatelessWidget {
-  const SendMessageButton({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 22,
-      child: Image.asset(
-        Const.instragramSendIcon,
-        color: Colors.black,
       ),
     );
   }

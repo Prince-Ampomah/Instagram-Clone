@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/core/utils/helper_functions.dart';
 
-import 'post/post_list_item.dart';
 import 'post/post_list.dart';
 import 'story/story.dart';
 

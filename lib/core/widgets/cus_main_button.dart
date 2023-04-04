@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/core/widgets/cus_circular_progressbar.dart';
 
-import '../constants/constants.dart';
-
 class MainButton extends StatelessWidget {
   const MainButton({
     Key? key,

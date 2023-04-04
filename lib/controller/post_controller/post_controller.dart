@@ -26,7 +26,7 @@ class PostController extends GetxController {
   getPosts() async {
     var postBox = HiveServices.getPosts();
 
-    _streamSubscription = FirebaseFirestore.instance
+    return _streamSubscription = FirebaseFirestore.instance
         .collection(Const.postsCollection)
         .orderBy('timePosted', descending: true)
         .snapshots()

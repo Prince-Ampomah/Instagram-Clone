@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../controller/post_controller/comment_controller.dart';
 import '../../core/constants/constants.dart';
 import '../../core/widgets/cus_appbar.dart';
 import 'comment_list_view.dart';
