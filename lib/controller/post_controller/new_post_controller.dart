@@ -32,8 +32,6 @@ class NewPostController extends GetxController {
 
   String postId = FirestoreDBImpl.generateFirestoreId(Const.postsCollection);
 
-  UserModel? userModel = HiveServices.getUserBox().get(Const.currentUser);
-
   Future<List<dynamic>> _pickMediaFiles() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       allowMultiple: true,
@@ -62,6 +60,8 @@ class NewPostController extends GetxController {
   }
 
   addNewPost(context) async {
+    UserModel? userModel = HiveServices.getUserBox().get(Const.currentUser);
+
     PostModel postModel = PostModel(
       id: postId,
       caption: captionController.text,

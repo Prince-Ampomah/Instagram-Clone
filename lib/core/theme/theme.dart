@@ -23,19 +23,6 @@ class AppTheme {
 
   static TextTheme textStyle(BuildContext context) =>
       Theme.of(context).textTheme;
-
-  // static ThemeData lightTheme = ThemeData(
-  //   useMaterial3: true,
-  //   colorSchemeSeed: AppColors.whiteColor,
-  //   brightness: Brightness.light,
-  //   // textTheme: GoogleFonts.interTextTheme(AppTheme.textStyle(context)),
-  //   // AppTheme.textStyle(context)
-  // );
-  // static ThemeData darkTheme = ThemeData(
-  //   useMaterial3: true,
-  //   colorSchemeSeed: AppColors.blackColor,
-  //   brightness: Brightness.dark,
-  // );
 }
 
 class AppColors {

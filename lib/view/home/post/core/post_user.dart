@@ -22,8 +22,17 @@ class PostUser extends StatelessWidget {
           Row(
             children: [
               image != null
-                  ? CustomCachedImge(imageUrl: image!)
+                  ? ClipRRect(
+                      borderRadius: BorderRadius.circular(100),
+                      child: CustomCachedImge(
+                        height: 40,
+                        width: 40,
+                        imageUrl: image!,
+                        fit: BoxFit.cover,
+                      ),
+                    )
                   : CircularImageContainer(image: image),
+              const SizedBox(width: 10),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

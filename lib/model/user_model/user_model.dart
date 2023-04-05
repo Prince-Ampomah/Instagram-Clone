@@ -27,6 +27,10 @@ class UserModel {
   @HiveField(6)
   DateTime? createdAt;
 
+  @HiveField(7)
+  String? bio;
+
+  @HiveField(8)
   bool? isEmailVerified;
 
   UserModel({
@@ -38,6 +42,7 @@ class UserModel {
     this.userHandle,
     this.createdAt,
     this.isEmailVerified = false,
+    this.bio,
   });
 
   Map<String, dynamic> toJson() {
@@ -51,6 +56,7 @@ class UserModel {
     map['userHandle'] = userHandle;
     map['isEmailVerified'] = isEmailVerified;
     map['createdAt'] = createdAt;
+    map['bio'] = bio;
 
     return map;
   }
@@ -64,6 +70,7 @@ class UserModel {
       phoneNumber: json['phoneNumber'],
       userHandle: json['userHandle'],
       isEmailVerified: json['isEmailVerified'],
+      bio: json['bio'],
       createdAt: (json['createdAt'] is Timestamp)
           ? json['createdAt'].toDate()
           : json['createdAt'],

@@ -32,7 +32,7 @@ class _PostImageState extends State<PostImage> with TickerProviderStateMixin {
   /// inject [PostImageController] dependecy
   final postImageController = Get.put(PostImageController());
 
-  String? userId = HiveServices.getUserBox().get(Const.currentUser)!.userId;
+  // String? userId = HiveServices.getUserBox().get(Const.currentUser)!.userId;
 
   Timer? timer;
 
@@ -124,8 +124,10 @@ class _PostImageState extends State<PostImage> with TickerProviderStateMixin {
                           // like button widget
                           // if (widget.postModel!.isLikedBy!.contains(userId))
 
-                          if (widget.postModel!.isLikedBy!.contains(userId) &&
-                              showLikeIcon)
+                          // if (widget.postModel!.isLikedBy!.contains(userId) &&
+                          //     showLikeIcon)
+
+                          if (showLikeIcon)
                             AnimatedBuilder(
                               animation: _heartAnimationController,
                               builder: (context, child) {
@@ -153,8 +155,10 @@ class _PostImageState extends State<PostImage> with TickerProviderStateMixin {
 
                           // like button widget
 
-                          if (widget.postModel!.isLikedBy!.contains(userId) &&
-                              showLikeIcon)
+                          // if (widget.postModel!.isLikedBy!.contains(userId) &&
+                          //     showLikeIcon)
+
+                          if (showLikeIcon)
                             AnimatedBuilder(
                               animation: _heartAnimationController,
                               builder: (context, child) {

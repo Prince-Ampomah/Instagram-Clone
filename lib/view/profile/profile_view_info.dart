@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:instagram_clone/core/services/hive_services.dart';
 import 'package:instagram_clone/core/widgets/cus_cached_image.dart';
 import 'package:instagram_clone/model/user_model/user_model.dart';
+import 'package:instagram_clone/view/profile/edit_profile/edit_profile_view.dart';
+import '../../controller/profile_controller/edit_profile_controller.dart';
 import '../../core/constants/constants.dart';
 import '../../core/widgets/cus_rich_text.dart';
 
@@ -30,6 +33,7 @@ class ProfileViewInfo extends StatelessWidget {
                         height: 75,
                         width: 75,
                         imageUrl: userInfo.profileImage!,
+                        fit: BoxFit.cover,
                       ),
                     )
                   : Container(
@@ -39,7 +43,10 @@ class ProfileViewInfo extends StatelessWidget {
                       decoration: const BoxDecoration(shape: BoxShape.circle),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(70),
-                        child: Image.asset(Const.userImage),
+                        child: Image.asset(
+                          Const.userImage,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
               Row(
@@ -111,15 +118,21 @@ class ProfileViewInfo extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Row(
             children: [
-              Container(
-                alignment: Alignment.center,
-                padding:
-                    const EdgeInsets.symmetric(vertical: 5, horizontal: 30),
-                decoration: BoxDecoration(
-                  color: const Color(0xFFEFEFEF),
-                  borderRadius: BorderRadius.circular(8),
+              GestureDetector(
+                onTap: () {
+                  Get.put(EditProfileController());
+                  Get.to(() => const EditProfileView());
+                },
+                child: Container(
+                  alignment: Alignment.center,
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 5, horizontal: 30),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFEFEFEF),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: const Text('Edit profile'),
                 ),
-                child: const Text('Edit profile'),
               ),
               const SizedBox(width: 10),
               Container(

@@ -1,11 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import 'app_state.dart';
 import 'core/services/hive_helper_function.dart';
 import 'core/theme/theme.dart';
+import 'core/theme/ui_layout_preference.dart';
 import 'firebase_options.dart';
 import 'view/authentication/sign_in_view/sign_in_view.dart';
 import 'view/layout/app_layout.dart';
@@ -13,12 +13,7 @@ import 'view/layout/app_layout.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-    statusBarColor: AppColors.whiteColor,
-    // statusBarBrightness: Brightness.dark,
-    statusBarIconBrightness: Brightness.dark,
-  ));
+  UIPreferenceLayout.setPreferences();
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 

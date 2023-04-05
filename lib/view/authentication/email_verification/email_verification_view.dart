@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 
 import '../../../controller/auth_controller/auth_controller.dart';
@@ -95,11 +96,13 @@ class _EmailVerificationViewState extends State<EmailVerificationView> {
           userModel.toJson(),
         );
 
+        await uploadProfilePicToStorage();
+
         //save user data offline
         Box<UserModel> userBox = HiveServices.getUserBox();
         await userBox.put(Const.currentUser, userModel);
 
-        await uploadProfilePicToStorage();
+        Get.off(() => AppLayoutView(pageIndex: 0));
       }
     } catch (e) {
       Utils.showErrorMessage(e.toString());
