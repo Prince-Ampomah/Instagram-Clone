@@ -4,7 +4,7 @@ import 'package:image_picker/image_picker.dart';
 
 import '../../../controller/profile_controller/edit_profile_controller.dart';
 import '../../../core/constants/constants.dart';
-import '../../../core/theme/theme.dart';
+import '../../../core/theme/app_colors.dart';
 import '../../../core/widgets/cus_appbar.dart';
 import '../../../core/widgets/cus_cached_image.dart';
 import '../../../core/widgets/cus_circular_image.dart';

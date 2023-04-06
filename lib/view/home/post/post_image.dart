@@ -108,15 +108,91 @@ class _PostImageState extends State<PostImage> with TickerProviderStateMixin {
                   onPageChanged: postImageController.onPageChanged,
                   itemCount: widget.images!.length,
                   itemBuilder: (context, index) {
-                    if (widget.images!.length != 1) {
-                      return Stack(
-                        children: [
-                          CustomCachedImge(
+                    return Stack(
+                      children: [
+                        InteractiveViewer(
+                          child: CustomCachedImge(
                             imageUrl: widget.images![index],
                             width: size.width,
                             shimmerHeight: size.height * 0.70,
                             fit: BoxFit.cover,
                           ),
+                        ),
+
+                        // like button widget
+                        // if (widget.postModel!.isLikedBy!.contains(userId) &&
+                        //     showLikeIcon)
+
+                        if (showLikeIcon)
+                          AnimatedBuilder(
+                            animation: _heartAnimationController,
+                            builder: (context, child) {
+                              return Align(
+                                alignment: Alignment.center,
+                                child: Icon(
+                                  Icons.favorite,
+                                  size: _heartAnimation.value,
+                                  color: Colors.white,
+                                ),
+                              );
+                            },
+                          ),
+                      ],
+                    );
+                  },
+                ),
+              ),
+
+              // image counter widget
+              if (widget.images!.length != 1)
+                Align(
+                  alignment: Alignment.topRight,
+                  child: Container(
+                    height: size.height * 0.05,
+                    width: size.width * 0.10,
+                    alignment: Alignment.center,
+                    margin: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                      color: Colors.black.withOpacity(0.7),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Center(
+                      child: Text(
+                        '${postImageController.countImage}/${widget.images!.length}',
+                        style: AppTheme.textStyle(context).titleSmall!.copyWith(
+                              color: Colors.white,
+                            ),
+                      ),
+                    ),
+                  ),
+                )
+            ],
+          ),
+        );
+      },
+    );
+  }
+}
+
+/**
+ * 
+                    if (widget.images!.length != 1) {
+                      return Stack(
+                        children: [
+                          widget.images!.length != 1
+                              ? CustomCachedImge(
+                                  imageUrl: widget.images![index],
+                                  width: size.width,
+                                  shimmerHeight: size.height * 0.70,
+                                  fit: BoxFit.cover,
+                                )
+                              : CustomCachedImge(
+                                  imageUrl: widget.images![index],
+                                  width: size.width,
+                                  shimmerHeight: size.height * 0.70,
+                                  fit: BoxFit.cover,
+                                ),
 
                           // like button widget
                           // if (widget.postModel!.isLikedBy!.contains(userId))
@@ -169,81 +245,8 @@ class _PostImageState extends State<PostImage> with TickerProviderStateMixin {
                                 );
                               },
                             ),
-
-                          // Align(
-                          //   alignment: Alignment.center,
-                          //   child: AnimatedOpacity(
-                          //     opacity: showLikeIcon ? 1.0 : 0.3,
-                          //     duration: const Duration(milliseconds: 500),
-                          //     child: const Icon(
-                          //       Icons.favorite,
-                          //       size: 100,
-                          //       color: Colors.white,
-                          //     ),
-                          //   ),
-                          // ),
-
-                          // if (widget.postModel!.isLikedBy!.contains(userId))
-                          //   GetBuilder<LikeController>(
-                          //     builder: (controller) {
-                          //       if (controller.showLikeIcon) {
-                          //         return Align(
-                          //           alignment: Alignment.center,
-                          //           child: AnimatedOpacity(
-                          //             opacity:
-                          //                 controller.showLikeIcon ? 1.0 : 0.0,
-                          //             duration:
-                          //                 const Duration(milliseconds: 500),
-                          //             child: const Icon(
-                          //               Icons.favorite,
-                          //               size: 100,
-                          //               color: Colors.red,
-                          //             ),
-                          //           ),
-                          //         );
-                          //       } else {
-                          //         return const SizedBox();
-                          //       }
-                          //     },
-                          //   ),
                         ],
                       );
                     }
-                  },
-                ),
-              ),
 
-              // image counter widget
-              widget.images!.length != 1
-                  ? Align(
-                      alignment: Alignment.topRight,
-                      child: Container(
-                        height: size.height * 0.05,
-                        width: size.width * 0.10,
-                        alignment: Alignment.center,
-                        margin: const EdgeInsets.all(10),
-                        padding: const EdgeInsets.all(5),
-                        decoration: BoxDecoration(
-                          color: Colors.black.withOpacity(0.7),
-                          shape: BoxShape.circle,
-                        ),
-                        child: Center(
-                          child: Text(
-                            '${postImageController.countImage}/${widget.images!.length}',
-                            style: AppTheme.textStyle(context)
-                                .titleSmall!
-                                .copyWith(
-                                  color: Colors.white,
-                                ),
-                          ),
-                        ),
-                      ),
-                    )
-                  : const SizedBox(),
-            ],
-          ),
-        );
-      },
-    );
-  }
-}
+ */

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:instagram_clone/core/theme/theme.dart';
+import 'package:instagram_clone/core/theme/app_colors.dart';
 import 'package:instagram_clone/core/widgets/cus.bottom.sheet.icons.dart';
 import 'package:instagram_clone/core/widgets/cus_cached_image.dart';
 

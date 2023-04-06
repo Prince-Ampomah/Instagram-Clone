@@ -1,7 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:instagram_clone/core/utils/utils.dart';
+import '../../../core/theme/app_colors.dart';
+import '../../../core/utils/utils.dart';
 
 import '../../../core/theme/theme.dart';
 import '../../../core/widgets/cus_appbar.dart';

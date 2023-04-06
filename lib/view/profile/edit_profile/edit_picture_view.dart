@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/theme/theme.dart';
+import '../../../core/theme/app_colors.dart';
 import '../../../core/widgets/cus_bottom_sheet.dart';
 
 class EditPictureView extends StatelessWidget {

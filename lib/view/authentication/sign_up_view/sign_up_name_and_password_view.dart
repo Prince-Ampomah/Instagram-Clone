@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:instagram_clone/core/utils/helper_functions.dart';
+import '../../../core/theme/app_colors.dart';
+import '../../../core/utils/helper_functions.dart';
 
 import '../../../controller/auth_controller/auth_controller.dart';
 import '../../../controller/auth_controller/password_visibility_controller.dart';

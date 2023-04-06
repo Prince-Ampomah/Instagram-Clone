@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:instagram_clone/core/theme/app_colors.dart';
 import 'package:overlay_support/overlay_support.dart';
-
-import '../theme/theme.dart';
 
 class Utils {
   // static showErrorMessage(String message, {String title = 'Error'}) {
@@ -45,7 +44,7 @@ class Utils {
         style: const TextStyle(color: Colors.black),
       ),
       elevation: 0.0,
-      background: const Color(0xFFCECECE),
+      background: AppColors.successColor, //const Color(0xFFCECECE),
     );
   }
 }

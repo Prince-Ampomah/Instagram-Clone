@@ -1,6 +1,5 @@
 import 'package:flutter/services.dart';
-
-import 'theme.dart';
+import 'package:instagram_clone/core/theme/app_colors.dart';
 
 class UIPreferenceLayout {
   static void setPreferences() {

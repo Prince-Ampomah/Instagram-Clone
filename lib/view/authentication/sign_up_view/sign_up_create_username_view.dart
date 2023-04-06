@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:instagram_clone/core/theme/app_colors.dart';
 import '../../../controller/auth_controller/auth_controller.dart';
 import '../../../core/utils/form_validator.dart';
 import '../../../core/utils/helper_functions.dart';

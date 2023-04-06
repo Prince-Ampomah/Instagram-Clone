@@ -6,6 +6,7 @@ import 'package:instagram_clone/core/widgets/cus_image_picker.dart';
 import 'package:instagram_clone/view/authentication/sign_up_view/sign_up_name_and_password_view.dart';
 
 import '../../../core/constants/constants.dart';
+import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/theme.dart';
 import '../../../core/utils/form_validator.dart';
 import '../../../core/utils/helper_functions.dart';

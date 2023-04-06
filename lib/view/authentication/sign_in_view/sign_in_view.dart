@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:instagram_clone/core/theme/app_colors.dart';
 
 import '../../../controller/auth_controller/auth_controller.dart';
 import '../../../controller/auth_controller/password_visibility_controller.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../controller/post_controller/new_post_controller.dart';
-import '../../core/theme/theme.dart';
+import '../../core/theme/app_colors.dart';
 import '../../core/utils/helper_functions.dart';
 import '../../core/widgets/cus_appbar.dart';
 import '../../core/widgets/cus_cached_image.dart';

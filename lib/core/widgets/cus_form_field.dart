@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:instagram_clone/core/theme/theme.dart';
+import 'package:instagram_clone/core/theme/app_colors.dart';
 
 class CustomFormField extends StatelessWidget {
   const CustomFormField({

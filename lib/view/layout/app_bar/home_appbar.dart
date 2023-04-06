@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../controller/post_controller/new_post_controller.dart';
 import '../../../core/constants/constants.dart';
-import '../../../core/theme/theme.dart';
+import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/menu_items.dart';
 import '../../../core/widgets/cus_popup_menu.dart';
 

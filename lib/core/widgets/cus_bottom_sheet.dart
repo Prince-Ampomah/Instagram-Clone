@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../theme/theme.dart';
+import 'package:instagram_clone/core/theme/app_colors.dart';
 
 class CustomBottomSheetContainer extends StatelessWidget {
   const CustomBottomSheetContainer({

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/controller/profile_controller/edit_profile_controller.dart';
 
-import '../../../core/theme/theme.dart';
+import '../../../core/theme/app_colors.dart';
 import '../../../core/widgets/cus_appbar.dart';
 
 class EditNameView extends StatelessWidget {
