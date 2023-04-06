@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/controller/profile_controller/edit_profile_controller.dart';
-import 'package:instagram_clone/core/constants/constants.dart';
 
 import '../../../core/theme/theme.dart';
 import '../../../core/widgets/cus_appbar.dart';
@@ -28,7 +27,9 @@ class EditNameView extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(right: 10),
             child: IconButton(
-              onPressed: () {},
+              onPressed: () async {
+                await EditProfileController.instance.updateFullname();
+              },
               icon: const Icon(
                 Icons.check,
                 size: 30,

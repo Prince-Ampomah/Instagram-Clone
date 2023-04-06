@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:instagram_clone/core/utils/helper_functions.dart';
 
 import 'post/post_list.dart';
 import 'story/story.dart';
@@ -22,7 +21,7 @@ class _HomeViewState extends State<HomeView> {
     return scrollController.addListener(() {
       if (scrollController.position.pixels ==
           scrollController.position.maxScrollExtent) {
-        showToast(msg: 'Load more');
+        // load more data here
       }
     });
   }

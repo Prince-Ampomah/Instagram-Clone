@@ -22,12 +22,22 @@ class CommentPostHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Row(
         children: [
           userImage != null
-              ? CustomCachedImge(imageUrl: userImage!)
+              ? ClipRRect(
+                  borderRadius: BorderRadius.circular(100),
+                  child: CustomCachedImge(
+                    height: 45,
+                    width: 45,
+                    imageUrl: userImage!,
+                    fit: BoxFit.cover,
+                  ),
+                )
               : const CircularImageContainer(
                   height: 0.04,
                   width: 0.04,
@@ -40,7 +50,7 @@ class CommentPostHeader extends StatelessWidget {
               children: [
                 CustomRichText(
                   text1: '$userHandle  ',
-                  text2: DateTimeConvertor.getFormattedMonthAndDay(
+                  text2: DateTimeConvertor.getTimeAgo(
                     timePosted!,
                   ),
                   text2Style: const TextStyle(

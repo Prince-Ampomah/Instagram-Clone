@@ -33,6 +33,7 @@ class AppColors {
   static const textFieldColor = Color(0xFFF7F7F7);
   static const deepButtonColor = Color(0xFF003050);
   static const errorColor = Color(0xFFDF5E55);
+  static const successColor = Color(0xFF1B741E);
 
   static const storyBorderColors = [
     Color(0xFFfeda75),

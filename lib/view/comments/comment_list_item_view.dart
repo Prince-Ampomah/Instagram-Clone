@@ -29,7 +29,15 @@ class CommentListItemView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               commentModel.userProfileImage != null
-                  ? CustomCachedImge(imageUrl: commentModel.userProfileImage!)
+                  ? ClipRRect(
+                      borderRadius: BorderRadius.circular(100),
+                      child: CustomCachedImge(
+                        height: 40,
+                        width: 40,
+                        imageUrl: commentModel.userProfileImage!,
+                        fit: BoxFit.cover,
+                      ),
+                    )
                   : CircularImageContainer(
                       height: 0.045,
                       width: 0.045,
@@ -44,7 +52,7 @@ class CommentListItemView extends StatelessWidget {
                     // user handle
                     CustomRichText(
                       text1: '${commentModel.userHandle}  ',
-                      text2: DateTimeConvertor.getFormattedMonthAndDay(
+                      text2: DateTimeConvertor.getTimeAgo(
                         commentModel.time ?? DateTime.now(),
                       ),
                       text1Style: const TextStyle(

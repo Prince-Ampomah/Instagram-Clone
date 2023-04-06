@@ -39,6 +39,22 @@ void sendToPage(BuildContext context, Widget newPage,
   );
 }
 
+void noReturnPushReplacement(
+  BuildContext context,
+  Widget newPage,
+) {
+  Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (BuildContext context) => newPage,
+      ));
+}
+
+void popUntil(BuildContext context, int numberOfScreen) {
+  int count = 0;
+  Navigator.of(context).popUntil((_) => count++ >= numberOfScreen);
+}
+
 onLoading(BuildContext context, String message, {bool isDimissible = true}) {
   return showDialog(
     context: context,

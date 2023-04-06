@@ -24,7 +24,6 @@ class CommentController extends GetxController {
   FirestoreDB firestoreDB = FirestoreDBImpl();
 
   // query user data from local disk
-  UserModel? userModel = HiveServices.getUserBox().get(Const.currentUser);
 
   StreamSubscription? _streamSubscription;
   bool hasError = false, hasData = true, waiting = true, done = false;
@@ -79,12 +78,14 @@ class CommentController extends GetxController {
     String postId = HiveServices.getPostId();
 
     if (commentTextFieldController.text.trim().isNotEmpty) {
+      UserModel? userModel = HiveServices.getUserBox().get(Const.currentUser);
+
       CommentModel commentModel = CommentModel(
         id: FirestoreDBImpl.generateFirestoreId(Const.commentsCollection),
         postId: postId,
         message: commentTextFieldController.text,
         userHandle: userModel!.userHandle,
-        userProfileImage: userModel?.profileImage,
+        userProfileImage: userModel.profileImage,
         time: DateTime.now(),
       );
 

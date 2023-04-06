@@ -28,9 +28,8 @@ class EditUsernameView extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(right: 10),
             child: IconButton(
-              onPressed: () {
-                EditProfileController.instance.updateUsername();
-                Navigator.pop(context);
+              onPressed: () async {
+                await EditProfileController.instance.updateUsername();
               },
               icon: const Icon(
                 Icons.check,
@@ -57,9 +56,9 @@ class EditUsernameView extends StatelessWidget {
               },
             ),
             10.ph,
-            const Text(
-              'You\'ll not be able to change your username back to iamprinceampomah for another 13 days.',
-              style: TextStyle(
+            Text(
+              'You\'ll not be able to change your username back to $username for another 13 days.',
+              style: const TextStyle(
                 fontSize: 12.5,
                 color: Colors.grey,
               ),

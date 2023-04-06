@@ -5,7 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 part 'user_model.g.dart';
 
 @HiveType(typeId: Const.hiveTypeId0)
-class UserModel {
+class UserModel extends HiveObject {
   @HiveField(0)
   String? userId;
 

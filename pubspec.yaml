@@ -42,6 +42,7 @@ dependencies:
 
   # date
   intl: ^0.17.0
+  timeago: ^3.3.0
 
   # firebase
   firebase_core: ^2.4.1

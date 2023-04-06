@@ -91,7 +91,7 @@ class PostReaction extends StatelessWidget {
           // posted time
           if (postModel!.timePosted != null)
             Text(
-              DateTimeConvertor.getFormattedMonthAndDay(postModel!.timePosted!),
+              DateTimeConvertor.getTimeAgo(postModel!.timePosted!),
               style: const TextStyle(
                 color: Colors.grey,
                 fontSize: 11,

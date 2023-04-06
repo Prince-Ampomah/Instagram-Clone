@@ -25,7 +25,8 @@ class UserModelAdapter extends TypeAdapter<UserModel> {
       userHandle: fields[5] as String?,
       createdAt: fields[6] as DateTime?,
       isEmailVerified: fields[8] as bool?,
-    )..bio = fields[7] as String?;
+      bio: fields[7] as String?,
+    );
   }
 
   @override

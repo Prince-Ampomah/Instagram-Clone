@@ -1,25 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
+import '../../../controller/profile_controller/edit_profile_controller.dart';
 import '../../../core/constants/constants.dart';
-import '../../../core/services/hive_services.dart';
 import '../../../core/theme/theme.dart';
 import '../../../core/widgets/cus_appbar.dart';
 import '../../../core/widgets/cus_cached_image.dart';
 import '../../../core/widgets/cus_circular_image.dart';
+import '../../../core/widgets/cus_circular_progressbar.dart';
 import '../../../model/user_model/user_model.dart';
 import 'edit_bio_view.dart';
 import 'edit_name_view.dart';
 import 'edit_picture_view.dart';
 import 'edit_username_view.dart';
 
-class EditProfileView extends StatelessWidget {
-  const EditProfileView({super.key});
+class EditProfileView extends StatefulWidget {
+  const EditProfileView({super.key, this.userInfo});
+
+  final UserModel? userInfo;
 
   @override
-  Widget build(BuildContext context) {
-    UserModel? userInfo = HiveServices.getUserBox().get(Const.currentUser);
+  State<EditProfileView> createState() => _EditProfileViewState();
+}
 
+class _EditProfileViewState extends State<EditProfileView> {
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
         implyLeading: true,
@@ -30,16 +37,34 @@ class EditProfileView extends StatelessWidget {
           icon: const Icon(Icons.clear, size: 30),
         ),
         actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 10),
-            child: IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.check,
-                size: 30,
-                color: AppColors.buttonColor,
-              ),
-            ),
+          GetBuilder<EditProfileController>(
+            builder: (controller) {
+              return Padding(
+                padding: const EdgeInsets.only(right: 20),
+                child: GestureDetector(
+                  onTap: () async {
+                    await controller
+                        .updateProfilePicture(widget.userInfo!.profileImage!);
+                  },
+                  child: controller.isLoading
+                      ? const SizedBox(
+                          height: 20,
+                          width: 20,
+                          child: Center(
+                            child: CustomCircularProgressBar(
+                              valueColor: AppColors.whiteColor,
+                              bgColor: AppColors.buttonColor,
+                            ),
+                          ),
+                        )
+                      : const Icon(
+                          Icons.check,
+                          size: 30,
+                          color: AppColors.buttonColor,
+                        ),
+                ),
+              );
+            },
           ),
         ],
       ),
@@ -47,40 +72,52 @@ class EditProfileView extends StatelessWidget {
         child: Column(
           children: [
             15.ph,
-            Column(
-              children: [
-                userInfo!.profileImage != null
-                    ? ClipRRect(
-                        borderRadius: BorderRadius.circular(100),
-                        child: CustomCachedImge(
-                          height: 95,
-                          width: 95,
-                          imageUrl: userInfo.profileImage!,
-                          fit: BoxFit.cover,
+            GetBuilder<EditProfileController>(
+              builder: (controller) {
+                return Column(
+                  children: [
+                    widget.userInfo!.profileImage != null
+                        ? ClipRRect(
+                            borderRadius: BorderRadius.circular(100),
+                            child: CustomCachedImge(
+                              height: 95,
+                              width: 95,
+                              imageUrl: widget.userInfo!.profileImage!,
+                              fit: BoxFit.cover,
+                            ),
+                          )
+                        : CircularImageContainer(
+                            height: 0.1,
+                            width: 0.1,
+                            border: Border.all(width: 0.5),
+                          ),
+                    10.ph,
+                    InkWell(
+                      onTap: () {
+                        showModalBottomSheet(
+                          context: context,
+                          builder: (context) => EditPictureView(
+                            onCameraTap: () {
+                              controller.getUserProfilePic(ImageSource.camera);
+                            },
+                            onGalleryTap: () {
+                              controller.getUserProfilePic(ImageSource.gallery);
+                            },
+                            onRemovePictureTap: () {},
+                          ),
+                        );
+                      },
+                      child: const Padding(
+                        padding: EdgeInsets.all(8),
+                        child: Text(
+                          'Edit Picture',
+                          style: TextStyle(color: AppColors.buttonColor),
                         ),
-                      )
-                    : CircularImageContainer(
-                        height: 0.1,
-                        width: 0.1,
-                        border: Border.all(width: 0.5),
                       ),
-                10.ph,
-                InkWell(
-                  onTap: () {
-                    showModalBottomSheet(
-                      context: context,
-                      builder: (context) => const EditPictureView(),
-                    );
-                  },
-                  child: const Padding(
-                    padding: EdgeInsets.all(8),
-                    child: Text(
-                      'Edit Picture',
-                      style: TextStyle(color: AppColors.buttonColor),
-                    ),
-                  ),
-                )
-              ],
+                    )
+                  ],
+                );
+              },
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(15, 20, 0, 0.0),
@@ -91,10 +128,10 @@ class EditProfileView extends StatelessWidget {
 
                   ListInfoItem(
                     onTap: () => Get.to(
-                      () => EditNameView(fullname: userInfo.fullname),
+                      () => EditNameView(fullname: widget.userInfo?.fullname),
                     ),
                     title: 'Name',
-                    description: userInfo.fullname,
+                    description: widget.userInfo?.fullname,
                   ),
 
                   const Divider(),
@@ -104,10 +141,11 @@ class EditProfileView extends StatelessWidget {
                   // username
                   ListInfoItem(
                     onTap: () => Get.to(
-                      () => EditUsernameView(username: userInfo.userHandle),
+                      () => EditUsernameView(
+                          username: widget.userInfo?.userHandle),
                     ),
                     title: 'Username',
-                    description: userInfo.userHandle,
+                    description: widget.userInfo?.userHandle,
                   ),
 
                   const Divider(),
@@ -116,9 +154,11 @@ class EditProfileView extends StatelessWidget {
 
                   // Bio data
                   ListInfoItem(
-                    onTap: () => Get.to(() => const EditBioView()),
+                    onTap: () => Get.to(
+                      () => EditBioView(bio: widget.userInfo?.bio),
+                    ),
                     title: 'Bio',
-                    description: userInfo.bio,
+                    description: widget.userInfo?.bio,
                   ),
                   const Divider(),
                 ],

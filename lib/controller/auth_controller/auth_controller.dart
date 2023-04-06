@@ -58,6 +58,7 @@ class AuthController extends GetxController {
       isLoading(false);
     } catch (e) {
       isLoading(false);
+
       Utils.showErrorMessage(e.toString());
     }
   }
@@ -73,6 +74,7 @@ class AuthController extends GetxController {
       isLoading(false);
     } catch (e) {
       isLoading(false);
+
       Utils.showErrorMessage(e.toString());
     }
   }
@@ -102,6 +104,14 @@ class AuthController extends GetxController {
       Utils.showErrorMessage(e.toString());
     }
   }
+
+  // void getUserProfilePic(String? profileImage, imageSource) async {
+  //   var imagePath = await getImagePicker(imageSource);
+  //   if (imagePath.isNotEmpty) {
+  //     profileImage = imagePath;
+  //     update();
+  //   }
+  // }
 }
 
   // late Rx<User?> _user;

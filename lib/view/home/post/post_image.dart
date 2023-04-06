@@ -4,12 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:instagram_clone/controller/post_controller/like_controller.dart';
 import 'package:instagram_clone/controller/post_controller/post_image_controller.dart';
-import 'package:instagram_clone/core/constants/constants.dart';
 import 'package:instagram_clone/core/theme/theme.dart';
 import 'package:instagram_clone/core/widgets/cus_cached_image.dart';
 import 'package:instagram_clone/model/post_model/post_model.dart';
-
-import '../../../core/services/hive_services.dart';
 
 class PostImage extends StatefulWidget {
   const PostImage({

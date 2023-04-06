@@ -1,4 +1,5 @@
 import 'package:intl/intl.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class DateTimeConvertor {
   static String greetingTime() {
@@ -55,7 +56,6 @@ class DateTimeConvertor {
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
     final yesterday = today.subtract(const Duration(days: 1));
-    // DateTime(now.year, now.month, now.day - 1);
 
     final messageDate =
         DateTime(dateToCheck.year, dateToCheck.month, dateToCheck.day);
@@ -70,21 +70,7 @@ class DateTimeConvertor {
 
   static String getTimeAgo(DateTime dateToCheck) {
     final now = DateTime.now();
-    final today = DateTime(now.year, now.month, now.day);
-    final yesterday = today.subtract(const Duration(days: 1));
-
-    DateTime secs = today.subtract(const Duration(seconds: 1));
-    DateTime mins = today.subtract(const Duration(minutes: 1));
-    // DateTime day = today.subtract(const Duration(days: 1));
-
-    final messageDate =
-        DateTime(dateToCheck.year, dateToCheck.month, dateToCheck.day);
-    if (messageDate == secs) {
-      return DateFormat('s').format(dateToCheck);
-    } else if (messageDate == mins) {
-      return DateFormat('m').format(dateToCheck);
-    } else {
-      return DateFormat('d').format(dateToCheck);
-    }
+    final difference = now.difference(dateToCheck);
+    return timeago.format(now.subtract(difference));
   }
 }

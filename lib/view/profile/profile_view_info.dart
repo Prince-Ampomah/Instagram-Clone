@@ -118,37 +118,54 @@ class ProfileViewInfo extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Row(
             children: [
+              // edit profile
               GestureDetector(
                 onTap: () {
                   Get.put(EditProfileController());
-                  Get.to(() => const EditProfileView());
+                  Get.to(() => EditProfileView(userInfo: userInfo));
                 },
                 child: Container(
                   alignment: Alignment.center,
                   padding:
-                      const EdgeInsets.symmetric(vertical: 5, horizontal: 30),
+                      const EdgeInsets.symmetric(vertical: 8, horizontal: 30),
                   decoration: BoxDecoration(
                     color: const Color(0xFFEFEFEF),
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  child: const Text('Edit profile'),
+                  child: const Text(
+                    'Edit profile',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
               ),
+
               const SizedBox(width: 10),
+
+              // share profile
               Container(
                 alignment: Alignment.center,
                 padding:
-                    const EdgeInsets.symmetric(vertical: 5, horizontal: 30),
+                    const EdgeInsets.symmetric(vertical: 8, horizontal: 30),
                 decoration: BoxDecoration(
                   color: const Color(0xFFEFEFEF),
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: const Text('Share profile'),
+                child: const Text(
+                  'Share profile',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
+
               const SizedBox(width: 10),
+
+              // icon
               Container(
                 alignment: Alignment.center,
-                padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 8),
+                padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
                 decoration: BoxDecoration(
                   color: const Color(0xFFEFEFEF),
                   borderRadius: BorderRadius.circular(8),
@@ -156,6 +173,7 @@ class ProfileViewInfo extends StatelessWidget {
                 child: const Icon(
                   Icons.person_add_outlined,
                   size: 18,
+                  color: Colors.black,
                 ),
               ),
             ],

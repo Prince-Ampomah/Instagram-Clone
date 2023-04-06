@@ -25,9 +25,8 @@ class EditBioView extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(right: 10),
             child: IconButton(
-              onPressed: () {
-                EditProfileController.instance.updateBio();
-                Navigator.pop(context);
+              onPressed: () async {
+                await EditProfileController.instance.updateBio();
               },
               icon: const Icon(
                 Icons.check,

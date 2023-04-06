@@ -133,7 +133,7 @@ class LikeController extends GetxController {
         likeModel.toJson(),
       );
     } catch (e) {
-      Utils.showErrorMessage(e.toString(), title: 'Error');
+      Utils.showErrorMessage(e.toString());
     }
   }
 
