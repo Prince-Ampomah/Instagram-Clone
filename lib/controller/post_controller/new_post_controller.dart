@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import '../../core/constants/constants.dart';
 import '../../core/services/hive_services.dart';
 import '../../core/utils/utils.dart';
+import '../../model/post_model/post_location_model.dart';
 import '../../model/post_model/post_model.dart';
 import '../../model/user_model/user_model.dart';
 import '../../repository/repository_abstract/database_abstract.dart';
@@ -45,6 +46,8 @@ class NewPostController extends GetxController {
 
     if (result != null) {
       media.clear();
+
+      // TODO: Fix (type 'List<String?>' is not a subtype of type 'Iterable<String>' of 'iterable')
       media.addAll(result.paths);
       // _TypeError (type 'List<String?>' is not a subtype of type 'Iterable<String>' of 'iterable')
     }
@@ -67,7 +70,7 @@ class NewPostController extends GetxController {
       caption: captionController.text,
       media: media,
       userModel: userModel!,
-      location: ModelController.instance.postLocationModel,
+      location: PostLocationModel(),
       timePosted: DateTime.now(),
     );
 

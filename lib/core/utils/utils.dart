@@ -32,7 +32,7 @@ class Utils {
         style: const TextStyle(color: Colors.white),
       ),
       elevation: 0.0,
-      background: AppColors.errorColor,
+      background: const Color(0xFFDD3529),
     );
   }
 

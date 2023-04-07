@@ -14,10 +14,8 @@ import 'model/user_model/user_model.dart';
 class AppState {
   static UserModel? user = HiveServices.getUserBox().get(Const.currentUser);
 
-  static injectAllControllers() {
+  static injectControllers() {
     Get.put(AuthController());
-    Get.put(NewPostController());
-    Get.put(ModelController());
     Get.put(PostController());
     Get.put(LikeController());
     Get.put(CommentController());

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../../controller/post_controller/new_post_controller.dart';
 import '../../../core/constants/constants.dart';
@@ -56,6 +57,7 @@ class HomeAppBar extends StatelessWidget {
       actions: [
         GestureDetector(
           onTap: () async {
+            Get.put(NewPostController());
             await NewPostController.instance.pickMediaFromDevice();
           },
           child: Padding(
