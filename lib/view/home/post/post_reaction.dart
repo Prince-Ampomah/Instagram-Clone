@@ -13,11 +13,13 @@ import '../../../core/services/hive_services.dart';
 import '../../../core/utils/date_time_convertor.dart';
 import '../../../core/widgets/cus_rich_text.dart';
 import '../../../model/post_model/post_model.dart';
+import '../../../model/user_model/user_model.dart';
 
 class PostReaction extends StatelessWidget {
-  const PostReaction({super.key, this.postModel});
+  const PostReaction({super.key, this.postModel, this.userModel});
 
   final PostModel? postModel;
+  final UserModel? userModel;
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +66,7 @@ class PostReaction extends StatelessWidget {
           // caption widget
           if (postModel!.caption!.isNotEmpty)
             CustomRichText(
-              text1: '${postModel!.userModel!.userHandle} ',
+              text1: '${userModel!.userHandle} ',
               text2: postModel!.caption,
               text1Style: const TextStyle(
                 fontWeight: FontWeight.bold,
@@ -107,8 +109,8 @@ class PostReaction extends StatelessWidget {
 
     Get.to(
       () => CommentView(
-        userImage: postModel!.userModel!.profileImage,
-        userHandle: postModel!.userModel!.userHandle,
+        userImage: userModel!.profileImage,
+        userHandle: userModel!.userHandle,
         caption: postModel!.caption,
         timePosted: postModel!.timePosted,
       ),

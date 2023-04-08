@@ -3,11 +3,11 @@ import 'package:get/get.dart';
 import 'package:instagram_clone/controller/profile_controller/post_profile_controller.dart';
 import 'package:instagram_clone/core/widgets/cus_cached_image.dart';
 import 'package:instagram_clone/model/post_model/post_model.dart';
+import 'package:instagram_clone/view/profile/users_profile/users_profile_view.dart';
 
-import '../../core/constants/constants.dart';
-import '../../core/theme/app_colors.dart';
-import '../../core/widgets/cus_circular_progressbar.dart';
-import '../../core/widgets/cus_tab_bar.dart';
+import '../../../core/theme/app_colors.dart';
+import '../../../core/widgets/cus_circular_progressbar.dart';
+import '../../../core/widgets/cus_tab_bar.dart';
 
 class ProfileViewGallery extends StatefulWidget {
   const ProfileViewGallery({
@@ -104,6 +104,7 @@ class ListPostProfileItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return GridView.count(
       crossAxisCount: 3,
       mainAxisSpacing: 1.0,
@@ -113,25 +114,31 @@ class ListPostProfileItem extends StatelessWidget {
         (index) {
           PostModel postModel =
               PostModel.fromJson(controller.getPostProfileList![index].data());
-          return Stack(
-            children: [
-              CustomCachedImge(
-                imageUrl: postModel.media![0],
-                fit: BoxFit.cover,
-              ),
-              if (postModel.media!.length != 1)
-                const Align(
-                  alignment: Alignment.topRight,
-                  child: Padding(
-                    padding: EdgeInsets.only(right: 8),
-                    child: Icon(
-                      Icons.bookmarks,
-                      color: Colors.white,
-                      size: 20,
+          return GestureDetector(
+            onTap: () {
+              // Get.to(() => const UsersProfileView());
+            },
+            child: Stack(
+              children: [
+                CustomCachedImge(
+                  width: size.width,
+                  imageUrl: postModel.media![0],
+                  fit: BoxFit.cover,
+                ),
+                if (postModel.media!.length != 1)
+                  const Align(
+                    alignment: Alignment.topRight,
+                    child: Padding(
+                      padding: EdgeInsets.only(right: 8),
+                      child: Icon(
+                        Icons.bookmarks,
+                        color: Colors.white,
+                        size: 20,
+                      ),
                     ),
                   ),
-                ),
-            ],
+              ],
+            ),
           );
         },
       ),

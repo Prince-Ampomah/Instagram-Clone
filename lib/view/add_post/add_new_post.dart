@@ -23,7 +23,7 @@ class AddNewPost extends StatelessWidget {
             padding: const EdgeInsets.only(right: 10),
             child: IconButton(
               onPressed: () async {
-                await NewPostController.instance.addNewPost(context);
+                await NewPostController.instance.addNewPost();
               },
               icon: const Icon(
                 Icons.check,

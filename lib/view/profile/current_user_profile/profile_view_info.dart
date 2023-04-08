@@ -4,9 +4,8 @@ import 'package:instagram_clone/core/services/hive_services.dart';
 import 'package:instagram_clone/core/widgets/cus_cached_image.dart';
 import 'package:instagram_clone/model/user_model/user_model.dart';
 import 'package:instagram_clone/view/profile/edit_profile/edit_profile_view.dart';
-import '../../controller/profile_controller/edit_profile_controller.dart';
-import '../../core/constants/constants.dart';
-import '../../core/widgets/cus_rich_text.dart';
+import '../../../controller/profile_controller/edit_profile_controller.dart';
+import '../../../core/constants/constants.dart';
 
 class ProfileViewInfo extends StatelessWidget {
   const ProfileViewInfo({
@@ -15,7 +14,7 @@ class ProfileViewInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    UserModel? userInfo = HiveServices.getUserBox().get(Const.currentUser);
+    UserModel? userModel = HiveServices.getUserBox().get(Const.currentUser);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -26,15 +25,19 @@ class ProfileViewInfo extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              userInfo!.profileImage != null
-                  ? ClipRRect(
-                      borderRadius: BorderRadius.circular(100),
-                      child: CustomCachedImge(
-                        height: 75,
-                        width: 75,
-                        imageUrl: userInfo.profileImage!,
-                        fit: BoxFit.cover,
-                      ),
+              userModel!.profileImage != null
+                  ? GetBuilder<EditProfileController>(
+                      builder: (controller) {
+                        return ClipRRect(
+                          borderRadius: BorderRadius.circular(100),
+                          child: CustomCachedImge(
+                            height: 75,
+                            width: 75,
+                            imageUrl: userModel.profileImage!,
+                            fit: BoxFit.cover,
+                          ),
+                        );
+                      },
                     )
                   : Container(
                       height: 65,
@@ -49,12 +52,14 @@ class ProfileViewInfo extends StatelessWidget {
                         ),
                       ),
                     ),
+
+              // number of post, followers and following
               Row(
                 children: [
                   Column(
                     children: [
                       Text(
-                        '9',
+                        '${userModel.numberOfPost}',
                         style: Theme.of(context)
                             .textTheme
                             .labelLarge!
@@ -67,7 +72,7 @@ class ProfileViewInfo extends StatelessWidget {
                   Column(
                     children: [
                       Text(
-                        '90',
+                        '${userModel.numberOfFollowers}',
                         style: Theme.of(context)
                             .textTheme
                             .labelLarge!
@@ -80,7 +85,7 @@ class ProfileViewInfo extends StatelessWidget {
                   Column(
                     children: [
                       Text(
-                        '100',
+                        '${userModel.numberOfFollowing}',
                         style: Theme.of(context)
                             .textTheme
                             .labelLarge!
@@ -96,19 +101,31 @@ class ProfileViewInfo extends StatelessWidget {
         ),
 
         // username and caption widget
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: CustomRichText(
-            text1: '${userInfo.fullname ?? 'full name'}\n',
-            text2:
-                "A ship is safe in the harbor but that's not ships are for\nWilliam Shed.\nExplore🌍\nAnd\nConquer🙏\nHard work💯",
-            text1Style: Theme.of(context)
-                .textTheme
-                .labelLarge!
-                .copyWith(fontWeight: FontWeight.bold, fontSize: 12),
-            text2Style:
-                Theme.of(context).textTheme.labelLarge!.copyWith(fontSize: 12),
-          ),
+        GetBuilder<EditProfileController>(
+          builder: (_) {
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    userModel.fullname ?? 'full name',
+                    style: Theme.of(context)
+                        .textTheme
+                        .labelLarge!
+                        .copyWith(fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 5),
+                  if (userModel.bio != null)
+                    Text(
+                      userModel.bio!,
+                      maxLines: 3,
+                      overflow: TextOverflow.clip,
+                    ),
+                ],
+              ),
+            );
+          },
         ),
 
         const SizedBox(height: 20),
@@ -121,8 +138,7 @@ class ProfileViewInfo extends StatelessWidget {
               // edit profile
               GestureDetector(
                 onTap: () {
-                  Get.put(EditProfileController());
-                  Get.to(() => EditProfileView(userInfo: userInfo));
+                  Get.to(() => EditProfileView(userInfo: userModel));
                 },
                 child: Container(
                   alignment: Alignment.center,
@@ -191,8 +207,8 @@ class ProfileViewInfo extends StatelessWidget {
                 3,
                 (index) {
                   return Container(
-                    height: 65,
-                    width: 65,
+                    height: 60,
+                    width: 60,
                     margin: const EdgeInsets.all(8.0),
                     decoration: BoxDecoration(
                         shape: BoxShape.circle, border: Border.all()),

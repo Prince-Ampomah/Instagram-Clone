@@ -40,6 +40,7 @@ class _HomeViewState extends State<HomeView> {
       backgroundColor: const Color(0xFF5B5B5B),
       strokeWidth: 2,
       child: ListView(
+        // shrinkWrap: true,
         controller: scrollController,
         children: const [
           Story(),

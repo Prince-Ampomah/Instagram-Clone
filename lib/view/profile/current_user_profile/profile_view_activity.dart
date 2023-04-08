@@ -4,10 +4,10 @@ import 'package:instagram_clone/core/services/hive_services.dart';
 import 'package:instagram_clone/core/utils/helper_functions.dart';
 import 'package:instagram_clone/view/authentication/sign_in_view/sign_in_view.dart';
 
-import '../../controller/auth_controller/auth_controller.dart';
-import '../../core/constants/constants.dart';
-import '../../core/theme/theme.dart';
-import '../../core/widgets/cus_bottom_sheet.dart';
+import '../../../controller/auth_controller/auth_controller.dart';
+import '../../../core/constants/constants.dart';
+import '../../../core/theme/theme.dart';
+import '../../../core/widgets/cus_bottom_sheet.dart';
 
 class ProfileActivity extends StatelessWidget {
   const ProfileActivity({
@@ -25,9 +25,17 @@ class ProfileActivity extends StatelessWidget {
             ActivityListItem(
               onTap: () async {
                 await AuthController.instance.signOutUser();
-                await HiveServices.getUserBox().delete(Const.currentUser);
+                await HiveServices.getUserBox()
+                    .delete(Const.currentUser)
+                    .whenComplete(
+                      () => Get.offAll(() => const SignInView()),
+                      // noReturnPushReplacement(
+                      //   context,
+                      //   const SignInView(),
+                      // ),
+                    );
 
-                Get.offAll(() => const SignInView());
+                // Get.offAll(() => const SignInView());
               },
               iconData: Icons.logout,
               text: 'Logout',
@@ -100,19 +108,21 @@ class ActivityListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      onTap: onTap,
-      minLeadingWidth: 20,
-      leading: Icon(
-        iconData,
-        size: 27,
-        color: const Color.fromARGB(255, 27, 27, 27),
-      ),
-      title: Text(
-        text,
-        style: AppTheme.textStyle(context).titleMedium!.copyWith(
-              fontSize: 16,
-            ),
+    return Material(
+      child: ListTile(
+        onTap: onTap,
+        minLeadingWidth: 20,
+        leading: Icon(
+          iconData,
+          size: 27,
+          color: const Color.fromARGB(255, 27, 27, 27),
+        ),
+        title: Text(
+          text,
+          style: AppTheme.textStyle(context).titleMedium!.copyWith(
+                fontSize: 16,
+              ),
+        ),
       ),
     );
   }

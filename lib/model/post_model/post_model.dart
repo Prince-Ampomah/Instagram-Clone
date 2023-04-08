@@ -24,8 +24,8 @@ class PostModel {
   @HiveField(4)
   num? comment;
 
-  @HiveField(5)
-  UserModel? userModel;
+  // @HiveField(5)
+  // UserModel? userModel;
 
   @HiveField(6)
   PostLocationModel? location;
@@ -39,10 +39,14 @@ class PostModel {
   @HiveField(9)
   List<dynamic>? isLikedBy;
 
+  @HiveField(10)
+  String? userId;
+
   PostModel({
     this.id,
     this.media,
-    this.userModel,
+    // this.userModel,
+    this.userId,
     this.caption,
     this.like = 0,
     this.comment = 0,
@@ -56,9 +60,10 @@ class PostModel {
     Map<String, dynamic> map = {};
 
     map['id'] = id;
+    map['userId'] = userId;
     map['caption'] = caption;
     map['media'] = media;
-    map['user'] = userModel!.toJson();
+    // map['user'] = userModel!.toJson();
     map['like'] = like;
     map['comment'] = comment;
     map['location'] = location!.toJson();
@@ -72,11 +77,12 @@ class PostModel {
   factory PostModel.fromJson(Map<String, dynamic> json) {
     return PostModel(
       id: json['id'],
+      userId: json['userId'],
       caption: json['caption'],
       media: json['media'],
       like: json['like'],
       comment: json['comment'],
-      userModel: UserModel.fromJson(json['user']),
+      // userModel: UserModel.fromJson(json['user']),
       location: PostLocationModel.fromJson(json['location']),
       timePosted: (json['timePosted'] is Timestamp)
           ? json['timePosted'].toDate()

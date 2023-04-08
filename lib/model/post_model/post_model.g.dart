@@ -19,7 +19,7 @@ class PostModelAdapter extends TypeAdapter<PostModel> {
     return PostModel(
       id: fields[0] as String?,
       media: (fields[2] as List?)?.cast<dynamic>(),
-      userModel: fields[5] as UserModel?,
+      userId: fields[10] as String?,
       caption: fields[1] as String?,
       like: fields[3] as num?,
       comment: fields[4] as num?,
@@ -44,8 +44,6 @@ class PostModelAdapter extends TypeAdapter<PostModel> {
       ..write(obj.like)
       ..writeByte(4)
       ..write(obj.comment)
-      ..writeByte(5)
-      ..write(obj.userModel)
       ..writeByte(6)
       ..write(obj.location)
       ..writeByte(7)
@@ -53,7 +51,9 @@ class PostModelAdapter extends TypeAdapter<PostModel> {
       ..writeByte(8)
       ..write(obj.isSavedBy)
       ..writeByte(9)
-      ..write(obj.isLikedBy);
+      ..write(obj.isLikedBy)
+      ..writeByte(10)
+      ..write(obj.userId);
   }
 
   @override

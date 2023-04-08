@@ -27,34 +27,18 @@ class PostProfileController extends GetxController {
   queryPostByUser() async {
     // var postBox = HiveServices.getPosts();
 
+//  TODO: fix user id bug here
     var user = HiveServices.getUserBox().get(Const.currentUser);
 
     return _streamSubscription = FirebaseFirestore.instance
         .collection(Const.postsCollection)
-        .where('user.userId', isEqualTo: user!.userId!)
+        .where('userId', isEqualTo: user!.userId!)
         .orderBy('timePosted', descending: true)
         .snapshots()
         .listen((data) async {
       _setPostProfileList = data.docs.toList();
 
-      // Map<String, PostModel> postChanges = {};
-      // List<String> postsRemoved = [];
-
-      // for (var docRef in data.docChanges) {
-      //   if (docRef.type == DocumentChangeType.removed) {
-      //     postsRemoved.add(docRef.doc.id);
-      //   } else {
-      //     postChanges[docRef.doc.id] = PostModel.fromJson({
-      //       ...docRef.doc.data()!,
-      //     });
-      //   }
-      // }
-      // // save post offline
-      // await postBox.putAll(postChanges);
-
-      // delete all post data from offline db
-      //that has been deleted online
-      // await postBox.deleteAll(postsRemoved);
+      update();
 
       if (_setPostProfileList!.isEmpty) {
         hasData = false;

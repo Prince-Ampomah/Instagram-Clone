@@ -7,6 +7,7 @@ import 'controller/post_controller/like_controller.dart';
 import 'controller/post_controller/new_post_controller.dart';
 import 'controller/post_controller/post_controller.dart';
 import 'controller/post_controller/save_controller.dart';
+import 'controller/profile_controller/edit_profile_controller.dart';
 import 'core/constants/constants.dart';
 import 'core/services/hive_services.dart';
 import 'model/user_model/user_model.dart';
@@ -19,6 +20,7 @@ class AppState {
     Get.put(PostController());
     Get.put(LikeController());
     Get.put(CommentController());
+    Get.put(EditProfileController());
     Get.put(SavePostController());
   }
 }

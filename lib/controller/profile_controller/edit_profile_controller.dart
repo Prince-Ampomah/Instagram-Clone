@@ -43,7 +43,6 @@ class EditProfileController extends GetxController {
   updateProfilePicture(String profileImage) async {
     try {
       if (profileImage.isNotEmpty) {
-        var postId = HiveServices.getPostId();
         bool isValidURL = Uri.parse(profileImage).isAbsolute;
 
         isLoading = true;
@@ -62,14 +61,6 @@ class EditProfileController extends GetxController {
           userInfo!.userId!,
           {
             'profileImage': profileImage,
-          },
-        );
-
-        await firestoreDB.updateDoc(
-          Const.postsCollection,
-          postId,
-          {
-            'user.profileImage': profileImage,
           },
         );
 
@@ -92,7 +83,6 @@ class EditProfileController extends GetxController {
   updateFullname() async {
     try {
       if (fullnameController.text.isNotEmpty) {
-        var postId = HiveServices.getPostId();
         await firestoreDB.updateDoc(
           Const.usersCollection,
           userInfo!.userId!,
@@ -101,18 +91,11 @@ class EditProfileController extends GetxController {
           },
         );
 
-        await firestoreDB.updateDoc(
-          Const.postsCollection,
-          postId,
-          {
-            'user.fullname': fullnameController.text,
-          },
-        );
-
         userInfo!.fullname = fullnameController.text;
         await userInfo!.save();
 
         Get.back();
+        update();
       }
     } catch (e) {
       Utils.showErrorMessage(e.toString());
@@ -122,7 +105,6 @@ class EditProfileController extends GetxController {
   updateUsername() async {
     try {
       if (usernameController.text.isNotEmpty) {
-        var postId = HiveServices.getPostId();
         await firestoreDB.updateDoc(
           Const.usersCollection,
           userInfo!.userId!,
@@ -131,17 +113,11 @@ class EditProfileController extends GetxController {
           },
         );
 
-        await firestoreDB.updateDoc(
-          Const.postsCollection,
-          postId,
-          {
-            'user.userHandle': usernameController.text,
-          },
-        );
-
         userInfo!.userHandle = usernameController.text;
         await userInfo!.save();
+
         Get.back();
+        update();
       }
     } catch (e) {
       Utils.showErrorMessage(e.toString());
@@ -151,7 +127,6 @@ class EditProfileController extends GetxController {
   updateBio() async {
     try {
       if (bioController.text.isNotEmpty) {
-        var postId = HiveServices.getPostId();
         await firestoreDB.updateDoc(
           Const.usersCollection,
           userInfo!.userId!,
@@ -160,17 +135,10 @@ class EditProfileController extends GetxController {
           },
         );
 
-        await firestoreDB.updateDoc(
-          Const.postsCollection,
-          postId,
-          {
-            'user.bio': bioController.text,
-          },
-        );
-
         userInfo!.bio = bioController.text;
         await userInfo!.save();
         Get.back();
+        update();
       }
     } catch (e) {
       Utils.showErrorMessage(e.toString());

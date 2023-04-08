@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import '../../controller/app_layout_controller/app_layout_controller.dart';
 import '../../core/widgets/cus_bottom_nav.dart';
 import '../home/home_view.dart';
-import '../profile/profile_view.dart';
+import '../profile/current_user_profile/profile_view.dart';
 import '../reel/reel_view.dart';
 import '../search/search_view.dart';
 import '../shop/shop_view.dart';
@@ -15,7 +15,7 @@ import 'app_bar/search_appbar.dart';
 import 'app_bar/shop_appbar.dart';
 
 class AppLayoutView extends StatelessWidget {
-  AppLayoutView({super.key, this.pageIndex});
+  AppLayoutView({super.key, this.pageIndex = 0});
 
   /// inject an [AppLayoutController] instance in memory
   final appLayoutCtrl = Get.put(AppLayoutController());
@@ -24,6 +24,9 @@ class AppLayoutView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // update the current page
+    appLayoutCtrl.pageIndex = pageIndex!;
+
     List<Widget> pages = const [
       HomeView(),
       SearchView(),

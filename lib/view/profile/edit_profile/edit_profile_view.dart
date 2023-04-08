@@ -119,50 +119,55 @@ class _EditProfileViewState extends State<EditProfileView> {
                 );
               },
             ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(15, 20, 0, 0.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // name
+            GetBuilder<EditProfileController>(
+              builder: (controller) {
+                return Padding(
+                  padding: const EdgeInsets.fromLTRB(15, 20, 0, 0.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // name
 
-                  ListInfoItem(
-                    onTap: () => Get.to(
-                      () => EditNameView(fullname: widget.userInfo?.fullname),
-                    ),
-                    title: 'Name',
-                    description: widget.userInfo?.fullname,
+                      ListInfoItem(
+                        onTap: () => Get.to(
+                          () =>
+                              EditNameView(fullname: widget.userInfo?.fullname),
+                        ),
+                        title: 'Name',
+                        description: widget.userInfo?.fullname,
+                      ),
+
+                      const Divider(),
+
+                      8.ph,
+
+                      // username
+                      ListInfoItem(
+                        onTap: () => Get.to(
+                          () => EditUsernameView(
+                              username: widget.userInfo?.userHandle),
+                        ),
+                        title: 'Username',
+                        description: widget.userInfo?.userHandle,
+                      ),
+
+                      const Divider(),
+
+                      8.ph,
+
+                      // Bio data
+                      ListInfoItem(
+                        onTap: () => Get.to(
+                          () => EditBioView(bio: widget.userInfo?.bio),
+                        ),
+                        title: 'Bio',
+                        description: widget.userInfo?.bio,
+                      ),
+                      const Divider(),
+                    ],
                   ),
-
-                  const Divider(),
-
-                  8.ph,
-
-                  // username
-                  ListInfoItem(
-                    onTap: () => Get.to(
-                      () => EditUsernameView(
-                          username: widget.userInfo?.userHandle),
-                    ),
-                    title: 'Username',
-                    description: widget.userInfo?.userHandle,
-                  ),
-
-                  const Divider(),
-
-                  8.ph,
-
-                  // Bio data
-                  ListInfoItem(
-                    onTap: () => Get.to(
-                      () => EditBioView(bio: widget.userInfo?.bio),
-                    ),
-                    title: 'Bio',
-                    description: widget.userInfo?.bio,
-                  ),
-                  const Divider(),
-                ],
-              ),
+                );
+              },
             ),
           ],
         ),
@@ -177,10 +182,12 @@ class ListInfoItem extends StatelessWidget {
     this.onTap,
     required this.title,
     this.description,
+    this.descriptionMaxLines = 1,
   });
 
   final Function()? onTap;
   final String? title, description;
+  final int? descriptionMaxLines;
 
   @override
   Widget build(BuildContext context) {
@@ -201,6 +208,7 @@ class ListInfoItem extends StatelessWidget {
             8.ph,
             Text(
               description ?? '',
+              maxLines: descriptionMaxLines,
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
           ],
