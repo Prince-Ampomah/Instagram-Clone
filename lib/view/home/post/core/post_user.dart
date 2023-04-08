@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:instagram_clone/core/widgets/cus_cached_image.dart';
 
 import '../../../../core/constants/constants.dart';
+import '../../../../core/services/hive_services.dart';
 import '../../../../core/widgets/cus_circular_image.dart';
+import '../../../../model/user_model/user_model.dart';
 
 class PostUser extends StatelessWidget {
   const PostUser({

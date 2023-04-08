@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:instagram_clone/core/services/hive_services.dart';
 import 'package:instagram_clone/core/widgets/cus_cached_image.dart';
 import 'package:instagram_clone/model/user_model/user_model.dart';
-import 'package:instagram_clone/view/profile/edit_profile/edit_profile_view.dart';
-import '../../controller/profile_controller/edit_profile_controller.dart';
-import '../../core/constants/constants.dart';
-import '../../core/widgets/cus_rich_text.dart';
+import '../../../core/constants/constants.dart';
+import '../../../core/theme/app_colors.dart';
 
-class ProfileViewInfo extends StatelessWidget {
-  const ProfileViewInfo({
+class UsersProfileViewInfo extends StatelessWidget {
+  const UsersProfileViewInfo({
     super.key,
   });
 
@@ -98,19 +95,25 @@ class ProfileViewInfo extends StatelessWidget {
         // username and caption widget
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: CustomRichText(
-            text1: '${userInfo.fullname ?? 'full name'}\n',
-            text2:
-                "A ship is safe in the harbor but that's not ships are for\nWilliam Shed.\nExplore🌍\nAnd\nConquer🙏\nHard work💯",
-            text1Style: Theme.of(context)
-                .textTheme
-                .labelLarge!
-                .copyWith(fontWeight: FontWeight.bold, fontSize: 12),
-            text2Style:
-                Theme.of(context).textTheme.labelLarge!.copyWith(fontSize: 12),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                userInfo.fullname ?? 'full name',
+                style: Theme.of(context)
+                    .textTheme
+                    .labelLarge!
+                    .copyWith(fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 5),
+              Text(
+                '${userInfo.bio}',
+                maxLines: 3,
+                overflow: TextOverflow.clip,
+              ),
+            ],
           ),
         ),
-
         const SizedBox(height: 20),
 
         // edit profile, share profile widget
@@ -118,24 +121,26 @@ class ProfileViewInfo extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Row(
             children: [
-              // edit profile
+              // follow
               GestureDetector(
-                onTap: () {
-                  Get.put(EditProfileController());
-                  Get.to(() => EditProfileView(userInfo: userInfo));
-                },
-                child: Container(
-                  alignment: Alignment.center,
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 8, horizontal: 30),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFEFEFEF),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: const Text(
-                    'Edit profile',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
+                onTap: () {},
+                child: Expanded(
+                  child: Container(
+                    alignment: Alignment.center,
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 10,
+                      horizontal: 40,
+                    ),
+                    decoration: BoxDecoration(
+                      color: AppColors.buttonColor,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: const Text(
+                      'Follow',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.whiteColor,
+                      ),
                     ),
                   ),
                 ),
@@ -144,23 +149,30 @@ class ProfileViewInfo extends StatelessWidget {
               const SizedBox(width: 10),
 
               // share profile
-              Container(
-                alignment: Alignment.center,
-                padding:
-                    const EdgeInsets.symmetric(vertical: 8, horizontal: 30),
-                decoration: BoxDecoration(
-                  color: const Color(0xFFEFEFEF),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: const Text(
-                  'Share profile',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
+              GestureDetector(
+                onTap: () {},
+                child: Expanded(
+                  child: Container(
+                    alignment: Alignment.center,
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 10,
+                      horizontal: 40,
+                    ),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFEFEFEF),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: const Text(
+                      'Message',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                 ),
               ),
 
-              const SizedBox(width: 10),
+              const Spacer(),
 
               // icon
               Container(
@@ -191,8 +203,8 @@ class ProfileViewInfo extends StatelessWidget {
                 3,
                 (index) {
                   return Container(
-                    height: 65,
-                    width: 65,
+                    height: 60,
+                    width: 60,
                     margin: const EdgeInsets.all(8.0),
                     decoration: BoxDecoration(
                         shape: BoxShape.circle, border: Border.all()),

@@ -4,10 +4,10 @@ import 'package:instagram_clone/core/services/hive_services.dart';
 import 'package:instagram_clone/core/utils/helper_functions.dart';
 import 'package:instagram_clone/view/authentication/sign_in_view/sign_in_view.dart';
 
-import '../../controller/auth_controller/auth_controller.dart';
-import '../../core/constants/constants.dart';
-import '../../core/theme/theme.dart';
-import '../../core/widgets/cus_bottom_sheet.dart';
+import '../../../controller/auth_controller/auth_controller.dart';
+import '../../../core/constants/constants.dart';
+import '../../../core/theme/theme.dart';
+import '../../../core/widgets/cus_bottom_sheet.dart';
 
 class ProfileActivity extends StatelessWidget {
   const ProfileActivity({

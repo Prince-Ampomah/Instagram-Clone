@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/core/services/hive_services.dart';
-import 'package:instagram_clone/view/profile/profile_view_activity.dart';
 
 import '../../../core/constants/constants.dart';
 import '../../../core/theme/theme.dart';
+import '../../profile/current_user_profile/profile_view_activity.dart';
 
 class ProfileAppBar extends StatelessWidget {
   const ProfileAppBar({

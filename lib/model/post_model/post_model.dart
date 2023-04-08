@@ -39,10 +39,14 @@ class PostModel {
   @HiveField(9)
   List<dynamic>? isLikedBy;
 
+  @HiveField(10)
+  String? userId;
+
   PostModel({
     this.id,
     this.media,
     this.userModel,
+    this.userId,
     this.caption,
     this.like = 0,
     this.comment = 0,
@@ -56,6 +60,7 @@ class PostModel {
     Map<String, dynamic> map = {};
 
     map['id'] = id;
+    map['userId'] = userId;
     map['caption'] = caption;
     map['media'] = media;
     map['user'] = userModel!.toJson();
@@ -72,6 +77,7 @@ class PostModel {
   factory PostModel.fromJson(Map<String, dynamic> json) {
     return PostModel(
       id: json['id'],
+      userId: json['userId'],
       caption: json['caption'],
       media: json['media'],
       like: json['like'],

@@ -177,10 +177,12 @@ class ListInfoItem extends StatelessWidget {
     this.onTap,
     required this.title,
     this.description,
+    this.descriptionMaxLines = 1,
   });
 
   final Function()? onTap;
   final String? title, description;
+  final int? descriptionMaxLines;
 
   @override
   Widget build(BuildContext context) {
@@ -201,6 +203,7 @@ class ListInfoItem extends StatelessWidget {
             8.ph,
             Text(
               description ?? '',
+              maxLines: descriptionMaxLines,
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
           ],

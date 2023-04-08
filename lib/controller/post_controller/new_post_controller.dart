@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -48,7 +49,7 @@ class NewPostController extends GetxController {
       media.clear();
 
       // TODO: Fix (type 'List<String?>' is not a subtype of type 'Iterable<String>' of 'iterable')
-      media.addAll(result.paths);
+      media.addAll(result.paths.whereType<String>());
       // _TypeError (type 'List<String?>' is not a subtype of type 'Iterable<String>' of 'iterable')
     }
     return media;
@@ -67,9 +68,10 @@ class NewPostController extends GetxController {
 
     PostModel postModel = PostModel(
       id: postId,
+      userId: userModel!.userId,
       caption: captionController.text,
       media: media,
-      userModel: userModel!,
+      userModel: userModel,
       location: PostLocationModel(),
       timePosted: DateTime.now(),
     );
@@ -77,7 +79,7 @@ class NewPostController extends GetxController {
     try {
       Get.off(() => AppLayoutView(pageIndex: 0));
       //   upload to firestore database
-      await saveToDB(postModel);
+      await saveToDB(postModel, userModel);
 
       // upload media to frebase storage
       await uploadMediaFiles();
@@ -92,13 +94,59 @@ class NewPostController extends GetxController {
     }
   }
 
-  Future<void> saveToDB(PostModel postModel) async {
+  Future<void> saveToDB(PostModel postModel, UserModel userModel) async {
+    var incrementNumberofPost = FieldValue.increment(1);
     // upload to firestore database
     await firestoreDB.addDocWithId(
       Const.postsCollection,
       postId,
       postModel.toJson(),
     );
+
+    await firestoreDB.updateDoc(
+      Const.usersCollection,
+      postModel.userModel!.userId!,
+      {
+        'numberOfPost': incrementNumberofPost,
+      },
+    );
+
+    // update all post as well
+    // await firestoreDB
+    //     .getDocByField(
+    //   Const.postsCollection,
+    //   'user.userId',
+    //   postModel.userModel!.userId!,
+    // )
+    //     .then((value) {
+    //   for (var doc in value.docs) {
+    //     doc.reference.update({
+    //       'user.numberOfPost': incrementNumberofPost,
+    //     });
+    //   }
+    // });
+
+    // userModel.numberOfPost = int.parse('$incrementNumberofPost');
+    // userModel.save();
+
+    // HiveServices.getUserBox().put(Const.currentUser, userModel);
+  }
+
+  Future<void> updateAllPost(
+      PostModel postModel, FieldValue incrementNumberofPost) async {
+    await firestoreDB
+        .getDocByField(
+      Const.postsCollection,
+      'user.userId',
+      postModel.userModel!.userId!,
+    )
+        .then((value) {
+      for (var doc in value.docs) {
+        doc.reference.update({
+          'user.numberofPost': incrementNumberofPost,
+        });
+      }
+    });
   }
 
   Future<void> uploadMediaFiles() async {

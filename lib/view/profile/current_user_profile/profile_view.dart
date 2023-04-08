@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:instagram_clone/view/profile/profile_view_gallery.dart';
-import 'package:instagram_clone/view/profile/profile_view_info.dart';
+import 'profile_view_gallery.dart';
+import 'profile_view_info.dart';
 
 class ProfileView extends StatelessWidget {
   const ProfileView({super.key});
@@ -15,8 +15,8 @@ class ProfileView extends StatelessWidget {
           SliverAppBar(
             automaticallyImplyLeading: false,
             flexibleSpace: const ProfileViewInfo(),
-            expandedHeight: size.height * 0.48,
-            collapsedHeight: size.height * 0.48,
+            expandedHeight: size.height * 0.43,
+            collapsedHeight: size.height * 0.43,
             scrolledUnderElevation: 0.0,
           ),
         ];

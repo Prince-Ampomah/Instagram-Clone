@@ -4,9 +4,9 @@ class ProfileModel {
   String userProfileImage;
   String username;
   String? caption;
-  double numberOfPost;
-  double numberOfFollowers;
-  double numberOfFollowing;
+  num numberOfPost;
+  num numberOfFollowers;
+  num numberOfFollowing;
   StoryModel? yourStories;
 
   ProfileModel({

@@ -43,7 +43,6 @@ class EditProfileController extends GetxController {
   updateProfilePicture(String profileImage) async {
     try {
       if (profileImage.isNotEmpty) {
-        var postId = HiveServices.getPostId();
         bool isValidURL = Uri.parse(profileImage).isAbsolute;
 
         isLoading = true;
@@ -65,13 +64,19 @@ class EditProfileController extends GetxController {
           },
         );
 
-        await firestoreDB.updateDoc(
+        await firestoreDB
+            .getDocByField(
           Const.postsCollection,
-          postId,
-          {
-            'user.profileImage': profileImage,
-          },
-        );
+          'user.userId',
+          userInfo!.userId,
+        )
+            .then((value) {
+          for (var doc in value.docs) {
+            doc.reference.update({
+              'user.profileImage': profileImage,
+            });
+          }
+        });
 
         userInfo!.profileImage = profileImage;
         await userInfo!.save();
@@ -92,7 +97,6 @@ class EditProfileController extends GetxController {
   updateFullname() async {
     try {
       if (fullnameController.text.isNotEmpty) {
-        var postId = HiveServices.getPostId();
         await firestoreDB.updateDoc(
           Const.usersCollection,
           userInfo!.userId!,
@@ -101,13 +105,27 @@ class EditProfileController extends GetxController {
           },
         );
 
-        await firestoreDB.updateDoc(
+        await firestoreDB
+            .getDocByField(
           Const.postsCollection,
-          postId,
-          {
-            'user.fullname': fullnameController.text,
-          },
-        );
+          'user.userId',
+          userInfo!.userId,
+        )
+            .then((value) {
+          for (var doc in value.docs) {
+            doc.reference.update({
+              'user.fullname': fullnameController.text,
+            });
+          }
+        });
+
+        // await firestoreDB.updateDoc(
+        //   Const.postsCollection,
+        //   postId,
+        //   {
+        //     'user.fullname': fullnameController.text,
+        //   },
+        // );
 
         userInfo!.fullname = fullnameController.text;
         await userInfo!.save();
@@ -122,7 +140,6 @@ class EditProfileController extends GetxController {
   updateUsername() async {
     try {
       if (usernameController.text.isNotEmpty) {
-        var postId = HiveServices.getPostId();
         await firestoreDB.updateDoc(
           Const.usersCollection,
           userInfo!.userId!,
@@ -131,13 +148,19 @@ class EditProfileController extends GetxController {
           },
         );
 
-        await firestoreDB.updateDoc(
+        await firestoreDB
+            .getDocByField(
           Const.postsCollection,
-          postId,
-          {
-            'user.userHandle': usernameController.text,
-          },
-        );
+          'user.userId',
+          userInfo!.userId,
+        )
+            .then((value) {
+          for (var doc in value.docs) {
+            doc.reference.update({
+              'user.userHandle': usernameController.text,
+            });
+          }
+        });
 
         userInfo!.userHandle = usernameController.text;
         await userInfo!.save();
@@ -151,7 +174,6 @@ class EditProfileController extends GetxController {
   updateBio() async {
     try {
       if (bioController.text.isNotEmpty) {
-        var postId = HiveServices.getPostId();
         await firestoreDB.updateDoc(
           Const.usersCollection,
           userInfo!.userId!,
@@ -160,13 +182,20 @@ class EditProfileController extends GetxController {
           },
         );
 
-        await firestoreDB.updateDoc(
+        // update post as well
+        await firestoreDB
+            .getDocByField(
           Const.postsCollection,
-          postId,
-          {
-            'user.bio': bioController.text,
-          },
-        );
+          'user.userId',
+          userInfo!.userId,
+        )
+            .then((value) {
+          for (var doc in value.docs) {
+            doc.reference.update({
+              'user.bio': bioController.text,
+            });
+          }
+        });
 
         userInfo!.bio = bioController.text;
         await userInfo!.save();

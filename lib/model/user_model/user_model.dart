@@ -33,6 +33,15 @@ class UserModel extends HiveObject {
   @HiveField(8)
   bool? isEmailVerified;
 
+  @HiveField(9)
+  num numberOfFollowers;
+
+  @HiveField(10)
+  num numberOfFollowing;
+
+  @HiveField(11)
+  num numberOfPost;
+
   UserModel({
     this.userId,
     this.profileImage,
@@ -43,6 +52,9 @@ class UserModel extends HiveObject {
     this.createdAt,
     this.isEmailVerified = false,
     this.bio,
+    this.numberOfPost = 0,
+    this.numberOfFollowers = 0,
+    this.numberOfFollowing = 0,
   });
 
   Map<String, dynamic> toJson() {
@@ -57,6 +69,9 @@ class UserModel extends HiveObject {
     map['isEmailVerified'] = isEmailVerified;
     map['createdAt'] = createdAt;
     map['bio'] = bio;
+    map['numberOfPost'] = numberOfPost;
+    map['numberOfFollowers'] = numberOfFollowers;
+    map['numberOfFollowing'] = numberOfFollowing;
 
     return map;
   }
@@ -71,6 +86,9 @@ class UserModel extends HiveObject {
       userHandle: json['userHandle'],
       isEmailVerified: json['isEmailVerified'],
       bio: json['bio'],
+      numberOfPost: json['numberOfPost'],
+      numberOfFollowers: json['numberOfFollowers'],
+      numberOfFollowing: json['numberOfFollowing'],
       createdAt: (json['createdAt'] is Timestamp)
           ? json['createdAt'].toDate()
           : json['createdAt'],
