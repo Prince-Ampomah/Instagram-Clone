@@ -116,7 +116,7 @@ class ListPostProfileItem extends StatelessWidget {
               PostModel.fromJson(controller.getPostProfileList![index].data());
           return GestureDetector(
             onTap: () {
-              Get.to(() => const UsersProfileView());
+              // Get.to(() => const UsersProfileView());
             },
             child: Stack(
               children: [

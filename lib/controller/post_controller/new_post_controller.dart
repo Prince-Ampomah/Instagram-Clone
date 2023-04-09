@@ -96,17 +96,16 @@ class NewPostController extends GetxController {
   }
 
   Future<void> saveToDB(PostModel postModel, UserModel userModel) async {
-    // upload to firestore database
     await firestoreDB.addDocWithId(
       Const.postsCollection,
       postId,
       postModel.toJson(),
     );
 
-    await updateUserData(userModel);
+    await updateNumberOfPost(userModel);
   }
 
-  Future<void> updateUserData(UserModel userModel) async {
+  Future<void> updateNumberOfPost(UserModel userModel) async {
     await firestoreDB.updateDoc(
       Const.usersCollection,
       userModel.userId!,

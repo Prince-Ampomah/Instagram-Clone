@@ -53,6 +53,7 @@ class _PostItemState extends State<PostItem> {
                 // userHandle: widget.postModel!.userModel!.userHandle,
                 // user the userModel parameter
                 userModel: userModelsnapshot.data,
+                postModel: widget.postModel,
               ),
               PostImage(
                 images: widget.postModel!.media,

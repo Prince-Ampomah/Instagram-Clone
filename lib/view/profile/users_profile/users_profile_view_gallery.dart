@@ -1,17 +1,24 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:instagram_clone/controller/profile_controller/post_profile_controller.dart';
 import 'package:instagram_clone/core/widgets/cus_cached_image.dart';
 import 'package:instagram_clone/model/post_model/post_model.dart';
 
+import '../../../core/constants/constants.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/widgets/cus_circular_progressbar.dart';
 import '../../../core/widgets/cus_tab_bar.dart';
+import '../../../repository/repository_abstract/database_abstract.dart';
+import '../../../repository/respository_implementation/database_implementation.dart';
 
 class UsersProfileViewGallery extends StatefulWidget {
   const UsersProfileViewGallery({
     super.key,
+    this.postModel,
   });
+
+  final PostModel? postModel;
 
   @override
   State<UsersProfileViewGallery> createState() =>
@@ -64,27 +71,7 @@ class _UsersProfileViewGalleryState extends State<UsersProfileViewGallery>
             physics: const BouncingScrollPhysics(),
             controller: tabController,
             children: [
-              GetBuilder<PostProfileController>(
-                builder: (controller) {
-                  if (controller.waiting) {
-                    return const Center(
-                      child: CustomCircularProgressBar(),
-                    );
-                  }
-
-                  if (controller.hasError) {
-                    return Center(
-                      child: Text(controller.getTextState),
-                    );
-                  }
-
-                  if (controller.hasData) {
-                    return ListPostProfileItem(controller: controller);
-                  }
-
-                  return Center(child: Text(controller.getTextState));
-                },
-              ),
+              UserProfileFeeds(postModel: widget.postModel),
               const Center(child: Text('tagged images')),
             ],
           ),
@@ -94,28 +81,105 @@ class _UsersProfileViewGalleryState extends State<UsersProfileViewGallery>
   }
 }
 
-class ListPostProfileItem extends StatelessWidget {
-  const ListPostProfileItem({
+class UserProfileFeeds extends StatelessWidget {
+  const UserProfileFeeds({
     super.key,
-    required this.controller,
+    this.postModel,
   });
 
-  final PostProfileController controller;
+  final PostModel? postModel;
 
   @override
   Widget build(BuildContext context) {
+    Future<QuerySnapshot<Map<String, dynamic>>> getUserProfileFeed() async {
+      return FirebaseFirestore.instance
+          .collection(Const.postsCollection)
+          .where('userId', isEqualTo: postModel!.userId)
+          .orderBy('timePosted', descending: true)
+          .get();
+    }
+
+    return FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
+      future: getUserProfileFeed(),
+      builder: (
+        BuildContext context,
+        AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot,
+      ) {
+        if (snapshot.hasError) {
+          return Center(
+            child: Text(snapshot.error.toString()),
+          );
+        }
+
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CustomCircularProgressBar());
+        }
+
+        if (snapshot.data!.docs.isEmpty) {
+          return const Center(child: Text('No feed posted yet'));
+        }
+
+        if (snapshot.hasData) {
+          return ListPostProfileItem(snapshot: snapshot);
+        }
+
+        return Center(child: Text('Something went wrong: ${snapshot.error}'));
+      },
+    );
+    // return GetBuilder<PostProfileController>(
+    //   builder: (controller) {
+    //     if (controller.waiting) {
+    //       return const Center(
+    //         child: CustomCircularProgressBar(),
+    //       );
+    //     }
+
+    //     if (controller.hasError) {
+    //       return Center(
+    //         child: Text(controller.getTextState),
+    //       );
+    //     }
+
+    //     if (controller.hasData) {
+    //       return ListPostProfileItem(snapshot: snapshot);
+    //     }
+
+    //     return Center(child: Text(controller.getTextState));
+    //   },
+    // );
+  }
+}
+
+class ListPostProfileItem extends StatelessWidget {
+  const ListPostProfileItem({
+    super.key,
+    this.snapshot,
+    this.controller,
+  });
+
+  final PostProfileController? controller;
+  final AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>? snapshot;
+
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return GridView.count(
       crossAxisCount: 3,
       mainAxisSpacing: 1.0,
       crossAxisSpacing: 1.0,
       children: List.generate(
-        controller.getPostProfileList!.length,
+        snapshot!.data!.docs.length,
+        // controller!.getPostProfileList!.length,
         (index) {
-          PostModel postModel =
-              PostModel.fromJson(controller.getPostProfileList![index].data());
+          PostModel postModel = PostModel.fromJson(
+            snapshot!.data!.docs[index].data(),
+            // controller!.getPostProfileList![index].data(),
+          );
+
           return Stack(
             children: [
               CustomCachedImge(
+                width: size.width,
                 imageUrl: postModel.media![0],
                 fit: BoxFit.cover,
               ),
@@ -138,3 +202,28 @@ class ListPostProfileItem extends StatelessWidget {
     );
   }
 }
+
+/**
+ * 
+    GetBuilder<PostProfileController>(
+                builder: (controller) {
+                  if (controller.waiting) {
+                    return const Center(
+                      child: CustomCircularProgressBar(),
+                    );
+                  }
+
+                  if (controller.hasError) {
+                    return Center(
+                      child: Text(controller.getTextState),
+                    );
+                  }
+
+                  if (controller.hasData) {
+                    return ListPostProfileItem(controller: controller);
+                  }
+
+                  return Center(child: Text(controller.getTextState));
+                },
+              ),
+ */

@@ -59,7 +59,7 @@ class _PostImageState extends State<PostImage> with TickerProviderStateMixin {
       duration: const Duration(milliseconds: 1500),
       reverseDuration: const Duration(milliseconds: 400),
     );
-    _heartAnimation = Tween(begin: 90.0, end: 120.0).animate(
+    _heartAnimation = Tween(begin: 90.0, end: 100.0).animate(
       CurvedAnimation(
         curve: Curves.elasticOut,
         reverseCurve: Curves.ease,

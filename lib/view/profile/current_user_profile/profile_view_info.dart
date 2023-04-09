@@ -14,7 +14,7 @@ class ProfileViewInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    UserModel? userInfo = HiveServices.getUserBox().get(Const.currentUser);
+    UserModel? userModel = HiveServices.getUserBox().get(Const.currentUser);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -25,7 +25,7 @@ class ProfileViewInfo extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              userInfo!.profileImage != null
+              userModel!.profileImage != null
                   ? GetBuilder<EditProfileController>(
                       builder: (controller) {
                         return ClipRRect(
@@ -33,7 +33,7 @@ class ProfileViewInfo extends StatelessWidget {
                           child: CustomCachedImge(
                             height: 75,
                             width: 75,
-                            imageUrl: userInfo.profileImage!,
+                            imageUrl: userModel.profileImage!,
                             fit: BoxFit.cover,
                           ),
                         );
@@ -59,7 +59,7 @@ class ProfileViewInfo extends StatelessWidget {
                   Column(
                     children: [
                       Text(
-                        '${userInfo.numberOfPost}',
+                        '${userModel.numberOfPost}',
                         style: Theme.of(context)
                             .textTheme
                             .labelLarge!
@@ -72,7 +72,7 @@ class ProfileViewInfo extends StatelessWidget {
                   Column(
                     children: [
                       Text(
-                        '${userInfo.numberOfFollowers}',
+                        '${userModel.numberOfFollowers}',
                         style: Theme.of(context)
                             .textTheme
                             .labelLarge!
@@ -85,7 +85,7 @@ class ProfileViewInfo extends StatelessWidget {
                   Column(
                     children: [
                       Text(
-                        '${userInfo.numberOfFollowing}',
+                        '${userModel.numberOfFollowing}',
                         style: Theme.of(context)
                             .textTheme
                             .labelLarge!
@@ -109,16 +109,16 @@ class ProfileViewInfo extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    userInfo.fullname ?? 'full name',
+                    userModel.fullname ?? 'full name',
                     style: Theme.of(context)
                         .textTheme
                         .labelLarge!
                         .copyWith(fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 5),
-                  if (userInfo.bio != null)
+                  if (userModel.bio != null)
                     Text(
-                      userInfo.bio!,
+                      userModel.bio!,
                       maxLines: 3,
                       overflow: TextOverflow.clip,
                     ),
@@ -138,8 +138,7 @@ class ProfileViewInfo extends StatelessWidget {
               // edit profile
               GestureDetector(
                 onTap: () {
-                  // Get.put(EditProfileController());
-                  Get.to(() => EditProfileView(userInfo: userInfo));
+                  Get.to(() => EditProfileView(userInfo: userModel));
                 },
                 child: Container(
                   alignment: Alignment.center,

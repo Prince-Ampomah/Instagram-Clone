@@ -40,25 +40,6 @@ class PostProfileController extends GetxController {
 
       update();
 
-      // Map<String, PostModel> postChanges = {};
-      // List<String> postsRemoved = [];
-
-      // for (var docRef in data.docChanges) {
-      //   if (docRef.type == DocumentChangeType.removed) {
-      //     postsRemoved.add(docRef.doc.id);
-      //   } else {
-      //     postChanges[docRef.doc.id] = PostModel.fromJson({
-      //       ...docRef.doc.data()!,
-      //     });
-      //   }
-      // }
-      // // save post offline
-      // await postBox.putAll(postChanges);
-
-      // delete all post data from offline db
-      //that has been deleted online
-      // await postBox.deleteAll(postsRemoved);
-
       if (_setPostProfileList!.isEmpty) {
         hasData = false;
         _setTextState = 'No feed yet';
