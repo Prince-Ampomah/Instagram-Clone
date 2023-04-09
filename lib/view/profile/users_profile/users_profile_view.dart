@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:instagram_clone/controller/models_controller/models_controller.dart';
 import 'package:instagram_clone/core/widgets/cus_appbar.dart';
 import 'package:instagram_clone/model/user_model/user_model.dart';
 import 'package:instagram_clone/view/profile/users_profile/users_profile_view_gallery.dart';

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+import '../../../controller/models_controller/models_controller.dart';
 import '../../../core/constants/constants.dart';
 import '../../../model/post_model/post_model.dart';
 import '../../../model/user_model/user_model.dart';
@@ -49,9 +50,6 @@ class _PostItemState extends State<PostItem> {
             mainAxisSize: MainAxisSize.min,
             children: [
               PostUser(
-                // image: widget.postModel!.userModel!.profileImage,
-                // userHandle: widget.postModel!.userModel!.userHandle,
-                // user the userModel parameter
                 userModel: userModelsnapshot.data,
                 postModel: widget.postModel,
               ),

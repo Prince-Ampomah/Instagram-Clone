@@ -91,7 +91,8 @@ onLoading(BuildContext context, String message, {bool isDimissible = true}) {
 }
 
 Future<String> getImagePicker(imageSource) async {
-  final pickedFile = await ImagePicker().pickImage(source: imageSource);
+  ImagePicker imagePicker = ImagePicker();
+  final pickedFile = await imagePicker.pickImage(source: imageSource);
   String image = '';
   if (pickedFile != null) {
     image = pickedFile.path;
