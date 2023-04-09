@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:overlay_support/overlay_support.dart';
 
 import '../../core/constants/constants.dart';
 import '../../core/services/hive_services.dart';
@@ -31,22 +33,26 @@ class SavePostController extends GetxController {
 
       if (!postModel!.isSavedBy!.contains(userId)) {
         // add user to the saved list and increase the like
-        return await firestoreDB.updateDoc(
+        await firestoreDB.updateDoc(
           Const.postsCollection,
           postId,
           {
             'isSavedBy': FieldValue.arrayUnion([userId]),
           },
         );
+
+        Utils.showNotificationMessage('Saved Successfully');
       } else {
         // remove user from the saved list and decrease the like
-        return await firestoreDB.updateDoc(
+        await firestoreDB.updateDoc(
           Const.postsCollection,
           postId,
           {
             'isSavedBy': FieldValue.arrayRemove([userId]),
           },
         );
+
+        Utils.showNotificationMessage('Removed Successfully');
       }
     } catch (e) {
       Utils.showErrorMessage(e.toString());
