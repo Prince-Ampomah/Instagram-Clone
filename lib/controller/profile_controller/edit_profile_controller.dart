@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../core/constants/constants.dart';
 import '../../core/services/hive_services.dart';
@@ -27,7 +29,18 @@ class EditProfileController extends GetxController {
   StorageContract storageContract = StorageImplementation();
 
   UserModel? userInfo = HiveServices.getUserBox().get(Const.currentUser);
-// var  post = HiveServices.getPosts();
+
+  Future<String> testCompressAndGetFile(String image, String targetPath) async {
+    File? result = await FlutterImageCompress.compressAndGetFile(
+      image,
+      targetPath,
+      quality: 88,
+      rotate: 180,
+      format: CompressFormat.png,
+    );
+
+    return result!.path;
+  }
 
   void getUserProfilePic(imageSource) async {
     var imagePath = await getImagePicker(imageSource);

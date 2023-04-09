@@ -6,6 +6,7 @@ import 'package:instagram_clone/model/post_model/post_model.dart';
 import 'package:instagram_clone/view/layout/app_layout.dart';
 import 'package:instagram_clone/view/profile/users_profile/users_profile_view.dart';
 
+import '../../../controller/models_controller/models_controller.dart';
 import '../../../core/constants/constants.dart';
 import '../../../core/services/hive_services.dart';
 import '../../../core/widgets/cus_circular_image.dart';

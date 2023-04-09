@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:instagram_clone/controller/models_controller/models_controller.dart';
 import 'package:instagram_clone/core/widgets/cus_circular_progressbar.dart';
 import 'package:instagram_clone/model/post_model/post_model.dart';
 import 'package:instagram_clone/view/home/post/post_item.dart';
@@ -35,6 +36,8 @@ class PostListItem extends StatelessWidget {
           // postController.getPostList![index].data()
           PostModel postModel =
               PostModel.fromJson(snapshot!.data!.docs[index].data());
+
+          ModelController.instance.postModel = postModel;
 
           return PostItem(postModel: postModel);
         }

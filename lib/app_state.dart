@@ -22,5 +22,6 @@ class AppState {
     Get.put(CommentController());
     Get.put(EditProfileController());
     Get.put(SavePostController());
+    Get.put(ModelController());
   }
 }
