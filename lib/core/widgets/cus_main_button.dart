@@ -130,3 +130,61 @@ class MainButton extends StatelessWidget {
     );
   }
 }
+
+class AppButton extends StatelessWidget {
+  const AppButton({
+    super.key,
+    this.onPressed,
+    required this.title,
+    this.bgColor,
+    this.foregroundColor = Colors.white,
+    this.textColor,
+    this.iconData,
+    this.isLoading,
+    this.disabled,
+    this.fontSize,
+    this.fontWeight = FontWeight.w600,
+    this.borderRadius = 5,
+    this.letterSpacing,
+    this.buttonHeight,
+  });
+
+  final String title;
+  final Color? foregroundColor, bgColor, textColor;
+  final IconData? iconData;
+  final bool? isLoading, disabled;
+  final double? fontSize, letterSpacing, borderRadius, buttonHeight;
+  final FontWeight? fontWeight;
+  final Function()? onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: onPressed,
+      style: ButtonStyle(
+        foregroundColor: MaterialStateProperty.all<Color?>(foregroundColor),
+        backgroundColor: MaterialStateProperty.all<Color?>(bgColor),
+        padding: MaterialStateProperty.all(
+          const EdgeInsets.symmetric(
+            horizontal: 14,
+            vertical: 14,
+          ),
+        ),
+        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(borderRadius!),
+          ),
+        ),
+      ),
+      child: Text(
+        title,
+        style: TextStyle(
+          color: textColor,
+          fontWeight: fontWeight,
+          fontSize: fontSize,
+          letterSpacing: letterSpacing,
+        ),
+      ),
+    );
+  }
+}

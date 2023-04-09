@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:instagram_clone/view/notification/notification_view.dart';
 
 import '../../../controller/post_controller/new_post_controller.dart';
 import '../../../core/constants/constants.dart';
@@ -71,7 +72,7 @@ class HomeAppBar extends StatelessWidget {
         ),
         GestureDetector(
           onTap: () {
-            // Get.to(() => const AnimateLikeIcon());
+            Get.to(() => const NotificationView());
           },
           child: const Icon(Icons.favorite_outline, size: 30),
         ),
