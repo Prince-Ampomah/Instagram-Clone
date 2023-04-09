@@ -17,7 +17,6 @@ import '../../repository/respository_implementation/database_implementation.dart
 import '../../repository/respository_implementation/storage_implementation.dart';
 import '../../view/add_post/add_new_post.dart';
 import '../../view/layout/app_layout.dart';
-import '../models_controller/models_controller.dart';
 
 class NewPostController extends GetxController {
   static NewPostController instance = Get.find<NewPostController>();
@@ -47,10 +46,12 @@ class NewPostController extends GetxController {
 
     if (result != null) {
       media.clear();
+      // for (var element in result.paths) {
+      //   media.add(element);
+      // }
+      media.addAll(result.paths); //.whereType<String>()
 
-      // TODO: Fix (type 'List<String?>' is not a subtype of type 'Iterable<String>' of 'iterable')
-      media.addAll(result.paths.whereType<String>());
-      // _TypeError (type 'List<String?>' is not a subtype of type 'Iterable<String>' of 'iterable')
+      //_TypeError (type 'List<String?>' is not a subtype of type 'Iterable<String>' of 'iterable'). Fix this error for me in flutter
     }
     return media;
   }
@@ -63,7 +64,7 @@ class NewPostController extends GetxController {
     }
   }
 
-  addNewPost(context) async {
+  addNewPost() async {
     UserModel? userModel = HiveServices.getUserBox().get(Const.currentUser);
 
     PostModel postModel = PostModel(
@@ -71,7 +72,6 @@ class NewPostController extends GetxController {
       userId: userModel!.userId,
       caption: captionController.text,
       media: media,
-      userModel: userModel,
       location: PostLocationModel(),
       timePosted: DateTime.now(),
     );
@@ -88,14 +88,14 @@ class NewPostController extends GetxController {
       await updateMediaUrl();
 
       captionController.clear();
+      media.clear();
     } catch (e) {
-      Navigator.pop(context);
+      Get.back();
       Utils.showErrorMessage(e.toString());
     }
   }
 
   Future<void> saveToDB(PostModel postModel, UserModel userModel) async {
-    var incrementNumberofPost = FieldValue.increment(1);
     // upload to firestore database
     await firestoreDB.addDocWithId(
       Const.postsCollection,
@@ -103,50 +103,30 @@ class NewPostController extends GetxController {
       postModel.toJson(),
     );
 
+    await updateUserData(userModel);
+  }
+
+  Future<void> updateUserData(UserModel userModel) async {
     await firestoreDB.updateDoc(
       Const.usersCollection,
-      postModel.userModel!.userId!,
+      userModel.userId!,
       {
-        'numberOfPost': incrementNumberofPost,
+        'numberOfPost': FieldValue.increment(1),
       },
     );
 
-    // update all post as well
-    // await firestoreDB
-    //     .getDocByField(
-    //   Const.postsCollection,
-    //   'user.userId',
-    //   postModel.userModel!.userId!,
-    // )
-    //     .then((value) {
-    //   for (var doc in value.docs) {
-    //     doc.reference.update({
-    //       'user.numberOfPost': incrementNumberofPost,
-    //     });
-    //   }
-    // });
+    //Query the new update from db and update locally
+    DocumentSnapshot doc = await firestoreDB.getDocById(
+      Const.usersCollection,
+      userModel.userId!,
+    );
 
-    // userModel.numberOfPost = int.parse('$incrementNumberofPost');
-    // userModel.save();
-
-    // HiveServices.getUserBox().put(Const.currentUser, userModel);
-  }
-
-  Future<void> updateAllPost(
-      PostModel postModel, FieldValue incrementNumberofPost) async {
-    await firestoreDB
-        .getDocByField(
-      Const.postsCollection,
-      'user.userId',
-      postModel.userModel!.userId!,
-    )
-        .then((value) {
-      for (var doc in value.docs) {
-        doc.reference.update({
-          'user.numberofPost': incrementNumberofPost,
-        });
-      }
-    });
+    if (doc.exists) {
+      userModel.numberOfPost =
+          UserModel.fromJson(doc.data() as Map<String, dynamic>).numberOfPost;
+      //save number of post locally
+      await userModel.save();
+    }
   }
 
   Future<void> uploadMediaFiles() async {

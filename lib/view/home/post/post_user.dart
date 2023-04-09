@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/core/widgets/cus_cached_image.dart';
 
-import '../../../../core/constants/constants.dart';
-import '../../../../core/services/hive_services.dart';
-import '../../../../core/widgets/cus_circular_image.dart';
-import '../../../../model/user_model/user_model.dart';
+import '../../../core/constants/constants.dart';
+import '../../../core/services/hive_services.dart';
+import '../../../core/widgets/cus_circular_image.dart';
+import '../../../model/user_model/user_model.dart';
 
 class PostUser extends StatelessWidget {
   const PostUser({
     super.key,
-    this.image,
-    this.userHandle,
+    // this.image,
+    // this.userHandle,
+    this.userModel,
   });
 
-  final String? image, userHandle;
+  // final String? image, userHandle;
+  final UserModel? userModel;
 
   @override
   Widget build(BuildContext context) {
@@ -23,17 +25,17 @@ class PostUser extends StatelessWidget {
         children: [
           Row(
             children: [
-              image != null
+              userModel!.profileImage != null
                   ? ClipRRect(
                       borderRadius: BorderRadius.circular(100),
                       child: CustomCachedImge(
                         height: 40,
                         width: 40,
-                        imageUrl: image!,
+                        imageUrl: userModel!.profileImage!,
                         fit: BoxFit.cover,
                       ),
                     )
-                  : CircularImageContainer(image: image),
+                  : const CircularImageContainer(image: Const.userImage),
               const SizedBox(width: 10),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,7 +43,8 @@ class PostUser extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        userHandle ?? 'instagram handle',
+                        // userHandle ?? 'instagram handle',
+                        userModel!.userHandle ?? 'instagram handle',
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.black,

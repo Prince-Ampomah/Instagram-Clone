@@ -64,20 +64,6 @@ class EditProfileController extends GetxController {
           },
         );
 
-        await firestoreDB
-            .getDocByField(
-          Const.postsCollection,
-          'user.userId',
-          userInfo!.userId,
-        )
-            .then((value) {
-          for (var doc in value.docs) {
-            doc.reference.update({
-              'user.profileImage': profileImage,
-            });
-          }
-        });
-
         userInfo!.profileImage = profileImage;
         await userInfo!.save();
 
@@ -105,32 +91,11 @@ class EditProfileController extends GetxController {
           },
         );
 
-        await firestoreDB
-            .getDocByField(
-          Const.postsCollection,
-          'user.userId',
-          userInfo!.userId,
-        )
-            .then((value) {
-          for (var doc in value.docs) {
-            doc.reference.update({
-              'user.fullname': fullnameController.text,
-            });
-          }
-        });
-
-        // await firestoreDB.updateDoc(
-        //   Const.postsCollection,
-        //   postId,
-        //   {
-        //     'user.fullname': fullnameController.text,
-        //   },
-        // );
-
         userInfo!.fullname = fullnameController.text;
         await userInfo!.save();
 
         Get.back();
+        update();
       }
     } catch (e) {
       Utils.showErrorMessage(e.toString());
@@ -148,23 +113,11 @@ class EditProfileController extends GetxController {
           },
         );
 
-        await firestoreDB
-            .getDocByField(
-          Const.postsCollection,
-          'user.userId',
-          userInfo!.userId,
-        )
-            .then((value) {
-          for (var doc in value.docs) {
-            doc.reference.update({
-              'user.userHandle': usernameController.text,
-            });
-          }
-        });
-
         userInfo!.userHandle = usernameController.text;
         await userInfo!.save();
+
         Get.back();
+        update();
       }
     } catch (e) {
       Utils.showErrorMessage(e.toString());
@@ -182,24 +135,10 @@ class EditProfileController extends GetxController {
           },
         );
 
-        // update post as well
-        await firestoreDB
-            .getDocByField(
-          Const.postsCollection,
-          'user.userId',
-          userInfo!.userId,
-        )
-            .then((value) {
-          for (var doc in value.docs) {
-            doc.reference.update({
-              'user.bio': bioController.text,
-            });
-          }
-        });
-
         userInfo!.bio = bioController.text;
         await userInfo!.save();
         Get.back();
+        update();
       }
     } catch (e) {
       Utils.showErrorMessage(e.toString());

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:instagram_clone/controller/profile_controller/edit_profile_controller.dart';
 import 'package:instagram_clone/core/services/hive_services.dart';
 
 import '../../../core/constants/constants.dart';
@@ -17,12 +19,16 @@ class ProfileAppBar extends StatelessWidget {
       scrolledUnderElevation: 0.0,
       title: Row(
         children: [
-          Text(
-            HiveServices.getUserBox().get(Const.currentUser)!.userHandle ??
-                'userHandle',
-            style: AppTheme.textStyle(context).titleMedium!.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
+          GetBuilder<EditProfileController>(
+            builder: (_) {
+              return Text(
+                HiveServices.getUserBox().get(Const.currentUser)!.userHandle ??
+                    'userHandle',
+                style: AppTheme.textStyle(context).titleMedium!.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+              );
+            },
           ),
           const Icon(
             Icons.expand_more_outlined,

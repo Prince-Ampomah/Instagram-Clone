@@ -104,6 +104,7 @@ class ListPostProfileItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return GridView.count(
       crossAxisCount: 3,
       mainAxisSpacing: 1.0,
@@ -120,6 +121,7 @@ class ListPostProfileItem extends StatelessWidget {
             child: Stack(
               children: [
                 CustomCachedImge(
+                  width: size.width,
                   imageUrl: postModel.media![0],
                   fit: BoxFit.cover,
                 ),

@@ -83,9 +83,12 @@ class FirestoreDBImpl implements FirestoreDB {
     String collection,
     String docId,
     Map<String, dynamic> data,
-  ) {
+  ) async {
     try {
-      return firebaseFirestore.collection(collection).doc(docId).update(data);
+      return await firebaseFirestore
+          .collection(collection)
+          .doc(docId)
+          .update(data);
     } catch (e) {
       throw Exception(e);
     }

@@ -27,15 +27,18 @@ class PostProfileController extends GetxController {
   queryPostByUser() async {
     // var postBox = HiveServices.getPosts();
 
+//  TODO: fix user id bug here
     var user = HiveServices.getUserBox().get(Const.currentUser);
 
     return _streamSubscription = FirebaseFirestore.instance
         .collection(Const.postsCollection)
-        .where('user.userId', isEqualTo: user!.userId!)
+        .where('userId', isEqualTo: user!.userId!)
         .orderBy('timePosted', descending: true)
         .snapshots()
         .listen((data) async {
       _setPostProfileList = data.docs.toList();
+
+      update();
 
       // Map<String, PostModel> postChanges = {};
       // List<String> postsRemoved = [];

@@ -6,7 +6,6 @@ import 'package:instagram_clone/model/user_model/user_model.dart';
 import 'package:instagram_clone/view/profile/edit_profile/edit_profile_view.dart';
 import '../../../controller/profile_controller/edit_profile_controller.dart';
 import '../../../core/constants/constants.dart';
-import '../../../core/widgets/cus_rich_text.dart';
 
 class ProfileViewInfo extends StatelessWidget {
   const ProfileViewInfo({
@@ -27,14 +26,18 @@ class ProfileViewInfo extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               userInfo!.profileImage != null
-                  ? ClipRRect(
-                      borderRadius: BorderRadius.circular(100),
-                      child: CustomCachedImge(
-                        height: 75,
-                        width: 75,
-                        imageUrl: userInfo.profileImage!,
-                        fit: BoxFit.cover,
-                      ),
+                  ? GetBuilder<EditProfileController>(
+                      builder: (controller) {
+                        return ClipRRect(
+                          borderRadius: BorderRadius.circular(100),
+                          child: CustomCachedImge(
+                            height: 75,
+                            width: 75,
+                            imageUrl: userInfo.profileImage!,
+                            fit: BoxFit.cover,
+                          ),
+                        );
+                      },
                     )
                   : Container(
                       height: 65,
@@ -49,6 +52,8 @@ class ProfileViewInfo extends StatelessWidget {
                         ),
                       ),
                     ),
+
+              // number of post, followers and following
               Row(
                 children: [
                   Column(
@@ -96,28 +101,31 @@ class ProfileViewInfo extends StatelessWidget {
         ),
 
         // username and caption widget
-
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                userInfo.fullname ?? 'full name',
-                style: Theme.of(context)
-                    .textTheme
-                    .labelLarge!
-                    .copyWith(fontWeight: FontWeight.bold),
+        GetBuilder<EditProfileController>(
+          builder: (_) {
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    userInfo.fullname ?? 'full name',
+                    style: Theme.of(context)
+                        .textTheme
+                        .labelLarge!
+                        .copyWith(fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 5),
+                  if (userInfo.bio != null)
+                    Text(
+                      userInfo.bio!,
+                      maxLines: 3,
+                      overflow: TextOverflow.clip,
+                    ),
+                ],
               ),
-              const SizedBox(height: 5),
-              if (userInfo.bio != null)
-                Text(
-                  userInfo.bio!,
-                  maxLines: 3,
-                  overflow: TextOverflow.clip,
-                ),
-            ],
-          ),
+            );
+          },
         ),
 
         const SizedBox(height: 20),
@@ -130,7 +138,7 @@ class ProfileViewInfo extends StatelessWidget {
               // edit profile
               GestureDetector(
                 onTap: () {
-                  Get.put(EditProfileController());
+                  // Get.put(EditProfileController());
                   Get.to(() => EditProfileView(userInfo: userInfo));
                 },
                 child: Container(

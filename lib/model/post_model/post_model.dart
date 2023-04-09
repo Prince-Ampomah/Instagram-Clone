@@ -24,8 +24,8 @@ class PostModel {
   @HiveField(4)
   num? comment;
 
-  @HiveField(5)
-  UserModel? userModel;
+  // @HiveField(5)
+  // UserModel? userModel;
 
   @HiveField(6)
   PostLocationModel? location;
@@ -45,7 +45,7 @@ class PostModel {
   PostModel({
     this.id,
     this.media,
-    this.userModel,
+    // this.userModel,
     this.userId,
     this.caption,
     this.like = 0,
@@ -63,7 +63,7 @@ class PostModel {
     map['userId'] = userId;
     map['caption'] = caption;
     map['media'] = media;
-    map['user'] = userModel!.toJson();
+    // map['user'] = userModel!.toJson();
     map['like'] = like;
     map['comment'] = comment;
     map['location'] = location!.toJson();
@@ -82,7 +82,7 @@ class PostModel {
       media: json['media'],
       like: json['like'],
       comment: json['comment'],
-      userModel: UserModel.fromJson(json['user']),
+      // userModel: UserModel.fromJson(json['user']),
       location: PostLocationModel.fromJson(json['location']),
       timePosted: (json['timePosted'] is Timestamp)
           ? json['timePosted'].toDate()
