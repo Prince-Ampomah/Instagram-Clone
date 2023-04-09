@@ -88,6 +88,8 @@ dependencies:
   # animation
   flutter_animate: ^4.1.1+1
 
+  readmore: ^2.2.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

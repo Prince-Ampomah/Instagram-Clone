@@ -2,11 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:instagram_clone/core/widgets/cus_read_more_text.dart';
 import 'package:instagram_clone/view/comments/comment_view.dart';
 import 'package:instagram_clone/view/home/post/core/post_comment_button.dart';
 import 'package:instagram_clone/view/home/post/core/post_like_button.dart';
 import 'package:instagram_clone/view/home/post/core/post_save_button.dart';
 import 'package:instagram_clone/view/home/post/core/post_send_message_button.dart';
+import 'package:readmore/readmore.dart';
 
 import '../../../core/constants/constants.dart';
 import '../../../core/services/hive_services.dart';
@@ -48,7 +50,7 @@ class PostReaction extends StatelessWidget {
             ],
           ),
 
-          10.ph,
+          8.ph,
 
           // users like widget
           if (postModel!.like != 0)
@@ -65,13 +67,21 @@ class PostReaction extends StatelessWidget {
 
           // caption widget
           if (postModel!.caption!.isNotEmpty)
-            CustomRichText(
-              text1: '${userModel!.userHandle} ',
-              text2: postModel!.caption,
-              text1Style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  userModel!.userHandle!,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
+                5.pw,
+                Expanded(
+                  child: CustomReadMore(text: postModel!.caption!),
+                ),
+              ],
             ),
 
           8.ph,

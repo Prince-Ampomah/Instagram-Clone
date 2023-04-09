@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:instagram_clone/core/widgets/cus_read_more_text.dart';
 
 import '../../core/constants/constants.dart';
 import '../../core/utils/date_time_convertor.dart';
@@ -25,6 +26,7 @@ class CommentPostHeader extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           userImage != null
               ? ClipRRect(
@@ -57,7 +59,7 @@ class CommentPostHeader extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 5),
-                if (caption != null) Text(caption!),
+                if (caption != null) CustomReadMore(text: caption!),
               ],
             ),
           ),

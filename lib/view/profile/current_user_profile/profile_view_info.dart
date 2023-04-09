@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:instagram_clone/core/services/hive_services.dart';
 import 'package:instagram_clone/core/widgets/cus_cached_image.dart';
+import 'package:instagram_clone/core/widgets/cus_read_more_text.dart';
 import 'package:instagram_clone/model/user_model/user_model.dart';
 import 'package:instagram_clone/view/profile/edit_profile/edit_profile_view.dart';
 import '../../../controller/profile_controller/edit_profile_controller.dart';
@@ -100,7 +101,7 @@ class ProfileViewInfo extends StatelessWidget {
           ),
         ),
 
-        // username and caption widget
+        // fullname and bio widget
         GetBuilder<EditProfileController>(
           builder: (_) {
             return Padding(
@@ -117,11 +118,15 @@ class ProfileViewInfo extends StatelessWidget {
                   ),
                   const SizedBox(height: 5),
                   if (userModel.bio != null)
-                    Text(
-                      userModel.bio!,
-                      maxLines: 3,
-                      overflow: TextOverflow.clip,
-                    ),
+                    CustomReadMore(
+                      text: userModel.bio!,
+                      trimLines: 3,
+                    )
+                  // Text(
+                  //   userModel.bio!,
+                  //   maxLines: 3,
+                  //   overflow: TextOverflow.clip,
+                  // ),
                 ],
               ),
             );

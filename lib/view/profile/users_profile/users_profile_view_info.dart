@@ -7,6 +7,7 @@ import 'package:instagram_clone/model/user_model/user_model.dart';
 import '../../../controller/profile_controller/edit_profile_controller.dart';
 import '../../../core/constants/constants.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../core/widgets/cus_read_more_text.dart';
 
 class UsersProfileViewInfo extends StatelessWidget {
   const UsersProfileViewInfo({
@@ -98,7 +99,7 @@ class UsersProfileViewInfo extends StatelessWidget {
           ),
         ),
 
-        // username and caption widget
+        // fullname and bio widget
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
@@ -113,11 +114,10 @@ class UsersProfileViewInfo extends StatelessWidget {
               ),
               const SizedBox(height: 5),
               if (userModel!.bio != null)
-                Text(
-                  userModel!.bio!,
-                  maxLines: 3,
-                  overflow: TextOverflow.clip,
-                ),
+                CustomReadMore(
+                  text: userModel!.bio!,
+                  trimLines: 3,
+                )
             ],
           ),
         ),
