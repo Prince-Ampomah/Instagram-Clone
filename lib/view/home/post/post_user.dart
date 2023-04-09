@@ -25,17 +25,19 @@ class PostUser extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
+        String currentUserId =
+            HiveServices.getUserBox().get(Const.currentUser)!.userId!;
         // compare the user id in post model and the current user id
-        if (postModel!.userId !=
-            HiveServices.getUserBox().get(Const.currentUser)!.userId) {
-          Get.to(
-            () => UsersProfileView(
+        if (postModel!.userId != currentUserId) {
+          sendToPage(
+            context,
+            UsersProfileView(
               userModel: userModel,
               postModel: postModel,
             ),
           );
         } else {
-          Get.to(() => AppLayoutView(pageIndex: 4));
+          sendToPage(context, AppLayoutView(pageIndex: 4));
         }
       },
       child: Padding(

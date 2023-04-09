@@ -70,7 +70,7 @@ class EditProfileController extends GetxController {
         isLoading = false;
         update();
 
-        Utils.showSuccessMessage('Profile Updated');
+        Utils.showNotificationMessage('Profile Updated');
         Get.back();
       }
     } catch (e) {

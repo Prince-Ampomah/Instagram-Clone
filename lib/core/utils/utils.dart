@@ -36,15 +36,20 @@ class Utils {
     );
   }
 
-  static showSuccessMessage(String message) {
+  static showNotificationMessage(
+    String message, {
+    Color? bgColor = AppColors.successColor,
+    NotificationPosition position = NotificationPosition.top,
+  }) {
     showSimpleNotification(
       Text(
         message,
         textAlign: TextAlign.center,
         style: const TextStyle(color: Colors.black),
       ),
+      position: position,
       elevation: 0.0,
-      background: AppColors.successColor, //const Color(0xFFCECECE),
+      background: bgColor,
     );
   }
 }
