@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:instagram_clone/controller/follow_controller/follow_controller.dart';
 import 'package:instagram_clone/core/services/hive_services.dart';
 import 'package:instagram_clone/core/widgets/cus_cached_image.dart';
 import 'package:instagram_clone/core/widgets/cus_read_more_text.dart';

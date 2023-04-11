@@ -43,8 +43,10 @@ class _PostItemState extends State<PostItem> {
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: getUserData(),
-      builder:
-          (BuildContext context, AsyncSnapshot<UserModel> userModelsnapshot) {
+      builder: (
+        BuildContext context,
+        AsyncSnapshot<UserModel> userModelsnapshot,
+      ) {
         if (userModelsnapshot.hasData) {
           return Column(
             mainAxisSize: MainAxisSize.min,

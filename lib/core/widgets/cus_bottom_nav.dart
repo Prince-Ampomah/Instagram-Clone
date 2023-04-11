@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:instagram_clone/core/constants/constants.dart';
+import 'package:instagram_clone/core/services/hive_services.dart';
+import 'package:instagram_clone/core/widgets/cus_cached_image.dart';
+import 'package:instagram_clone/core/widgets/cus_circular_image.dart';
+
+import '../../model/user_model/user_model.dart';
 
 class CustomBottomNavigation extends StatelessWidget {
   const CustomBottomNavigation({
@@ -87,6 +93,104 @@ class CusDefaultBottomNav extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    UserModel? userModel = HiveServices.getUserBox().get(Const.currentUser);
+
+    List<BottomNavigationBarItem> navItems = [
+      const BottomNavigationBarItem(
+        icon: Icon(Icons.home_outlined),
+        activeIcon: Icon(Icons.home),
+        label: '',
+        tooltip: 'Home',
+      ),
+      const BottomNavigationBarItem(
+        icon: Icon(
+          Icons.search_outlined,
+        ),
+        activeIcon: Icon(
+          Icons.search,
+        ),
+        label: '',
+        tooltip: 'Search',
+      ),
+      const BottomNavigationBarItem(
+        icon: Icon(
+          Icons.movie_outlined,
+        ),
+        activeIcon: Icon(
+          Icons.movie,
+        ),
+        label: '',
+        tooltip: 'Reel',
+      ),
+      const BottomNavigationBarItem(
+        icon: Icon(
+          // FontAwesomeIcons.bagShopping,
+          Icons.shopping_bag_outlined,
+        ),
+        activeIcon: Icon(
+          // FontAwesomeIcons.bagShopping,
+          Icons.shopping_bag,
+        ),
+        label: '',
+        tooltip: 'Shop',
+      ),
+      BottomNavigationBarItem(
+        icon: userModel?.profileImage != null
+            ? Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(100),
+                  border: Border.all(
+                    width: .5,
+                    color: Colors.black,
+                  ),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(100),
+                  child: CustomCachedImge(
+                    imageUrl: userModel!.profileImage!,
+                    height: 30,
+                    width: 30,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              )
+            : CircularImageContainer(
+                height: 0.04,
+                width: 0.04,
+                border: Border.all(width: .5),
+              ),
+        activeIcon: userModel?.profileImage != null
+            ? Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(100),
+                  border: Border.all(
+                    width: 1.5,
+                    color: Colors.black,
+                  ),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(100),
+                  child: CustomCachedImge(
+                    imageUrl: userModel!.profileImage!,
+                    height: 30,
+                    width: 30,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              )
+            : CircularImageContainer(
+                height: 0.04,
+                width: 0.04,
+                border: Border.all(
+                  width: 1.5,
+                  color: Colors.black,
+                ),
+              ),
+        label: '',
+        tooltip: 'Profile',
+      ),
+    ];
+
     return BottomNavigationBar(
       currentIndex: currentIndex,
       items: navItems,
@@ -99,54 +203,3 @@ class CusDefaultBottomNav extends StatelessWidget {
     );
   }
 }
-
-List<BottomNavigationBarItem> navItems = const [
-  BottomNavigationBarItem(
-    icon: Icon(Icons.home_outlined),
-    activeIcon: Icon(Icons.home),
-    label: '',
-    tooltip: 'Home',
-  ),
-  BottomNavigationBarItem(
-    icon: Icon(
-      Icons.search_outlined,
-    ),
-    activeIcon: Icon(
-      Icons.search,
-    ),
-    label: '',
-    tooltip: 'Search',
-  ),
-  BottomNavigationBarItem(
-    icon: Icon(
-      Icons.movie_outlined,
-    ),
-    activeIcon: Icon(
-      Icons.movie,
-    ),
-    label: '',
-    tooltip: 'Reel',
-  ),
-  BottomNavigationBarItem(
-      icon: Icon(
-        // FontAwesomeIcons.bagShopping,
-        Icons.shopping_bag_outlined,
-      ),
-      activeIcon: Icon(
-        // FontAwesomeIcons.bagShopping,
-        Icons.shopping_bag,
-      ),
-      label: '',
-      tooltip: 'Shop'),
-  BottomNavigationBarItem(
-      icon: Icon(
-        // FontAwesomeIcons.user,
-        Icons.person_outline,
-      ),
-      activeIcon: Icon(
-        // FontAwesomeIcons.user,
-        Icons.person,
-      ),
-      label: '',
-      tooltip: 'Profile'),
-];

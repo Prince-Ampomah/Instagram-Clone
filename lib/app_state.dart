@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:instagram_clone/controller/follow_controller/follow_controller.dart';
 import 'package:instagram_clone/controller/post_controller/comment_controller.dart';
 
 import 'controller/auth_controller/auth_controller.dart';
@@ -23,5 +24,6 @@ class AppState {
     Get.put(EditProfileController());
     Get.put(SavePostController());
     Get.put(ModelController());
+    Get.put(FollowController());
   }
 }

@@ -29,13 +29,15 @@ class UserModelAdapter extends TypeAdapter<UserModel> {
       numberOfPost: fields[11] as num,
       numberOfFollowers: fields[9] as num,
       numberOfFollowing: fields[10] as num,
+      listOfFollowers: (fields[12] as List?)?.cast<dynamic>(),
+      listOfFollowing: (fields[13] as List?)?.cast<dynamic>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, UserModel obj) {
     writer
-      ..writeByte(12)
+      ..writeByte(14)
       ..writeByte(0)
       ..write(obj.userId)
       ..writeByte(1)
@@ -59,7 +61,11 @@ class UserModelAdapter extends TypeAdapter<UserModel> {
       ..writeByte(10)
       ..write(obj.numberOfFollowing)
       ..writeByte(11)
-      ..write(obj.numberOfPost);
+      ..write(obj.numberOfPost)
+      ..writeByte(12)
+      ..write(obj.listOfFollowers)
+      ..writeByte(13)
+      ..write(obj.listOfFollowing);
   }
 
   @override

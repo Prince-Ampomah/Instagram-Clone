@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:instagram_clone/controller/follow_controller/follow_controller.dart';
 import 'package:instagram_clone/core/services/hive_services.dart';
 import 'package:instagram_clone/core/utils/helper_functions.dart';
 import 'package:instagram_clone/core/widgets/cus_cached_image.dart';
+import 'package:instagram_clone/model/post_model/post_model.dart';
 import 'package:instagram_clone/model/user_model/user_model.dart';
-import '../../../controller/profile_controller/edit_profile_controller.dart';
 import '../../../core/constants/constants.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/widgets/cus_read_more_text.dart';
@@ -13,12 +14,15 @@ class UsersProfileViewInfo extends StatelessWidget {
   const UsersProfileViewInfo({
     super.key,
     this.userModel,
+    this.postModel,
   });
 
   final UserModel? userModel;
+  final PostModel? postModel;
 
   @override
   Widget build(BuildContext context) {
+    UserModel? currentUser = HiveServices.getUserBox().get(Const.currentUser);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -68,30 +72,38 @@ class UsersProfileViewInfo extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(width: 30),
-                  Column(
-                    children: [
-                      Text(
-                        '${userModel!.numberOfFollowers}',
-                        style: Theme.of(context)
-                            .textTheme
-                            .labelLarge!
-                            .copyWith(fontWeight: FontWeight.bold),
-                      ),
-                      const Text('Followers'),
-                    ],
+                  GetBuilder<FollowController>(
+                    builder: (controller) {
+                      return Column(
+                        children: [
+                          Text(
+                            '${userModel!.numberOfFollowers}',
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelLarge!
+                                .copyWith(fontWeight: FontWeight.bold),
+                          ),
+                          const Text('Followers'),
+                        ],
+                      );
+                    },
                   ),
                   const SizedBox(width: 30),
-                  Column(
-                    children: [
-                      Text(
-                        '${userModel!.numberOfFollowing}',
-                        style: Theme.of(context)
-                            .textTheme
-                            .labelLarge!
-                            .copyWith(fontWeight: FontWeight.bold),
-                      ),
-                      const Text('Following'),
-                    ],
+                  GetBuilder<FollowController>(
+                    builder: (_) {
+                      return Column(
+                        children: [
+                          Text(
+                            '${userModel!.numberOfFollowing}',
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelLarge!
+                                .copyWith(fontWeight: FontWeight.bold),
+                          ),
+                          const Text('Following'),
+                        ],
+                      );
+                    },
                   ),
                 ],
               ),
@@ -132,30 +144,15 @@ class UsersProfileViewInfo extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               // follow button
-              GestureDetector(
-                onTap: () {
-                  // Get.to(() => EditProfileView(userInfo: userModel));
-                  showToast(msg: 'Follow');
-                },
-                child: Container(
-                  alignment: Alignment.center,
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 10,
-                    horizontal: 30,
-                  ),
-                  decoration: BoxDecoration(
-                    color: AppColors.buttonColor,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: const Text(
-                    'Follow',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.whiteColor,
+              userModel!.listOfFollowers!.contains(currentUser!.userId)
+                  ? UnfollowButton(
+                      postModel: postModel,
+                      userModel: userModel,
+                    )
+                  : FollowButton(
+                      postModel: postModel,
+                      userModel: userModel,
                     ),
-                  ),
-                ),
-              ),
 
               const SizedBox(width: 10),
 
@@ -226,6 +223,82 @@ class UsersProfileViewInfo extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class FollowButton extends StatelessWidget {
+  const FollowButton({
+    super.key,
+    required this.postModel,
+    required this.userModel,
+  });
+
+  final PostModel? postModel;
+  final UserModel? userModel;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        FollowController.instance.followUser(postModel!.userId!);
+      },
+      child: Container(
+        alignment: Alignment.center,
+        padding: const EdgeInsets.symmetric(
+          vertical: 10,
+          horizontal: 30,
+        ),
+        decoration: BoxDecoration(
+          color: AppColors.buttonColor,
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: const Text(
+          'Follow',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: AppColors.whiteColor,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class UnfollowButton extends StatelessWidget {
+  const UnfollowButton({
+    super.key,
+    required this.postModel,
+    required this.userModel,
+  });
+
+  final PostModel? postModel;
+  final UserModel? userModel;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        FollowController.instance.unFollowUser(postModel!.userId!);
+      },
+      child: Container(
+        alignment: Alignment.center,
+        padding: const EdgeInsets.symmetric(
+          vertical: 10,
+          horizontal: 30,
+        ),
+        decoration: BoxDecoration(
+          color: const Color(0xFFEFEFEF),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: const Text(
+          'Unfollow',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
+          ),
+        ),
+      ),
     );
   }
 }

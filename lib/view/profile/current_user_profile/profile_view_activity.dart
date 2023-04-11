@@ -34,8 +34,6 @@ class ProfileActivity extends StatelessWidget {
                       //   const SignInView(),
                       // ),
                     );
-
-                // Get.offAll(() => const SignInView());
               },
               iconData: Icons.logout,
               text: 'Logout',

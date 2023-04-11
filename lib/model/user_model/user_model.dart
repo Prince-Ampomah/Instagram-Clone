@@ -42,6 +42,12 @@ class UserModel extends HiveObject {
   @HiveField(11)
   num numberOfPost;
 
+  @HiveField(12)
+  List<dynamic>? listOfFollowers;
+
+  @HiveField(13)
+  List<dynamic>? listOfFollowing;
+
   UserModel({
     this.userId,
     this.profileImage,
@@ -55,6 +61,8 @@ class UserModel extends HiveObject {
     this.numberOfPost = 0,
     this.numberOfFollowers = 0,
     this.numberOfFollowing = 0,
+    this.listOfFollowers = const [],
+    this.listOfFollowing = const [],
   });
 
   Map<String, dynamic> toJson() {
@@ -72,6 +80,8 @@ class UserModel extends HiveObject {
     map['numberOfPost'] = numberOfPost;
     map['numberOfFollowers'] = numberOfFollowers;
     map['numberOfFollowing'] = numberOfFollowing;
+    map['listOfFollowers'] = listOfFollowers;
+    map['listOfFollowing'] = listOfFollowing;
 
     return map;
   }
@@ -89,6 +99,8 @@ class UserModel extends HiveObject {
       numberOfPost: json['numberOfPost'],
       numberOfFollowers: json['numberOfFollowers'],
       numberOfFollowing: json['numberOfFollowing'],
+      listOfFollowers: json['listOfFollowers'],
+      listOfFollowing: json['listOfFollowing'],
       createdAt: (json['createdAt'] is Timestamp)
           ? json['createdAt'].toDate()
           : json['createdAt'],
