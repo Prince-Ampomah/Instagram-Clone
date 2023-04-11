@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:instagram_clone/controller/follow_controller/follow_controller.dart';
-import 'package:instagram_clone/core/services/hive_services.dart';
-import 'package:instagram_clone/core/utils/helper_functions.dart';
-import 'package:instagram_clone/core/widgets/cus_cached_image.dart';
-import 'package:instagram_clone/model/post_model/post_model.dart';
-import 'package:instagram_clone/model/user_model/user_model.dart';
+
+import '../../../controller/follow_controller/follow_controller.dart';
 import '../../../core/constants/constants.dart';
+import '../../../core/services/hive_services.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../core/widgets/cus_cached_image.dart';
 import '../../../core/widgets/cus_read_more_text.dart';
+import '../../../model/post_model/post_model.dart';
+import '../../../model/user_model/user_model.dart';
 
 class UsersProfileViewInfo extends StatelessWidget {
   const UsersProfileViewInfo({
@@ -72,38 +71,30 @@ class UsersProfileViewInfo extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(width: 30),
-                  GetBuilder<FollowController>(
-                    builder: (controller) {
-                      return Column(
-                        children: [
-                          Text(
-                            '${userModel!.numberOfFollowers}',
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelLarge!
-                                .copyWith(fontWeight: FontWeight.bold),
-                          ),
-                          const Text('Followers'),
-                        ],
-                      );
-                    },
+                  Column(
+                    children: [
+                      Text(
+                        '${userModel!.numberOfFollowers}',
+                        style: Theme.of(context)
+                            .textTheme
+                            .labelLarge!
+                            .copyWith(fontWeight: FontWeight.bold),
+                      ),
+                      const Text('Followers'),
+                    ],
                   ),
                   const SizedBox(width: 30),
-                  GetBuilder<FollowController>(
-                    builder: (_) {
-                      return Column(
-                        children: [
-                          Text(
-                            '${userModel!.numberOfFollowing}',
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelLarge!
-                                .copyWith(fontWeight: FontWeight.bold),
-                          ),
-                          const Text('Following'),
-                        ],
-                      );
-                    },
+                  Column(
+                    children: [
+                      Text(
+                        '${userModel!.numberOfFollowing}',
+                        style: Theme.of(context)
+                            .textTheme
+                            .labelLarge!
+                            .copyWith(fontWeight: FontWeight.bold),
+                      ),
+                      const Text('Following'),
+                    ],
                   ),
                 ],
               ),
@@ -136,7 +127,7 @@ class UsersProfileViewInfo extends StatelessWidget {
 
         const SizedBox(height: 20),
 
-        // edit profile, share profile widget
+        // follow and message widget
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Row(

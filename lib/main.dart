@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
         title: 'Instagram Clone',
         theme: AppTheme.lightTheme(context),
         home: AppState.user?.userId != null
-            ? AppLayoutView()
+            ? const AppLayoutView()
             : const SignInView(),
       ),
     );

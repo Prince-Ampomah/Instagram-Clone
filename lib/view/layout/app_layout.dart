@@ -14,19 +14,28 @@ import 'app_bar/reels_appbar.dart';
 import 'app_bar/search_appbar.dart';
 import 'app_bar/shop_appbar.dart';
 
-class AppLayoutView extends StatelessWidget {
-  AppLayoutView({super.key, this.pageIndex = 0});
-
-  /// inject an [AppLayoutController] instance in memory
-  final appLayoutCtrl = Get.put(AppLayoutController());
+class AppLayoutView extends StatefulWidget {
+  const AppLayoutView({super.key, this.pageIndex = 0});
 
   final int? pageIndex;
 
   @override
-  Widget build(BuildContext context) {
-    // update the current page
-    appLayoutCtrl.pageIndex = pageIndex!;
+  State<AppLayoutView> createState() => _AppLayoutViewState();
+}
 
+class _AppLayoutViewState extends State<AppLayoutView> {
+  /// inject an [AppLayoutController] instance in memory
+  final appLayoutCtrl = Get.put(AppLayoutController());
+
+  @override
+  void initState() {
+    super.initState();
+    // update the current page
+    appLayoutCtrl.pageIndex = widget.pageIndex!;
+  }
+
+  @override
+  Widget build(BuildContext context) {
     List<Widget> pages = const [
       HomeView(),
       SearchView(),

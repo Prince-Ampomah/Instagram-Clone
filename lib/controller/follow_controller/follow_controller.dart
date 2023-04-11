@@ -26,7 +26,7 @@ class FollowController extends GetxController {
           },
         );
 
-        await updateCurrentUserListOFFollowing(userToFollowId, currentUser);
+        await updateFollowDataRemotely(userToFollowId, currentUser);
       }
     } catch (e) {
       Utils.showErrorMessage(e.toString());
@@ -46,33 +46,7 @@ class FollowController extends GetxController {
           },
         );
 
-        await firestoreDB.updateDoc(
-          Const.usersCollection,
-          currentUser.userId!,
-          {
-            'listOfFollowing': FieldValue.arrayRemove([userToUnFollowId]),
-            'numberOfFollowing': FieldValue.increment(-1),
-          },
-        );
-
-        DocumentSnapshot doc = await firestoreDB.getDocById(
-          Const.usersCollection,
-          currentUser.userId!,
-        );
-
-        if (doc.exists) {
-          currentUser.listOfFollowing =
-              UserModel.fromJson(doc.data() as Map<String, dynamic>)
-                  .listOfFollowing;
-          currentUser.numberOfFollowing =
-              UserModel.fromJson(doc.data() as Map<String, dynamic>)
-                  .numberOfFollowing;
-
-          //save number of post locally
-          await currentUser.save();
-
-          update();
-        }
+        await updateUnfollowDataRemotely(currentUser, userToUnFollowId);
       }
     } catch (e) {
       update();
@@ -80,7 +54,8 @@ class FollowController extends GetxController {
     }
   }
 
-  Future<void> updateCurrentUserListOFFollowing(
+  /// update follow data remotely and locally
+  Future<void> updateFollowDataRemotely(
     String userToFollowId,
     UserModel userModel,
   ) async {
@@ -93,10 +68,10 @@ class FollowController extends GetxController {
       },
     );
 
-    await updateCurrentUserFollowingDataLocally(userModel);
+    await updateFollowDataLocally(userModel);
   }
 
-  Future<void> updateCurrentUserFollowingDataLocally(
+  Future<void> updateFollowDataLocally(
     UserModel userModel,
   ) async {
     //Query the new update from db and update locally
@@ -115,6 +90,47 @@ class FollowController extends GetxController {
 
       //save number of post locally
       await userModel.save();
+    }
+  }
+
+  /// update unfollow data remotely and locally
+  Future<void> updateUnfollowDataRemotely(
+    UserModel currentUser,
+    String userToUnFollowId,
+  ) async {
+    // update the following list and number of following in the current data
+    await firestoreDB.updateDoc(
+      Const.usersCollection,
+      currentUser.userId!,
+      {
+        'listOfFollowing': FieldValue.arrayRemove([userToUnFollowId]),
+        'numberOfFollowing': FieldValue.increment(-1),
+      },
+    );
+
+    // query the current user data and save it locally
+    await updateUnfollowDataLocally(currentUser);
+  }
+
+  Future<void> updateUnfollowDataLocally(UserModel currentUser) async {
+    // query the current user data and save it locally
+    DocumentSnapshot doc = await firestoreDB.getDocById(
+      Const.usersCollection,
+      currentUser.userId!,
+    );
+
+    if (doc.exists) {
+      currentUser.listOfFollowing =
+          UserModel.fromJson(doc.data() as Map<String, dynamic>)
+              .listOfFollowing;
+      currentUser.numberOfFollowing =
+          UserModel.fromJson(doc.data() as Map<String, dynamic>)
+              .numberOfFollowing;
+
+      //save number of post locally
+      await currentUser.save();
+
+      update();
     }
   }
 }

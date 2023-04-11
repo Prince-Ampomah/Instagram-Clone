@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:instagram_clone/core/utils/helper_functions.dart';
-import 'package:instagram_clone/core/widgets/cus_cached_image.dart';
-import 'package:instagram_clone/model/post_model/post_model.dart';
-import 'package:instagram_clone/view/layout/app_layout.dart';
-import 'package:instagram_clone/view/profile/users_profile/users_profile_view.dart';
+import 'package:instagram_clone/view/home/post/post_current_user_bottomsheet_activity.dart';
+import '../../../core/utils/helper_functions.dart';
+import '../../../core/widgets/cus_cached_image.dart';
+import '../../../model/post_model/post_model.dart';
+import 'post_user_bottomsheet_activity.dart';
+import '../../layout/app_layout.dart';
+import '../../profile/users_profile/users_profile_view.dart';
 
-import '../../../controller/models_controller/models_controller.dart';
 import '../../../core/constants/constants.dart';
 import '../../../core/services/hive_services.dart';
 import '../../../core/widgets/cus_circular_image.dart';
@@ -24,10 +24,10 @@ class PostUser extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String currentUserId =
+        HiveServices.getUserBox().get(Const.currentUser)!.userId!;
     return InkWell(
       onTap: () {
-        String currentUserId =
-            HiveServices.getUserBox().get(Const.currentUser)!.userId!;
         // compare the user id in post model and the current user id
         if (postModel!.userId != currentUserId) {
           sendToPage(
@@ -38,7 +38,7 @@ class PostUser extends StatelessWidget {
             ),
           );
         } else {
-          sendToPage(context, AppLayoutView(pageIndex: 4));
+          sendToPage(context, const AppLayoutView(pageIndex: 4));
         }
       },
       child: Padding(
@@ -65,7 +65,6 @@ class PostUser extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          // userHandle ?? 'instagram handle',
                           userModel!.userHandle ?? 'instagram handle',
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
@@ -78,20 +77,6 @@ class PostUser extends StatelessWidget {
                           height: 15,
                           width: 15,
                         ),
-                        // Container(
-                        //   height: 15,
-                        //   width: 15,
-                        //   decoration: const BoxDecoration(
-                        //       color: Colors.blue, shape: BoxShape.circle),
-                        //   child: ClipRRect(
-                        //     borderRadius: BorderRadius.circular(20),
-                        //     child: const Icon(
-                        //       Icons.check,
-                        //       color: Colors.white,
-                        //       size: 10,
-                        //     ),
-                        //   ),
-                        // )
                       ],
                     ),
                     const Text('location'),
@@ -102,7 +87,23 @@ class PostUser extends StatelessWidget {
             const Spacer(),
             GestureDetector(
               onTap: () {
-                showToast(msg: 'dd');
+                // show the type of bottom sheet
+                showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    builder: (context) {
+                      if (postModel!.userId != currentUserId) {
+                        return PostUserBottomSheetActivity(
+                          postModel: postModel,
+                          userModel: userModel,
+                        );
+                      } else {
+                        return PostCurrentUserBottomSheetActivity(
+                          postModel: postModel,
+                          userModel: userModel,
+                        );
+                      }
+                    });
               },
               child: const Icon(Icons.more_vert),
             )

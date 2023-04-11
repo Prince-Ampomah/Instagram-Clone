@@ -39,13 +39,16 @@ class Utils {
   static showNotificationMessage(
     String message, {
     Color? bgColor = AppColors.successColor,
+    Color? textColor = Colors.black,
     NotificationPosition position = NotificationPosition.top,
   }) {
     showSimpleNotification(
       Text(
         message,
         textAlign: TextAlign.center,
-        style: const TextStyle(color: Colors.black),
+        style: TextStyle(
+          color: textColor,
+        ),
       ),
       position: position,
       elevation: 0.0,

@@ -41,7 +41,12 @@ class SavePostController extends GetxController {
           },
         );
 
-        Utils.showNotificationMessage('Saved Successfully');
+        Utils.showNotificationMessage(
+          'Saved Successfully',
+          bgColor: Colors.grey,
+          textColor: Colors.white,
+          position: NotificationPosition.bottom,
+        );
       } else {
         // remove user from the saved list and decrease the like
         await firestoreDB.updateDoc(
@@ -52,7 +57,12 @@ class SavePostController extends GetxController {
           },
         );
 
-        Utils.showNotificationMessage('Removed Successfully');
+        Utils.showNotificationMessage(
+          'Removed Successfully',
+          bgColor: Colors.grey,
+          textColor: Colors.white,
+          position: NotificationPosition.bottom,
+        );
       }
     } catch (e) {
       Utils.showErrorMessage(e.toString());

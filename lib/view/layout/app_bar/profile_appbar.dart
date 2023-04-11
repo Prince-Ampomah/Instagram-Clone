@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:instagram_clone/controller/profile_controller/edit_profile_controller.dart';
-import 'package:instagram_clone/core/services/hive_services.dart';
 
+import '../../../controller/profile_controller/edit_profile_controller.dart';
 import '../../../core/constants/constants.dart';
+import '../../../core/services/hive_services.dart';
 import '../../../core/theme/theme.dart';
 import '../../profile/current_user_profile/profile_view_activity.dart';
 
@@ -49,8 +49,10 @@ class ProfileAppBar extends StatelessWidget {
         GestureDetector(
           onTap: () {
             showModalBottomSheet(
-                context: context,
-                builder: (context) => const ProfileActivity());
+              context: context,
+              isScrollControlled: true,
+              builder: (context) => const ProfileActivity(),
+            );
           },
           child: const Padding(
             padding: EdgeInsets.all(8.0),
