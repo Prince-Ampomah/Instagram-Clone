@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:instagram_clone/core/constants/constants.dart';
-import 'package:instagram_clone/core/utils/utils.dart';
+import 'package:instagram_clone/controller/notification_controller/notification_controller.dart';
+import 'package:instagram_clone/model/notification_model/notification_model.dart';
 
+import '../../core/constants/constants.dart';
 import '../../core/services/hive_services.dart';
+import '../../core/utils/utils.dart';
 import '../../model/user_model/user_model.dart';
 import '../../repository/repository_abstract/database_abstract.dart';
 import '../../repository/respository_implementation/database_implementation.dart';
@@ -13,8 +16,12 @@ class FollowController extends GetxController {
 
   FirestoreDB firestoreDB = FirestoreDBImpl();
 
+  String notificationId =
+      FirestoreDBImpl.generateFirestoreId(Const.notificationCollection);
+
   Future<void> followUser(String userToFollowId) async {
     UserModel? currentUser = HiveServices.getUserBox().get(Const.currentUser);
+
     try {
       if (!currentUser!.listOfFollowing!.contains(userToFollowId)) {
         await firestoreDB.updateDoc(
@@ -27,6 +34,8 @@ class FollowController extends GetxController {
         );
 
         await updateFollowDataRemotely(userToFollowId, currentUser);
+
+        NotificationController.instance.addNewNotification();
       }
     } catch (e) {
       Utils.showErrorMessage(e.toString());
@@ -72,24 +81,24 @@ class FollowController extends GetxController {
   }
 
   Future<void> updateFollowDataLocally(
-    UserModel userModel,
+    UserModel currentUser,
   ) async {
     //Query the new update from db and update locally
     DocumentSnapshot doc = await firestoreDB.getDocById(
       Const.usersCollection,
-      userModel.userId!,
+      currentUser.userId!,
     );
 
     if (doc.exists) {
-      userModel.listOfFollowing =
+      currentUser.listOfFollowing =
           UserModel.fromJson(doc.data() as Map<String, dynamic>)
               .listOfFollowing;
-      userModel.numberOfFollowing =
+      currentUser.numberOfFollowing =
           UserModel.fromJson(doc.data() as Map<String, dynamic>)
               .numberOfFollowing;
 
       //save number of post locally
-      await userModel.save();
+      await currentUser.save();
     }
   }
 
@@ -127,10 +136,7 @@ class FollowController extends GetxController {
           UserModel.fromJson(doc.data() as Map<String, dynamic>)
               .numberOfFollowing;
 
-      //save number of post locally
       await currentUser.save();
-
-      update();
     }
   }
 }

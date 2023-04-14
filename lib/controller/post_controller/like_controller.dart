@@ -119,24 +119,6 @@ class LikeController extends GetxController {
     update();
   }
 
-  addLikeToDB(String postId) async {
-    try {
-      LikeModel likeModel = LikeModel(
-        id: FirestoreDBImpl.generateFirestoreId(Const.likesCollection),
-        postId: postId,
-        userId: HiveServices.getUserBox().get(Const.currentUser)!.userId!,
-      );
-
-      return await firestoreDB.addDocWithId(
-        Const.likesCollection,
-        likeModel.id!,
-        likeModel.toJson(),
-      );
-    } catch (e) {
-      Utils.showErrorMessage(e.toString());
-    }
-  }
-
   @override
   void dispose() {
     _likeIconTimer?.cancel();

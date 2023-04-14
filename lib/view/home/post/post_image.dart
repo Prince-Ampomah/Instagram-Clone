@@ -1,11 +1,13 @@
 import 'dart:async';
 
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:instagram_clone/controller/post_controller/like_controller.dart';
 import 'package:instagram_clone/controller/post_controller/post_image_controller.dart';
 import 'package:instagram_clone/core/theme/theme.dart';
 import 'package:instagram_clone/core/widgets/cus_cached_image.dart';
+import 'package:instagram_clone/core/widgets/cus_slider.dart';
 import 'package:instagram_clone/model/post_model/post_model.dart';
 
 class PostImage extends StatefulWidget {
@@ -100,6 +102,40 @@ class _PostImageState extends State<PostImage> with TickerProviderStateMixin {
           },
           child: Stack(
             children: [
+              // CustomImageSlider(
+              //   autoplay: false,
+              //   aspectRatio: 1.0,
+              //   items: List.generate(
+              //     widget.images!.length,
+              //     (index) {
+              //       return Stack(
+              //         children: [
+              //           CustomCachedImge(
+              //             imageUrl: widget.images![index],
+              //             width: size.width,
+              //             shimmerHeight: size.height * 0.70,
+              //             fit: BoxFit.fitWidth,
+              //           ),
+              //           if (showLikeIcon)
+              //             AnimatedBuilder(
+              //               animation: _heartAnimationController,
+              //               builder: (context, child) {
+              //                 return Align(
+              //                   alignment: Alignment.center,
+              //                   child: Icon(
+              //                     Icons.favorite,
+              //                     size: _heartAnimation.value,
+              //                     color: Colors.white,
+              //                   ),
+              //                 );
+              //               },
+              //             ),
+              //         ],
+              //       );
+              //     },
+              //   ),
+              // ),
+
               SizedBox(
                 height: size.height * 0.50,
                 width: size.width,
@@ -115,7 +151,7 @@ class _PostImageState extends State<PostImage> with TickerProviderStateMixin {
                             imageUrl: widget.images![index],
                             width: size.width,
                             shimmerHeight: size.height * 0.70,
-                            fit: BoxFit.cover,
+                            fit: BoxFit.fitWidth,
                           ),
                         ),
 

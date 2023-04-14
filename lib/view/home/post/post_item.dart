@@ -24,12 +24,12 @@ class PostItem extends StatefulWidget {
 }
 
 class _PostItemState extends State<PostItem> {
+  FirestoreDB firestoreDB = FirestoreDBImpl();
+
   /// Query the user who posted the feed from the [Users] collection in
   /// the database.
   ///
   Future<UserModel> getUserData() async {
-    FirestoreDB firestoreDB = FirestoreDBImpl();
-
     // use post [userId] field to fetch the user the db
     DocumentSnapshot doc = await firestoreDB.getDocById(
       Const.usersCollection,

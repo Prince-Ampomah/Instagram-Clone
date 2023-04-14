@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
-import '../../../controller/follow_controller/follow_controller.dart';
 import '../../../core/constants/constants.dart';
 import '../../../core/services/hive_services.dart';
-import '../../../core/theme/app_colors.dart';
 import '../../../core/widgets/cus_cached_image.dart';
 import '../../../core/widgets/cus_read_more_text.dart';
 import '../../../model/post_model/post_model.dart';
 import '../../../model/user_model/user_model.dart';
+import '../../core/follow_button.dart';
+import '../../core/unfollow_button.dart';
 
 class UsersProfileViewInfo extends StatelessWidget {
   const UsersProfileViewInfo({
@@ -21,7 +22,6 @@ class UsersProfileViewInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    UserModel? currentUser = HiveServices.getUserBox().get(Const.currentUser);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -134,16 +134,22 @@ class UsersProfileViewInfo extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             mainAxisSize: MainAxisSize.min,
             children: [
-              // follow button
-              userModel!.listOfFollowers!.contains(currentUser!.userId)
-                  ? UnfollowButton(
-                      postModel: postModel,
-                      userModel: userModel,
-                    )
-                  : FollowButton(
-                      postModel: postModel,
-                      userModel: userModel,
-                    ),
+              // listen to the user model hive box
+              ValueListenableBuilder<Box<UserModel>>(
+                valueListenable: HiveServices.getUserBox().listenable(),
+                builder: (BuildContext context, currentUserBox, _) {
+                  bool isInListOFFollowers = currentUserBox
+                      .get(Const.currentUser)!
+                      .listOfFollowing!
+                      .contains(userModel!.userId!);
+
+                  if (isInListOFFollowers) {
+                    return UnfollowButton(postModel: postModel);
+                  } else {
+                    return FollowButton(postModel: postModel);
+                  }
+                },
+              ),
 
               const SizedBox(width: 10),
 
@@ -214,82 +220,6 @@ class UsersProfileViewInfo extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-class FollowButton extends StatelessWidget {
-  const FollowButton({
-    super.key,
-    required this.postModel,
-    required this.userModel,
-  });
-
-  final PostModel? postModel;
-  final UserModel? userModel;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        FollowController.instance.followUser(postModel!.userId!);
-      },
-      child: Container(
-        alignment: Alignment.center,
-        padding: const EdgeInsets.symmetric(
-          vertical: 10,
-          horizontal: 30,
-        ),
-        decoration: BoxDecoration(
-          color: AppColors.buttonColor,
-          borderRadius: BorderRadius.circular(8),
-        ),
-        child: const Text(
-          'Follow',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: AppColors.whiteColor,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class UnfollowButton extends StatelessWidget {
-  const UnfollowButton({
-    super.key,
-    required this.postModel,
-    required this.userModel,
-  });
-
-  final PostModel? postModel;
-  final UserModel? userModel;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        FollowController.instance.unFollowUser(postModel!.userId!);
-      },
-      child: Container(
-        alignment: Alignment.center,
-        padding: const EdgeInsets.symmetric(
-          vertical: 10,
-          horizontal: 30,
-        ),
-        decoration: BoxDecoration(
-          color: const Color(0xFFEFEFEF),
-          borderRadius: BorderRadius.circular(8),
-        ),
-        child: const Text(
-          'Unfollow',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Colors.black,
-          ),
-        ),
-      ),
     );
   }
 }

@@ -77,7 +77,7 @@ class NewPostController extends GetxController {
     );
 
     try {
-      Get.off(() => AppLayoutView(pageIndex: 0));
+      Get.off(() => const AppLayoutView(pageIndex: 0));
       //   upload to firestore database
       await saveToDB(postModel, userModel);
 

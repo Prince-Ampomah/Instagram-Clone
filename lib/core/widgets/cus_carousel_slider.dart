@@ -46,28 +46,23 @@ class CustomImageSlider extends StatelessWidget {
     required this.items,
     this.autoplay = true,
     this.viewportFraction = 1.0,
-    this.aspectRatio = 16 / 9,
-    this.enableInfiniteScroll = false,
-    this.enlargeFactor = 0.0,
+    this.aspectRatio = 2.0,
   }) : super(key: key);
 
   final List<Widget> items;
-  final bool? autoplay, enableInfiniteScroll;
+  final bool? autoplay;
 
-  final double? viewportFraction, enlargeFactor;
-  final double aspectRatio;
+  final double? viewportFraction, aspectRatio;
 
   @override
   Widget build(BuildContext context) {
     return CarouselSlider(
       options: CarouselOptions(
         autoPlay: autoplay!,
-        aspectRatio: aspectRatio,
+        aspectRatio: aspectRatio!,
         enlargeCenterPage: true,
-        enableInfiniteScroll: enableInfiniteScroll!,
         viewportFraction: viewportFraction!,
         enlargeStrategy: CenterPageEnlargeStrategy.height,
-        enlargeFactor: enlargeFactor!,
         autoPlayCurve: Curves.ease,
       ),
       items: items,
