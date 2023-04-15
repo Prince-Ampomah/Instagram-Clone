@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:instagram_clone/controller/profile_controller/post_profile_controller.dart';
 import 'package:instagram_clone/core/widgets/cus_cached_image.dart';
 import 'package:instagram_clone/model/post_model/post_model.dart';
@@ -31,7 +30,7 @@ class _UsersProfileViewGalleryState extends State<UsersProfileViewGallery>
   @override
   void initState() {
     tabController = TabController(length: 2, vsync: this);
-    Get.put(PostProfileController());
+
     super.initState();
   }
 
@@ -89,16 +88,12 @@ class UserProfileFeeds extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Future<QuerySnapshot<Map<String, dynamic>>> getUserProfileFeed() async {
-      return FirebaseFirestore.instance
+    return FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
+      future: FirebaseFirestore.instance
           .collection(Const.postsCollection)
           .where('userId', isEqualTo: postModel!.userId)
           .orderBy('timePosted', descending: true)
-          .get();
-    }
-
-    return FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
-      future: getUserProfileFeed(),
+          .get(),
       builder: (
         BuildContext context,
         AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot,
@@ -124,27 +119,6 @@ class UserProfileFeeds extends StatelessWidget {
         return Center(child: Text('Something went wrong: ${snapshot.error}'));
       },
     );
-    // return GetBuilder<PostProfileController>(
-    //   builder: (controller) {
-    //     if (controller.waiting) {
-    //       return const Center(
-    //         child: CustomCircularProgressBar(),
-    //       );
-    //     }
-
-    //     if (controller.hasError) {
-    //       return Center(
-    //         child: Text(controller.getTextState),
-    //       );
-    //     }
-
-    //     if (controller.hasData) {
-    //       return ListPostProfileItem(snapshot: snapshot);
-    //     }
-
-    //     return Center(child: Text(controller.getTextState));
-    //   },
-    // );
   }
 }
 

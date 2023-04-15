@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'dart:async';
@@ -6,7 +7,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:instagram_clone/core/constants/constants.dart';
 import 'package:instagram_clone/core/services/hive_services.dart';
 
-class PostProfileController extends GetxController {
+class PostProfileController extends ChangeNotifier {
   StreamSubscription? _streamSubscription;
   bool hasError = false, hasData = true, waiting = true, done = false;
 
@@ -37,22 +38,27 @@ class PostProfileController extends GetxController {
         .listen((data) async {
       _setPostProfileList = data.docs.toList();
 
-      update();
+      // update();
+      notifyListeners();
 
       if (_setPostProfileList!.isEmpty) {
         hasData = false;
         _setTextState = 'No feed yet';
-        update();
+        // update();
+        notifyListeners();
       }
       waiting = false;
-      update();
+      // update();
+      notifyListeners();
     }, onError: (Object error, StackTrace stackTrace) {
       hasError = true;
       _setTextState = 'Something went wrong: $error';
-      update();
+      // update();
+      notifyListeners();
     }, onDone: () {
       done = true;
-      update();
+      // update();
+      notifyListeners();
     });
   }
 
