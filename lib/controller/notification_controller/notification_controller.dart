@@ -96,27 +96,37 @@ class NotificationController extends GetxController {
     super.dispose();
   }
 
-  addNewNotification() async {
-    UserModel? currentUser = HiveServices.getUserBox().get(Const.currentUser);
+  addNewNotification(String userToFollowId) async {
+    // UserModel? currentUser = HiveServices.getUserBox().get(Const.currentUser);
 
     try {
-      NotificationModel notificationModel = NotificationModel(
-        id: notificationId,
-        userId: currentUser!.userId,
-        userImage: currentUser.profileImage,
-        userHandle: currentUser.userHandle,
-        userFullName: currentUser.fullname,
-        date: DateTime.now(),
+      DocumentSnapshot doc = await firestoreDB.getDocById(
+        Const.usersCollection,
+        userToFollowId,
       );
 
-      return await firestoreDB.addDocWithId(
-        Const.notificationCollection,
-        notificationId,
-        {
-          ...notificationModel.toJson(),
-          'date': FieldValue.serverTimestamp(),
-        },
-      );
+      if (doc.exists) {
+        UserModel? userModel =
+            UserModel.fromJson(doc.data() as Map<String, dynamic>);
+
+        NotificationModel notificationModel = NotificationModel(
+          id: notificationId,
+          userId: userModel.userId,
+          userImage: userModel.profileImage,
+          userHandle: userModel.userHandle,
+          userFullName: userModel.fullname,
+          date: DateTime.now(),
+        );
+
+        await firestoreDB.addDocWithId(
+          Const.notificationCollection,
+          notificationId,
+          {
+            ...notificationModel.toJson(),
+            'date': FieldValue.serverTimestamp(),
+          },
+        );
+      }
     } catch (e) {
       Utils.showErrorMessage(e.toString());
     }

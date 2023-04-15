@@ -1,24 +1,21 @@
 import 'package:flutter/material.dart';
 
 import '../../controller/follow_controller/follow_controller.dart';
-import '../../controller/notification_controller/notification_controller.dart';
 import '../../core/theme/app_colors.dart';
-import '../../model/post_model/post_model.dart';
-import '../../model/user_model/user_model.dart';
 
 class FollowButton extends StatelessWidget {
   const FollowButton({
     super.key,
-    required this.postModel,
+    required this.userToFollowerId,
   });
 
-  final PostModel? postModel;
+  final String? userToFollowerId;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        FollowController.instance.followUser(postModel!.userId!);
+        FollowController.instance.followUser(userToFollowerId!);
       },
       child: Container(
         alignment: Alignment.center,

@@ -9,8 +9,6 @@ import '../../../core/constants/constants.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/widgets/cus_circular_progressbar.dart';
 import '../../../core/widgets/cus_tab_bar.dart';
-import '../../../repository/repository_abstract/database_abstract.dart';
-import '../../../repository/respository_implementation/database_implementation.dart';
 
 class UsersProfileViewGallery extends StatefulWidget {
   const UsersProfileViewGallery({
@@ -178,7 +176,7 @@ class ListPostProfileItem extends StatelessWidget {
 
           return Stack(
             children: [
-              CustomCachedImge(
+              CustomCachedImage(
                 width: size.width,
                 imageUrl: postModel.media![0],
                 fit: BoxFit.cover,

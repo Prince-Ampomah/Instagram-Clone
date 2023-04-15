@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:instagram_clone/view/messages/message_view.dart';
 import 'package:instagram_clone/view/notification/notification_view.dart';
 
 import '../../../controller/post_controller/new_post_controller.dart';
@@ -76,12 +77,17 @@ class HomeAppBar extends StatelessWidget {
           },
           child: const Icon(Icons.favorite_outline, size: 30),
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Image.asset(
-            Const.instragramChatIcon,
-            height: 25,
-            width: 25,
+        GestureDetector(
+          onTap: () {
+            Get.to(() => const MessageView());
+          },
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Image.asset(
+              Const.instragramChatIcon,
+              height: 25,
+              width: 25,
+            ),
           ),
         ),
       ],

@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:instagram_clone/controller/notification_controller/notification_controller.dart';
-import 'package:instagram_clone/core/constants/constants.dart';
-import 'package:instagram_clone/core/theme/app_colors.dart';
 import 'package:instagram_clone/core/widgets/cus_appbar.dart';
-import 'package:instagram_clone/core/widgets/cus_circular_image.dart';
 import 'package:instagram_clone/core/widgets/cus_circular_progressbar.dart';
-import 'package:instagram_clone/core/widgets/cus_main_button.dart';
-import 'package:instagram_clone/core/widgets/cus_rich_text.dart';
 import 'package:instagram_clone/view/notification/notification_list_item.dart';
 
 class NotificationView extends StatelessWidget {

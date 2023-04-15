@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:instagram_clone/core/utils/utils.dart';
-import 'package:instagram_clone/model/post_model/like_model.dart';
 
 import '../../core/constants/constants.dart';
 import '../../core/services/hive_services.dart';

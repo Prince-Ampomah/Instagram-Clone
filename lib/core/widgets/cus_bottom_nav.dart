@@ -146,7 +146,7 @@ class CusDefaultBottomNav extends StatelessWidget {
                 ),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(100),
-                  child: CustomCachedImge(
+                  child: CustomCachedImage(
                     imageUrl: userModel!.profileImage!,
                     height: 30,
                     width: 30,
@@ -170,7 +170,7 @@ class CusDefaultBottomNav extends StatelessWidget {
                 ),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(100),
-                  child: CustomCachedImge(
+                  child: CustomCachedImage(
                     imageUrl: userModel!.profileImage!,
                     height: 30,
                     width: 30,

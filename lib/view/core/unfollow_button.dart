@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
 
 import '../../controller/follow_controller/follow_controller.dart';
-import '../../model/post_model/post_model.dart';
 
 class UnfollowButton extends StatelessWidget {
   const UnfollowButton({
     super.key,
-    required this.postModel,
+    required this.userToUnfollowId,
   });
 
-  final PostModel? postModel;
+  final String? userToUnfollowId;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        FollowController.instance.unFollowUser(postModel!.userId!);
+        FollowController.instance.unFollowUser(userToUnfollowId!);
       },
       child: Container(
         alignment: Alignment.center,

@@ -34,7 +34,7 @@ class UsersProfileViewInfo extends StatelessWidget {
               userModel!.profileImage != null
                   ? ClipRRect(
                       borderRadius: BorderRadius.circular(100),
-                      child: CustomCachedImge(
+                      child: CustomCachedImage(
                         height: 75,
                         width: 75,
                         imageUrl: userModel!.profileImage!,
@@ -144,9 +144,9 @@ class UsersProfileViewInfo extends StatelessWidget {
                       .contains(userModel!.userId!);
 
                   if (isInListOFFollowers) {
-                    return UnfollowButton(postModel: postModel);
+                    return UnfollowButton(userToUnfollowId: postModel!.userId!);
                   } else {
-                    return FollowButton(postModel: postModel);
+                    return FollowButton(userToFollowerId: postModel!.userId!);
                   }
                 },
               ),

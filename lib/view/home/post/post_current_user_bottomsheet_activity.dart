@@ -5,7 +5,6 @@ import 'package:instagram_clone/model/post_model/post_model.dart';
 import 'package:instagram_clone/model/user_model/user_model.dart';
 import 'dart:math' as math;
 
-import '../../../controller/follow_controller/follow_controller.dart';
 import '../../../controller/post_controller/save_controller.dart';
 import '../../../core/services/hive_services.dart';
 import '../../../core/widgets/cus_bottom_sheet.dart';

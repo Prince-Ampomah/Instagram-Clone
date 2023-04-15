@@ -1,8 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:instagram_clone/controller/notification_controller/notification_controller.dart';
-import 'package:instagram_clone/model/notification_model/notification_model.dart';
 
 import '../../core/constants/constants.dart';
 import '../../core/services/hive_services.dart';
@@ -24,6 +21,19 @@ class FollowController extends GetxController {
 
     try {
       if (!currentUser!.listOfFollowing!.contains(userToFollowId)) {
+        // FollowUnfollowModel followUnfollowModel =
+        //     FollowUnfollowModel(id: currentUser.userId);
+
+        // await firestoreDB.addDocWithId(
+        //   Const.followAndUnfollowCollection,
+        //   currentUser.userId!,
+        //   {
+        //     ...followUnfollowModel.toJson(),
+        //     'following': FieldValue.arrayUnion([userToFollowId]),
+        //     'followers': FieldValue.arrayUnion([userToFollowId]),
+        //   },
+        // );
+
         await firestoreDB.updateDoc(
           Const.usersCollection,
           userToFollowId,
@@ -34,8 +44,6 @@ class FollowController extends GetxController {
         );
 
         await updateFollowDataRemotely(userToFollowId, currentUser);
-
-        NotificationController.instance.addNewNotification();
       }
     } catch (e) {
       Utils.showErrorMessage(e.toString());
@@ -46,6 +54,18 @@ class FollowController extends GetxController {
     UserModel? currentUser = HiveServices.getUserBox().get(Const.currentUser);
     try {
       if (currentUser!.listOfFollowing!.contains(userToUnFollowId)) {
+        // FollowUnfollowModel followUnfollowModel =
+        //     FollowUnfollowModel(id: currentUser.userId);
+
+        // await firestoreDB.addDocWithId(
+        //   Const.followAndUnfollowCollection,
+        //   currentUser.userId!,
+        //   {
+        //     ...followUnfollowModel.toJson(),
+        //     'following': FieldValue.arrayRemove([userToUnFollowId]),
+        //   },
+        // );
+
         await firestoreDB.updateDoc(
           Const.usersCollection,
           userToUnFollowId,

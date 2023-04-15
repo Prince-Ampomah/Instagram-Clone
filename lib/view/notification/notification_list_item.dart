@@ -37,7 +37,7 @@ class NotificationListItem extends StatelessWidget {
               notificationModel.userImage != null
                   ? ClipRRect(
                       borderRadius: BorderRadius.circular(100),
-                      child: CustomCachedImge(
+                      child: CustomCachedImage(
                         height: 50,
                         width: 50,
                         imageUrl: notificationModel.userImage!,

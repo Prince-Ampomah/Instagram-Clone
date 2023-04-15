@@ -5,7 +5,6 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:instagram_clone/core/constants/constants.dart';
 import 'package:instagram_clone/core/services/hive_services.dart';
-import 'package:instagram_clone/model/post_model/post_model.dart';
 
 class PostProfileController extends GetxController {
   StreamSubscription? _streamSubscription;

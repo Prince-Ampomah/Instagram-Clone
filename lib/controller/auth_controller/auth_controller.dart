@@ -51,7 +51,7 @@ class AuthController extends GetxController {
 
           await userBox.put(Const.currentUser, userModel);
 
-          Get.off(() => AppLayoutView(pageIndex: 0));
+          Get.off(() => const AppLayoutView(pageIndex: 0));
         }
       }
 

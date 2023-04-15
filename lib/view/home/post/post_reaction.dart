@@ -8,12 +8,10 @@ import 'package:instagram_clone/view/home/post/core/post_comment_button.dart';
 import 'package:instagram_clone/view/home/post/core/post_like_button.dart';
 import 'package:instagram_clone/view/home/post/core/post_save_button.dart';
 import 'package:instagram_clone/view/home/post/core/post_send_message_button.dart';
-import 'package:readmore/readmore.dart';
 
 import '../../../core/constants/constants.dart';
 import '../../../core/services/hive_services.dart';
 import '../../../core/utils/date_time_convertor.dart';
-import '../../../core/widgets/cus_rich_text.dart';
 import '../../../model/post_model/post_model.dart';
 import '../../../model/user_model/user_model.dart';
 

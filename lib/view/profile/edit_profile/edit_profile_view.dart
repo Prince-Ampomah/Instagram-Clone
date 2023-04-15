@@ -79,7 +79,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                     widget.userInfo!.profileImage != null
                         ? ClipRRect(
                             borderRadius: BorderRadius.circular(100),
-                            child: CustomCachedImge(
+                            child: CustomCachedImage(
                               height: 95,
                               width: 95,
                               imageUrl: widget.userInfo!.profileImage!,

@@ -4,8 +4,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/core/widgets/cus.shimmer.effect.dart';
 
-class CustomCachedImge extends StatelessWidget {
-  const CustomCachedImge({
+class CustomCachedImage extends StatelessWidget {
+  const CustomCachedImage({
     Key? key,
     required this.imageUrl,
     this.fit,

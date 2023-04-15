@@ -50,7 +50,7 @@ class PostUser extends StatelessWidget {
                 userModel!.profileImage != null
                     ? ClipRRect(
                         borderRadius: BorderRadius.circular(100),
-                        child: CustomCachedImge(
+                        child: CustomCachedImage(
                           height: 40,
                           width: 40,
                           imageUrl: userModel!.profileImage!,

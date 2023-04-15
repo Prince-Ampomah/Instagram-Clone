@@ -32,7 +32,7 @@ class CommentTextField extends StatelessWidget {
                   child: userModel?.profileImage != null
                       ? ClipRRect(
                           borderRadius: BorderRadius.circular(100),
-                          child: CustomCachedImge(
+                          child: CustomCachedImage(
                             height: 35,
                             width: 35,
                             imageUrl: userModel!.profileImage!,

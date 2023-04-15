@@ -6,6 +6,7 @@ class AppColors {
   static const greyColor = Color(0xFF8C8C8C);
   static const buttonColor = Color(0xFF0094F6);
   static const textFieldColor = Color(0xFFF7F7F7);
+  static const buttonBgColor = Color(0xFFECECEC);
   static const deepButtonColor = Color(0xFF003050);
   static const errorColor = Color(0xFFDF5E55);
   static const successColor = Color(0xFFEFF2FA);

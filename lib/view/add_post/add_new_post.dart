@@ -46,7 +46,7 @@ class AddNewPost extends StatelessWidget {
                     onTap: () => sendToPage(context, const NewPostPreview()),
                     child: Stack(
                       children: [
-                        CustomCachedImge(
+                        CustomCachedImage(
                           imageUrl: NewPostController.instance.media.first,
                           height: size.height * 0.12,
                           width: 150,

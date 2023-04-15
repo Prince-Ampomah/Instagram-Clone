@@ -31,7 +31,7 @@ class CommentListItemView extends StatelessWidget {
               commentModel.userProfileImage != null
                   ? ClipRRect(
                       borderRadius: BorderRadius.circular(100),
-                      child: CustomCachedImge(
+                      child: CustomCachedImage(
                         height: 40,
                         width: 40,
                         imageUrl: commentModel.userProfileImage!,

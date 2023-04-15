@@ -6,7 +6,6 @@ import 'package:instagram_clone/controller/post_controller/comment_controller.da
 import 'controller/auth_controller/auth_controller.dart';
 import 'controller/models_controller/models_controller.dart';
 import 'controller/post_controller/like_controller.dart';
-import 'controller/post_controller/new_post_controller.dart';
 import 'controller/post_controller/post_controller.dart';
 import 'controller/post_controller/save_controller.dart';
 import 'controller/profile_controller/edit_profile_controller.dart';

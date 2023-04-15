@@ -12,8 +12,6 @@ class PostListItem extends StatelessWidget {
     this.snapshot,
   });
 
-  // final PostController? postController;
-
   final AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>? snapshot;
 
   @override
@@ -22,9 +20,7 @@ class PostListItem extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       itemCount: snapshot!.data!.docs.length + 1,
-      // postController!.getPostList!.length + 1,
       itemBuilder: (BuildContext context, int index) {
-        // postController.getPostList!.length
         if (index == snapshot!.data!.docs.length) {
           return const Padding(
             padding: EdgeInsets.only(bottom: 10),
@@ -33,7 +29,6 @@ class PostListItem extends StatelessWidget {
             ),
           );
         } else {
-          // postController.getPostList![index].data()
           PostModel postModel =
               PostModel.fromJson(snapshot!.data!.docs[index].data());
 

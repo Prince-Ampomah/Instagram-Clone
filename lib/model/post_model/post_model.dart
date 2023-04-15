@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hive/hive.dart';
 import 'package:instagram_clone/core/constants/constants.dart';
 
-import '../user_model/user_model.dart';
 import 'post_location_model.dart';
 
 part 'post_model.g.dart';

@@ -102,7 +102,7 @@ class _EmailVerificationViewState extends State<EmailVerificationView> {
         Box<UserModel> userBox = HiveServices.getUserBox();
         await userBox.put(Const.currentUser, userModel);
 
-        Get.off(() => AppLayoutView(pageIndex: 0));
+        Get.off(() => const AppLayoutView(pageIndex: 0));
       }
     } catch (e) {
       Utils.showErrorMessage(e.toString());
@@ -137,7 +137,7 @@ class _EmailVerificationViewState extends State<EmailVerificationView> {
   @override
   Widget build(BuildContext context) {
     return isEmailVerified
-        ? AppLayoutView()
+        ? const AppLayoutView()
         : VerifyUserEmailView(resendSendEmailLink: sendEmailVerification);
   }
 }

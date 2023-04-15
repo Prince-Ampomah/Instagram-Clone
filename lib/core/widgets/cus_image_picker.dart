@@ -53,7 +53,7 @@ class CustomImagePicker extends StatelessWidget {
         child: ClipRRect(
           borderRadius: borderRadius ?? BorderRadius.circular(0),
           child: imagePath != null
-              ? CustomCachedImge(imageUrl: imagePath!, fit: BoxFit.cover)
+              ? CustomCachedImage(imageUrl: imagePath!, fit: BoxFit.cover)
               : Stack(
                   children: [
                     if (placeHolder != null) placeHolder!,

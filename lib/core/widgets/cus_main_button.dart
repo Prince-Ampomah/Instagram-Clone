@@ -159,30 +159,35 @@ class AppButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: onPressed,
-      style: ButtonStyle(
-        foregroundColor: MaterialStateProperty.all<Color?>(foregroundColor),
-        backgroundColor: MaterialStateProperty.all<Color?>(bgColor),
-        padding: MaterialStateProperty.all(
-          const EdgeInsets.symmetric(
-            horizontal: 14,
-            vertical: 14,
+    return SizedBox(
+      height: buttonHeight,
+      child: ElevatedButton(
+        onPressed: onPressed,
+        style: ButtonStyle(
+          foregroundColor: MaterialStateProperty.all<Color?>(foregroundColor),
+          backgroundColor: MaterialStateProperty.all<Color?>(bgColor),
+          elevation: MaterialStateProperty.all<double>(0.0),
+
+          // padding: MaterialStateProperty.all(
+          //   const EdgeInsets.symmetric(
+          //     horizontal: 14,
+          //     vertical: 14,
+          //   ),
+          // ),
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(borderRadius!),
+            ),
           ),
         ),
-        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-          RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(borderRadius!),
+        child: Text(
+          title,
+          style: TextStyle(
+            color: textColor,
+            fontWeight: fontWeight,
+            fontSize: fontSize,
+            letterSpacing: letterSpacing,
           ),
-        ),
-      ),
-      child: Text(
-        title,
-        style: TextStyle(
-          color: textColor,
-          fontWeight: fontWeight,
-          fontSize: fontSize,
-          letterSpacing: letterSpacing,
         ),
       ),
     );

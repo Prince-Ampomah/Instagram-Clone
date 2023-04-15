@@ -53,4 +53,5 @@ class Const {
   static const String commentsCollection = 'comments';
   static const String likesCollection = 'likes';
   static const String notificationCollection = 'notifications';
+  static const String followAndUnfollowCollection = 'followAndUnfollow';
 }

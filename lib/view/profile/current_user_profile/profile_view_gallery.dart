@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:instagram_clone/controller/profile_controller/post_profile_controller.dart';
 import 'package:instagram_clone/core/widgets/cus_cached_image.dart';
 import 'package:instagram_clone/model/post_model/post_model.dart';
-import 'package:instagram_clone/view/profile/users_profile/users_profile_view.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/widgets/cus_circular_progressbar.dart';
@@ -120,7 +119,7 @@ class ListPostProfileItem extends StatelessWidget {
             },
             child: Stack(
               children: [
-                CustomCachedImge(
+                CustomCachedImage(
                   width: size.width,
                   imageUrl: postModel.media![0],
                   fit: BoxFit.cover,

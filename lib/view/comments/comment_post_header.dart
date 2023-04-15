@@ -31,7 +31,7 @@ class CommentPostHeader extends StatelessWidget {
           userImage != null
               ? ClipRRect(
                   borderRadius: BorderRadius.circular(100),
-                  child: CustomCachedImge(
+                  child: CustomCachedImage(
                     height: 45,
                     width: 45,
                     imageUrl: userImage!,
