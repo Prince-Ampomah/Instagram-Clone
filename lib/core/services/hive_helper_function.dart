@@ -18,4 +18,5 @@ Future<void> initHiveServices() async {
   await Hive.openBox<UserModel>(Const.userBoxName);
   await Hive.openBox<PostModel>(Const.postBoxName);
   await Hive.openBox(Const.postIdName);
+  await Hive.openBox(Const.chatIdBoxName);
 }

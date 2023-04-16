@@ -12,12 +12,12 @@ class MessagesListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    UserModel userModel = HiveServices.getUserBox().get(Const.currentUser)!;
+    UserModel? userModel = HiveServices.getUserBox().get(Const.currentUser);
+
     return StreamBuilder(
       stream: FirebaseFirestore.instance
           .collection(Const.usersCollection)
-          .where('userId', isNotEqualTo: userModel.userId)
-          // .orderBy('createdAt', descending: true)
+          .where('listOfFollowers', arrayContains: userModel!.userId!)
           .snapshots(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasError) {
@@ -31,7 +31,7 @@ class MessagesListView extends StatelessWidget {
         }
 
         if (snapshot.data!.docs.isEmpty) {
-          return const Center(child: Text('No feed posted yet'));
+          return const Center(child: Text('You have not followed any one yet'));
         }
 
         if (snapshot.hasData) {

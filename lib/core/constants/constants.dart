@@ -46,6 +46,7 @@ class Const {
   static const String postIdName = 'postIdName';
   static const String currentUser = 'currentUser';
   static const String postId = 'postId';
+  static const String chatIdBoxName = 'chatIdBoxName';
 
   // Firestore contants
   static const String usersCollection = 'users';
@@ -54,4 +55,10 @@ class Const {
   static const String likesCollection = 'likes';
   static const String notificationCollection = 'notifications';
   static const String followAndUnfollowCollection = 'followAndUnfollow';
+  static const String chatCollection = 'chats';
+  static const String messagesCollection = 'messages';
+  static const String timeSent = 'timeSent';
+
+// chat type
+  static const String text = 'text';
 }

@@ -3,6 +3,7 @@ import 'package:instagram_clone/core/constants/constants.dart';
 import 'package:instagram_clone/core/utils/helper_functions.dart';
 import 'package:instagram_clone/model/user_model/user_model.dart';
 
+import '../../core/services/hive_services.dart';
 import '../../core/widgets/cus_cached_image.dart';
 import '../../core/widgets/cus_circular_image.dart';
 import 'chat_room/chat_room_view.dart';
@@ -22,12 +23,22 @@ class MessageListItem extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       itemCount: snapshot.data.docs.length,
       itemBuilder: (BuildContext context, int index) {
+        UserModel? currentUser =
+            HiveServices.getUserBox().get(Const.currentUser);
+
         UserModel userModel =
             UserModel.fromJson(snapshot.data.docs[index].data());
 
+        String chatId = '${currentUser!.userId}_${userModel.userId}';
+
         return InkWell(
           onTap: () {
-            sendToPage(context, ChatRoomView(userModel: userModel));
+            sendToPage(
+              context,
+              ChatRoomView(
+                userModel: userModel,
+              ),
+            );
           },
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:instagram_clone/controller/profile_controller/post_profile_controller.dart';
 import 'package:instagram_clone/core/widgets/cus_cached_image.dart';
 import 'package:instagram_clone/model/post_model/post_model.dart';

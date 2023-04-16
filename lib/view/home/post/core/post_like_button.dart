@@ -17,7 +17,7 @@ class LikeButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String? userId = HiveServices.getUserBox().get(Const.currentUser)!.userId;
+    String? userId = HiveServices.getUserBox().get(Const.currentUser)?.userId;
 
     return GestureDetector(
       onTap: () async {

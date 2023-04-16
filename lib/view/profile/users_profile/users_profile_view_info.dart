@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:instagram_clone/core/theme/app_colors.dart';
+import 'package:instagram_clone/view/messages/chat_room/chat_room_view.dart';
 
 import '../../../core/constants/constants.dart';
 import '../../../core/services/hive_services.dart';
+import '../../../core/utils/helper_functions.dart';
 import '../../../core/widgets/cus_cached_image.dart';
+import '../../../core/widgets/cus_main_button.dart';
 import '../../../core/widgets/cus_read_more_text.dart';
 import '../../../model/post_model/post_model.dart';
 import '../../../model/user_model/user_model.dart';
@@ -154,33 +158,27 @@ class UsersProfileViewInfo extends StatelessWidget {
               const SizedBox(width: 10),
 
               // message button
-              Container(
-                alignment: Alignment.center,
-                padding: const EdgeInsets.symmetric(
-                  vertical: 10,
-                  horizontal: 30,
-                ),
-                decoration: BoxDecoration(
-                  color: const Color(0xFFEFEFEF),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: const Text(
-                  'Message',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+              AppButton(
+                buttonHeight: 36,
+                buttonWidth: 120,
+                onPressed: () {
+                  sendToPage(context, ChatRoomView(userModel: userModel!));
+                },
+                title: 'Message',
+                foregroundColor: Colors.black,
+                bgColor: AppColors.buttonBgColor,
+                borderRadius: 8,
               ),
 
-              // const SizedBox(width: 10),
               const Spacer(),
 
               // icon
               Container(
                 alignment: Alignment.center,
+                width: 50,
                 padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFEFEFEF),
+                  color: AppColors.buttonBgColor,
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: const Icon(

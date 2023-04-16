@@ -38,8 +38,6 @@ class NotificationController extends GetxController {
   getNotifications() async {
     // var postBox = HiveServices.getPosts();
 
-    UserModel? userModel = HiveServices.getUserBox().get(Const.currentUser);
-
     return _streamSubscription = FirebaseFirestore.instance
         .collection(Const.notificationCollection)
         // .where('userId', isNotEqualTo: userModel!.userId)

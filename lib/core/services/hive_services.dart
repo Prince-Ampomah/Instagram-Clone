@@ -15,4 +15,12 @@ class HiveServices {
   static dynamic getPostId() {
     return Hive.box(Const.postIdName).get('postId');
   }
+
+  static Future<void> setChatId(String chatId) {
+    return Hive.box(Const.chatIdBoxName).put('chatId', chatId);
+  }
+
+  static dynamic getChatId() {
+    return Hive.box(Const.chatIdBoxName).get('chatId');
+  }
 }

@@ -27,8 +27,6 @@ class EditProfileController extends GetxController {
 
   StorageContract storageContract = StorageImplementation();
 
-  UserModel? userInfo = HiveServices.getUserBox().get(Const.currentUser);
-
   Future<String> testCompressAndGetFile(String image, String targetPath) async {
     File? result = await FlutterImageCompress.compressAndGetFile(
       image,
@@ -42,6 +40,7 @@ class EditProfileController extends GetxController {
   }
 
   void getUserProfilePic(imageSource) async {
+    UserModel? userInfo = HiveServices.getUserBox().get(Const.currentUser);
     var imagePath = await getImagePicker(imageSource);
     if (imagePath.isNotEmpty) {
       userInfo!.profileImage = imagePath;
@@ -53,6 +52,7 @@ class EditProfileController extends GetxController {
   }
 
   updateProfilePicture(String profileImage) async {
+    UserModel? userInfo = HiveServices.getUserBox().get(Const.currentUser);
     try {
       if (profileImage.isNotEmpty) {
         bool isValidURL = Uri.parse(profileImage).isAbsolute;
@@ -76,8 +76,8 @@ class EditProfileController extends GetxController {
           },
         );
 
-        userInfo!.profileImage = profileImage;
-        await userInfo!.save();
+        userInfo.profileImage = profileImage;
+        await userInfo.save();
 
         isLoading = false;
         update();
@@ -93,6 +93,7 @@ class EditProfileController extends GetxController {
   }
 
   updateFullname() async {
+    UserModel? userInfo = HiveServices.getUserBox().get(Const.currentUser);
     try {
       if (fullnameController.text.isNotEmpty) {
         await firestoreDB.updateDoc(
@@ -103,8 +104,8 @@ class EditProfileController extends GetxController {
           },
         );
 
-        userInfo!.fullname = fullnameController.text;
-        await userInfo!.save();
+        userInfo.fullname = fullnameController.text;
+        await userInfo.save();
 
         Get.back();
         update();
@@ -115,6 +116,7 @@ class EditProfileController extends GetxController {
   }
 
   updateUsername() async {
+    UserModel? userInfo = HiveServices.getUserBox().get(Const.currentUser);
     try {
       if (usernameController.text.isNotEmpty) {
         await firestoreDB.updateDoc(
@@ -125,8 +127,8 @@ class EditProfileController extends GetxController {
           },
         );
 
-        userInfo!.userHandle = usernameController.text;
-        await userInfo!.save();
+        userInfo.userHandle = usernameController.text;
+        await userInfo.save();
 
         Get.back();
         update();
@@ -137,6 +139,7 @@ class EditProfileController extends GetxController {
   }
 
   updateBio() async {
+    UserModel? userInfo = HiveServices.getUserBox().get(Const.currentUser);
     try {
       if (bioController.text.isNotEmpty) {
         await firestoreDB.updateDoc(
@@ -147,8 +150,8 @@ class EditProfileController extends GetxController {
           },
         );
 
-        userInfo!.bio = bioController.text;
-        await userInfo!.save();
+        userInfo.bio = bioController.text;
+        await userInfo.save();
         Get.back();
         update();
       }

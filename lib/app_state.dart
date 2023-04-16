@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:instagram_clone/controller/chat_controller/chat_controller.dart';
 import 'package:instagram_clone/controller/follow_controller/follow_controller.dart';
 import 'package:instagram_clone/controller/notification_controller/notification_controller.dart';
 import 'package:instagram_clone/controller/post_controller/comment_controller.dart';
@@ -26,5 +27,6 @@ class AppState {
     Get.put(ModelController());
     Get.put(FollowController());
     Get.put(NotificationController());
+    Get.put(ChatController());
   }
 }
