@@ -15,7 +15,7 @@ class SavePostButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String? userId = HiveServices.getUserBox().get(Const.currentUser)!.userId;
+    String? userId = HiveServices.getUserBox().get(Const.currentUser)?.userId;
     return IconButton(
       onPressed: () {
         SavePostController.instance.savePost(postModel!.id!);

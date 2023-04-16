@@ -21,19 +21,6 @@ class FollowController extends GetxController {
 
     try {
       if (!currentUser!.listOfFollowing!.contains(userToFollowId)) {
-        // FollowUnfollowModel followUnfollowModel =
-        //     FollowUnfollowModel(id: currentUser.userId);
-
-        // await firestoreDB.addDocWithId(
-        //   Const.followAndUnfollowCollection,
-        //   currentUser.userId!,
-        //   {
-        //     ...followUnfollowModel.toJson(),
-        //     'following': FieldValue.arrayUnion([userToFollowId]),
-        //     'followers': FieldValue.arrayUnion([userToFollowId]),
-        //   },
-        // );
-
         await firestoreDB.updateDoc(
           Const.usersCollection,
           userToFollowId,
@@ -52,20 +39,9 @@ class FollowController extends GetxController {
 
   Future<void> unFollowUser(String userToUnFollowId) async {
     UserModel? currentUser = HiveServices.getUserBox().get(Const.currentUser);
+
     try {
       if (currentUser!.listOfFollowing!.contains(userToUnFollowId)) {
-        // FollowUnfollowModel followUnfollowModel =
-        //     FollowUnfollowModel(id: currentUser.userId);
-
-        // await firestoreDB.addDocWithId(
-        //   Const.followAndUnfollowCollection,
-        //   currentUser.userId!,
-        //   {
-        //     ...followUnfollowModel.toJson(),
-        //     'following': FieldValue.arrayRemove([userToUnFollowId]),
-        //   },
-        // );
-
         await firestoreDB.updateDoc(
           Const.usersCollection,
           userToUnFollowId,
@@ -78,7 +54,6 @@ class FollowController extends GetxController {
         await updateUnfollowDataRemotely(currentUser, userToUnFollowId);
       }
     } catch (e) {
-      update();
       Utils.showErrorMessage(e.toString());
     }
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../controller/chat_controller/chat_controller.dart';
 import '../../../core/theme/app_colors.dart';
 
 class ChatTextField extends StatelessWidget {
@@ -10,7 +11,7 @@ class ChatTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.fromLTRB(15, 5.0, 15, 20.0),
+      margin: const EdgeInsets.fromLTRB(5, 5.0, 5, 20.0),
       padding: const EdgeInsets.symmetric(horizontal: 10),
       decoration: BoxDecoration(
         color: AppColors.buttonBgColor,
@@ -31,17 +32,17 @@ class ChatTextField extends StatelessWidget {
               color: Colors.white,
             ),
           ),
-          const Flexible(
+          Flexible(
             child: TextField(
-              // focusNode: widget.textFocus,
-              // controller: widget.textCtrl,
+              focusNode: ChatController.chatTextFieldFocus,
+              controller: ChatController.chatTextController,
               maxLines: 7,
               minLines: 1,
               textCapitalization: TextCapitalization.sentences,
               textInputAction: TextInputAction.newline,
               textAlign: TextAlign.justify,
               cursorColor: AppColors.blackColor,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 contentPadding: EdgeInsets.all(8),
                 border: InputBorder.none,
                 hintText: 'Message...',
@@ -49,19 +50,28 @@ class ChatTextField extends StatelessWidget {
             ),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              ChatController.instance.sendTextMessage();
+            },
             icon: const Icon(
-              Icons.mic_none_outlined,
+              Icons.send,
               size: 27,
             ),
           ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.image_outlined,
-              size: 27,
-            ),
-          ),
+          // IconButton(
+          //   onPressed: () {},
+          //   icon: const Icon(
+          //     Icons.mic_none_outlined,
+          //     size: 27,
+          //   ),
+          // ),
+          // IconButton(
+          //   onPressed: () {},
+          //   icon: const Icon(
+          //     Icons.image_outlined,
+          //     size: 27,
+          //   ),
+          // ),
         ],
       ),
     );

@@ -19,5 +19,14 @@ abstract class FirestoreDB {
 
   Future<void> deleteDoc(String collection, String docId);
 
-  // String generateFirestoreId(String collection);
+  Future<void> addNestedDocsWithId(
+    String collection1,
+    String docId1,
+    String collection2,
+    String docId2,
+    Map<String, dynamic> data,
+  );
+
+  Future<void> updateNestedDocs(String collection1, String docId1,
+      String collection2, String docId2, Map<String, dynamic> data);
 }

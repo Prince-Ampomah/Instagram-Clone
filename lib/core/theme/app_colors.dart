@@ -10,6 +10,7 @@ class AppColors {
   static const deepButtonColor = Color(0xFF003050);
   static const errorColor = Color(0xFFDF5E55);
   static const successColor = Color(0xFFEFF2FA);
+  static const chatColor = Color(0xFF2E6DE5);
 
   static const storyBorderColors = [
     Color(0xFFfeda75),

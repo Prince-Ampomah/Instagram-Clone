@@ -7,6 +7,8 @@ import 'package:instagram_clone/model/user_model/user_model.dart';
 import 'package:instagram_clone/view/profile/edit_profile/edit_profile_view.dart';
 import '../../../controller/profile_controller/edit_profile_controller.dart';
 import '../../../core/constants/constants.dart';
+import '../../../core/theme/app_colors.dart';
+import '../../../core/widgets/cus_main_button.dart';
 
 class ProfileViewInfo extends StatelessWidget {
   const ProfileViewInfo({
@@ -141,52 +143,41 @@ class ProfileViewInfo extends StatelessWidget {
           child: Row(
             children: [
               // edit profile
-              GestureDetector(
-                onTap: () {
+              AppButton(
+                onPressed: () {
                   Get.to(() => EditProfileView(userInfo: userModel));
                 },
-                child: Container(
-                  alignment: Alignment.center,
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 8, horizontal: 30),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFEFEFEF),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: const Text(
-                    'Edit profile',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
+                buttonHeight: 34,
+                buttonWidth: 120,
+                title: 'Edit profile',
+                fontWeight: FontWeight.bold,
+                foregroundColor: Colors.black,
+                bgColor: AppColors.buttonBgColor,
+                borderRadius: 8,
               ),
 
               const SizedBox(width: 10),
 
               // share profile
-              Container(
-                alignment: Alignment.center,
-                padding:
-                    const EdgeInsets.symmetric(vertical: 8, horizontal: 30),
-                decoration: BoxDecoration(
-                  color: const Color(0xFFEFEFEF),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: const Text(
-                  'Share profile',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+              AppButton(
+                onPressed: () {},
+                buttonHeight: 34,
+                buttonWidth: 120,
+                title: 'Share profile',
+                fontWeight: FontWeight.bold,
+                foregroundColor: Colors.black,
+                bgColor: AppColors.buttonBgColor,
+                borderRadius: 8,
               ),
 
-              const SizedBox(width: 10),
+              const Spacer(),
 
               // icon
               Container(
+                width: 50,
                 alignment: Alignment.center,
-                padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 7.5, horizontal: 8),
                 decoration: BoxDecoration(
                   color: const Color(0xFFEFEFEF),
                   borderRadius: BorderRadius.circular(8),

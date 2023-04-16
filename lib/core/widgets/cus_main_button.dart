@@ -147,13 +147,18 @@ class AppButton extends StatelessWidget {
     this.borderRadius = 5,
     this.letterSpacing,
     this.buttonHeight,
+    this.buttonWidth,
   });
 
   final String title;
   final Color? foregroundColor, bgColor, textColor;
   final IconData? iconData;
   final bool? isLoading, disabled;
-  final double? fontSize, letterSpacing, borderRadius, buttonHeight;
+  final double? fontSize,
+      letterSpacing,
+      borderRadius,
+      buttonHeight,
+      buttonWidth;
   final FontWeight? fontWeight;
   final Function()? onPressed;
 
@@ -161,6 +166,7 @@ class AppButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: buttonHeight,
+      width: buttonWidth,
       child: ElevatedButton(
         onPressed: onPressed,
         style: ButtonStyle(

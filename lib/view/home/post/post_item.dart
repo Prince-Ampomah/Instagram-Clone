@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:instagram_clone/controller/models_controller/models_controller.dart';
 
 import '../../../core/constants/constants.dart';
 import '../../../model/post_model/post_model.dart';

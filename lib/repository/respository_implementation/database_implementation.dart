@@ -16,6 +16,18 @@ class FirestoreDBImpl implements FirestoreDB {
   }
 
   @override
+  Future<void> updateNestedDocs(String collection1, String docId1,
+      String collection2, String docId2, Map<String, dynamic> data) {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    return firebaseFirestore
+        .collection(collection1)
+        .doc(docId1)
+        .collection(collection2)
+        .doc(docId2)
+        .update(data);
+  }
+
+  @override
   Future<DocumentSnapshot> getDocById(
     String collection,
     String docId,
@@ -38,16 +50,26 @@ class FirestoreDBImpl implements FirestoreDB {
           .collection(collection)
           .doc(docId)
           .set(data);
-      // var existingDoc = await getDocById(collection, docId);
-      // if (!existingDoc.exists) {
-      //   await FirebaseFirestore.instance
-      //       .collection(collection)
-      //       .doc(docId)
-      //       .set(data);
-      //   return 'saved';
-      // } else {
-      //   throw ('Document already exist');
-      // }
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  @override
+  Future<void> addNestedDocsWithId(
+    String collection1,
+    String docId1,
+    String collection2,
+    String docId2,
+    Map<String, dynamic> data,
+  ) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection(collection1)
+          .doc(docId1)
+          .collection(collection2)
+          .doc(docId2)
+          .set(data);
     } catch (e) {
       throw Exception(e);
     }

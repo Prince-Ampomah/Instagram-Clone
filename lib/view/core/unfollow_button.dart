@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../controller/follow_controller/follow_controller.dart';
+import '../../core/theme/app_colors.dart';
+import '../../core/widgets/cus_main_button.dart';
 
 class UnfollowButton extends StatelessWidget {
   const UnfollowButton({
@@ -12,28 +14,18 @@ class UnfollowButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
+    return AppButton(
+      buttonHeight: 36,
+      buttonWidth: 120,
+      onPressed: () {
         FollowController.instance.unFollowUser(userToUnfollowId!);
       },
-      child: Container(
-        alignment: Alignment.center,
-        padding: const EdgeInsets.symmetric(
-          vertical: 10,
-          horizontal: 30,
-        ),
-        decoration: BoxDecoration(
-          color: const Color(0xFFEFEFEF),
-          borderRadius: BorderRadius.circular(8),
-        ),
-        child: const Text(
-          'Unfollow',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Colors.black,
-          ),
-        ),
-      ),
+      title: 'Unfollow',
+      fontWeight: FontWeight.bold,
+      textColor: Colors.black,
+      foregroundColor: Colors.black,
+      bgColor: AppColors.buttonBgColor,
+      borderRadius: 8,
     );
   }
 }

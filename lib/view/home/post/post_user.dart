@@ -24,8 +24,8 @@ class PostUser extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String currentUserId =
-        HiveServices.getUserBox().get(Const.currentUser)!.userId!;
+    String? currentUserId =
+        HiveServices.getUserBox().get(Const.currentUser)?.userId!;
     return InkWell(
       onTap: () {
         // compare the user id in post model and the current user id

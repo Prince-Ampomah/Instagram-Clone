@@ -74,22 +74,24 @@ class CommentController extends GetxController {
   }
 
   Future<void> sendComment() async {
-    // get the post id from local db
-    String postId = HiveServices.getPostId();
+    try {
+      // get the post id from local db
+      String postId = HiveServices.getPostId();
 
-    if (commentTextFieldController.text.trim().isNotEmpty) {
-      UserModel? userModel = HiveServices.getUserBox().get(Const.currentUser);
+      if (commentTextFieldController.text.trim().isNotEmpty) {
+        UserModel? userModel = HiveServices.getUserBox().get(Const.currentUser);
 
-      CommentModel commentModel = CommentModel(
-        id: FirestoreDBImpl.generateFirestoreId(Const.commentsCollection),
-        postId: postId,
-        message: commentTextFieldController.text,
-        userHandle: userModel!.userHandle,
-        userProfileImage: userModel.profileImage,
-        time: DateTime.now(),
-      );
+        CommentModel commentModel = CommentModel(
+          id: FirestoreDBImpl.generateFirestoreId(Const.commentsCollection),
+          postId: postId,
+          message: commentTextFieldController.text,
+          userHandle: userModel!.userHandle,
+          userProfileImage: userModel.profileImage,
+          time: DateTime.now(),
+        );
 
-      try {
+        commentTextFieldController.clear();
+
         await firestoreDB.addDocWithId(
           Const.commentsCollection,
           commentModel.id!,
@@ -99,14 +101,12 @@ class CommentController extends GetxController {
           },
         );
 
-        commentTextFieldController.clear();
-
         updateCommentValue(postId);
-      } catch (e) {
-        Utils.showErrorMessage(e.toString());
+      } else {
+        showToast(msg: 'Add a comment');
       }
-    } else {
-      showToast(msg: 'Add a comment');
+    } catch (e) {
+      Utils.showErrorMessage(e.toString());
     }
   }
 

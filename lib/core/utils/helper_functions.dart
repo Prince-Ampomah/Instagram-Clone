@@ -2,7 +2,9 @@ import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:instagram_clone/core/widgets/cus_circular_progressbar.dart';
+import 'package:instagram_clone/core/utils/utils.dart';
+import '../widgets/cus_circular_progressbar.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../theme/theme.dart';
 
@@ -98,4 +100,16 @@ Future<String> getImagePicker(imageSource) async {
     image = pickedFile.path;
   }
   return image;
+}
+
+Future<void> makePhoneCall(String phoneNumber) async {
+  try {
+    final Uri launchUri = Uri(
+      scheme: 'tel',
+      path: phoneNumber,
+    );
+    await launchUrl(launchUri);
+  } catch (e) {
+    Utils.showErrorMessage(e.toString());
+  }
 }

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:instagram_clone/core/constants/constants.dart';
-import 'package:instagram_clone/core/utils/helper_functions.dart';
-import 'package:instagram_clone/model/user_model/user_model.dart';
 
+import '../../core/constants/constants.dart';
+import '../../core/utils/helper_functions.dart';
 import '../../core/widgets/cus_cached_image.dart';
 import '../../core/widgets/cus_circular_image.dart';
+import '../../model/chat_model/recent_chat_model.dart';
 import 'chat_room/chat_room_view.dart';
 
 class MessageListItem extends StatelessWidget {
@@ -22,24 +22,30 @@ class MessageListItem extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       itemCount: snapshot.data.docs.length,
       itemBuilder: (BuildContext context, int index) {
-        UserModel userModel =
-            UserModel.fromJson(snapshot.data.docs[index].data());
+        RecentChatModel recentChatModel =
+            RecentChatModel.fromJson(snapshot.data.docs[index].data());
 
         return InkWell(
           onTap: () {
-            sendToPage(context, ChatRoomView(userModel: userModel));
+            sendToPage(
+              context,
+              ChatRoomView(
+                userModel: recentChatModel.receiverModel!,
+              ),
+            );
           },
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
             child: Row(
               children: [
-                userModel.profileImage != null
+                recentChatModel.receiverModel!.profileImage != null
                     ? ClipRRect(
                         borderRadius: BorderRadius.circular(100),
                         child: CustomCachedImage(
                           height: 57,
                           width: 57,
-                          imageUrl: userModel.profileImage!,
+                          imageUrl:
+                              recentChatModel.receiverModel!.profileImage!,
                           fit: BoxFit.cover,
                         ),
                       )
@@ -54,7 +60,7 @@ class MessageListItem extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        userModel.fullname!,
+                        recentChatModel.receiverModel!.fullname!,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
@@ -63,9 +69,11 @@ class MessageListItem extends StatelessWidget {
                         ),
                       ),
                       5.ph,
-                      const Text(
-                        'Recent Message',
-                        style: TextStyle(
+                      Text(
+                        recentChatModel.recentMessage ?? '',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
                           color: Colors.grey,
                         ),
                       ),
