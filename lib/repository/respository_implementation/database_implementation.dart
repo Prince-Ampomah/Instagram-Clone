@@ -64,7 +64,7 @@ class FirestoreDBImpl implements FirestoreDB {
     Map<String, dynamic> data,
   ) async {
     try {
-      return await FirebaseFirestore.instance
+      await FirebaseFirestore.instance
           .collection(collection1)
           .doc(docId1)
           .collection(collection2)

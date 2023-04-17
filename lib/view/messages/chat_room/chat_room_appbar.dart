@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/core/constants/constants.dart';
+import 'package:instagram_clone/core/utils/helper_functions.dart';
 
 import '../../../core/widgets/cus_cached_image.dart';
 import '../../../core/widgets/cus_circular_image.dart';
@@ -50,11 +51,11 @@ class ChatRoomAppBar extends StatelessWidget {
                   ),
                 ),
                 3.ph,
-                const Text(
-                  'Active today',
+                Text(
+                  userModel.userHandle ?? '',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 15,
                     color: Colors.grey,
                   ),
@@ -66,11 +67,16 @@ class ChatRoomAppBar extends StatelessWidget {
       ),
       actions: [
         IconButton(
-          onPressed: () {},
+          onPressed: () async {
+            if (userModel.phoneNumber != null) {
+              await makePhoneCall(userModel.phoneNumber!);
+            }
+          },
           icon: const Icon(
             Icons.phone_outlined,
             size: 27,
           ),
+          tooltip: 'call',
         ),
         Padding(
           padding: const EdgeInsets.only(right: 10),

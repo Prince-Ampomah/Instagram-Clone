@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:instagram_clone/core/services/hive_services.dart';
-import 'package:instagram_clone/model/user_model/user_model.dart';
+import 'package:instagram_clone/repository/respository_implementation/auth_implementation.dart';
 import 'package:instagram_clone/view/messages/message_list_item_view.dart';
 
 import '../../core/constants/constants.dart';
@@ -12,12 +11,11 @@ class MessagesListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    UserModel? userModel = HiveServices.getUserBox().get(Const.currentUser);
-
     return StreamBuilder(
       stream: FirebaseFirestore.instance
-          .collection(Const.usersCollection)
-          .where('listOfFollowers', arrayContains: userModel!.userId!)
+          .collection(Const.chatCollection)
+          .where('senderId', isEqualTo: firebaseAuth.currentUser!.uid)
+          .orderBy(Const.timeSent, descending: true)
           .snapshots(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasError) {
@@ -31,7 +29,7 @@ class MessagesListView extends StatelessWidget {
         }
 
         if (snapshot.data!.docs.isEmpty) {
-          return const Center(child: Text('You have not followed any one yet'));
+          return const Center(child: Text('You have no recent message'));
         }
 
         if (snapshot.hasData) {

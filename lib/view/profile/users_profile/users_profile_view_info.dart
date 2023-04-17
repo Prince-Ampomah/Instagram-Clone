@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:instagram_clone/controller/chat_controller/chat_controller.dart';
 import 'package:instagram_clone/core/theme/app_colors.dart';
 import 'package:instagram_clone/view/messages/chat_room/chat_room_view.dart';
 

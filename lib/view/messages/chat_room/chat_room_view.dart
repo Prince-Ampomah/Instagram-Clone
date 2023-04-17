@@ -1,15 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/controller/chat_controller/chat_controller.dart';
-import 'package:instagram_clone/view/comments/comment_text_field.dart';
 import '../../../core/constants/constants.dart';
-import '../../../core/utils/helper_functions.dart';
-import '../../profile/users_profile/users_profile_view.dart';
 
-import '../../../controller/models_controller/models_controller.dart';
 import '../../../core/services/hive_services.dart';
-import '../../../core/widgets/cus_cached_image.dart';
-import '../../../core/widgets/cus_circular_image.dart';
-import '../../../core/widgets/cus_main_button.dart';
 import '../../../model/user_model/user_model.dart';
 import 'chat_messages_list.dart';
 import 'chat_room_appbar.dart';
@@ -26,7 +19,7 @@ class ChatRoomView extends StatefulWidget {
 }
 
 class _ChatRoomViewState extends State<ChatRoomView> {
-  late String? chatId;
+  late String? chatId, receiverId;
   late UserModel currentUser;
 
   @override
@@ -36,11 +29,30 @@ class _ChatRoomViewState extends State<ChatRoomView> {
     currentUser = HiveServices.getUserBox().get(Const.currentUser)!;
 
     generateAndSaveChatId();
+    saveReceiverModel();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   generateAndSaveChatId() async {
     chatId = '${currentUser.userId}_${widget.userModel.userId}';
+    // save the chat id offline
     await HiveServices.setChatId(chatId!);
+  }
+
+  saveReceiverModel() {
+    // set receiver chat controller instance to be accessible everywhere
+
+    ChatController.instance.receiverModel = widget.userModel;
+
+    ChatController.instance.recieverId = widget.userModel.userId;
+
+    if (widget.userModel.profileImage != null) {
+      ChatController.instance.receiverImage = widget.userModel.profileImage;
+    }
   }
 
   @override
@@ -55,14 +67,16 @@ class _ChatRoomViewState extends State<ChatRoomView> {
         children: [
           Expanded(
             child: ListView(
-              controller: ChatController.listController,
+              reverse: true,
               children: [
-                UserProfileHeader(userModel: widget.userModel),
-                20.ph,
                 const ChatMessagesList(),
+                20.ph,
+                UserProfileHeader(userModel: widget.userModel),
               ],
             ),
           ),
+
+          // Expanded(child: ChatMessagesList()),
           const ChatTextField(),
         ],
       ),

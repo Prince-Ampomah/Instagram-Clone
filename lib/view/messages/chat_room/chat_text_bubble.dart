@@ -1,10 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:instagram_clone/core/widgets/cus_cached_image.dart';
-import 'package:instagram_clone/core/widgets/cus_circular_image.dart';
-import 'package:instagram_clone/core/widgets/cus_read_more_text.dart';
+import 'package:instagram_clone/controller/chat_controller/chat_controller.dart';
+import 'package:instagram_clone/controller/models_controller/models_controller.dart';
+import 'package:instagram_clone/core/utils/helper_functions.dart';
+import 'package:instagram_clone/view/profile/users_profile/users_profile_view.dart';
 
 import '../../../core/theme/app_colors.dart';
+import '../../../core/widgets/cus_cached_image.dart';
+import '../../../core/widgets/cus_read_more_text.dart';
 import '../../../model/chat_model/chat_model.dart';
 
 class ChatBubbleTextMessage extends StatelessWidget {
@@ -19,7 +22,30 @@ class ChatBubbleTextMessage extends StatelessWidget {
     return Row(
       mainAxisAlignment: isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
       children: [
-        !isMe ? const CircularImageContainer() : const SizedBox(),
+        if (!isMe && chatModel.receiverImage != null)
+          GestureDetector(
+            onTap: () {
+              sendToPage(
+                context,
+                UsersProfileView(
+                  userModel: ChatController.instance.receiverModel,
+                  postModel: ModelController.instance.postModel,
+                ),
+              );
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(left: 5.0),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(100),
+                child: CustomCachedImage(
+                  height: 35,
+                  width: 35,
+                  imageUrl: chatModel.receiverImage!,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+          ),
         Flexible(
           child: Container(
             margin: EdgeInsets.only(
@@ -49,6 +75,9 @@ class ChatBubbleTextMessage extends StatelessWidget {
               textStyle: TextStyle(
                 color: isMe ? AppColors.whiteColor : AppColors.blackColor,
               ),
+              trimLines: 4,
+              readMoreText: ' Read More',
+              readLessText: ' Read Less',
             ),
           ),
         ),

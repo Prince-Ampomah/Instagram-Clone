@@ -1,24 +1,21 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:instagram_clone/model/user_model/user_model.dart';
 
-class ChatModel {
+class RecentChatModel {
   String? messageId;
-  String? chatId;
-  String? message;
-  String? messageType;
+  String? recentMessage;
   String? senderId;
   String? receiverId;
-  String? receiverImage;
+  UserModel? receiverModel;
   DateTime? timeSent;
   List<dynamic>? media = [];
 
-  ChatModel({
+  RecentChatModel({
     this.messageId,
-    this.chatId,
     this.senderId,
     this.receiverId,
-    this.receiverImage,
-    this.message,
-    this.messageType,
+    this.receiverModel,
+    this.recentMessage, // will use it for images 📷 Photo
     this.media,
     this.timeSent,
   });
@@ -27,28 +24,24 @@ class ChatModel {
     Map<String, dynamic> map = {};
 
     map['messageId'] = messageId;
-    map['chatId'] = chatId;
     map['senderId'] = senderId;
     map['receiverId'] = receiverId;
-    map['receiverImage'] = receiverImage;
-    map['media'] = media;
-    map['message'] = message;
-    map['messageType'] = messageType;
+    map['receiverModel'] = receiverModel!.toJson();
+    map['recentMessage'] = recentMessage;
     map['timeSent'] = timeSent;
 
     return map;
   }
 
-  factory ChatModel.fromJson(Map<String, dynamic> json) {
-    return ChatModel(
+  factory RecentChatModel.fromJson(Map<String, dynamic> json) {
+    return RecentChatModel(
       messageId: json['messageId'],
-      chatId: json['chatId'],
       senderId: json['senderId'],
       receiverId: json['receiverId'],
-      receiverImage: json['receiverImage'],
-      media: json['media'],
-      message: json['message'],
-      messageType: json['messageType'],
+      // receiverImage: json['receiverImage'],
+      // receiverName: json['receiverName'],
+      recentMessage: json['recentMessage'],
+      receiverModel: UserModel.fromJson(json['receiverModel'] ?? {}),
       timeSent: (json['timeSent'] is Timestamp)
           ? json['timeSent'].toDate()
           : json['timeSent'],

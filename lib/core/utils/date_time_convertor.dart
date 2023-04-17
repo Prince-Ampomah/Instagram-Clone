@@ -68,6 +68,22 @@ class DateTimeConvertor {
     }
   }
 
+  static String calcuateChatTimeDiffernce(DateTime dateToCheck) {
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    final yesterday = today.subtract(const Duration(days: 1));
+
+    final messageDate =
+        DateTime(dateToCheck.year, dateToCheck.month, dateToCheck.day);
+    if (messageDate == today) {
+      return 'Today ${DateFormat('h:mm a').format(dateToCheck)}';
+    } else if (messageDate == yesterday) {
+      return 'Yesterday ${DateFormat('h:mm a').format(dateToCheck)}';
+    } else {
+      return DateFormat('MMMM d, h:mm a').format(dateToCheck);
+    }
+  }
+
   static String getTimeAgo(DateTime dateToCheck) {
     final now = DateTime.now();
     final difference = now.difference(dateToCheck);
