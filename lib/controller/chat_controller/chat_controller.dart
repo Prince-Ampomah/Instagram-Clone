@@ -21,6 +21,8 @@ class ChatController extends GetxController {
   static FocusNode chatTextFieldFocus = FocusNode();
   static ScrollController listController = ScrollController();
 
+  bool isTyping = false;
+
   String? recieverId, receiverImage;
   UserModel? receiverModel;
 
@@ -86,6 +88,13 @@ class ChatController extends GetxController {
     );
 
     return UserModel.fromJson(doc.data() as Map<String, dynamic>);
+  }
+
+  chatTextFieldListener() {
+    chatTextController.addListener(() {
+      isTyping = chatTextController.text.trim().isNotEmpty;
+      update();
+    });
   }
 
   @override
