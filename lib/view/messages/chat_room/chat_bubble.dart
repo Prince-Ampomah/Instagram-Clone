@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:instagram_clone/core/widgets/cus_cached_image.dart';
+import 'package:instagram_clone/view/messages/chat_room/chat_image_bubble.dart';
 import 'package:instagram_clone/view/messages/chat_room/chat_text_bubble.dart';
 
 import '../../../core/constants/constants.dart';
@@ -13,9 +15,9 @@ class ChatBubble extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0.0, 2.0, 0.0, 8.0),
-      child: chatModel.messageType == Const.text
+      child: chatModel.messageType == Const.textType
           ? ChatBubbleTextMessage(chatModel: chatModel)
-          : Container(),
+          : ChatBubbleImageMessage(chatModel: chatModel),
     );
   }
 }

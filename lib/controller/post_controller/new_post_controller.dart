@@ -49,6 +49,7 @@ class NewPostController extends GetxController {
       // for (var element in result.paths) {
       //   media.add(element);
       // }
+
       media.addAll(result.paths); //.whereType<String>()
 
       //_TypeError (type 'List<String?>' is not a subtype of type 'Iterable<String>' of 'iterable'). Fix this error for me in flutter

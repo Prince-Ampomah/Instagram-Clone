@@ -28,11 +28,11 @@ class NewPostPreview extends StatelessWidget {
           itemBuilder: (context, index) {
             if (NewPostController.instance.media.length != 1) {
               return CustomCachedImage(
-                imageUrl: NewPostController.instance.media[index],
+                imageUrl: NewPostController.instance.media[index]!,
               );
             } else {
               return CustomCachedImage(
-                imageUrl: NewPostController.instance.media[index],
+                imageUrl: NewPostController.instance.media[index]!,
               );
             }
           },

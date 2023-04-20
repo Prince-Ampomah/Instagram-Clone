@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:instagram_clone/core/services/hive_services.dart';
 import 'package:instagram_clone/view/messages/message_view.dart';
 import 'package:instagram_clone/view/notification/notification_view.dart';
 
@@ -61,6 +62,11 @@ class HomeAppBar extends StatelessWidget {
           onTap: () async {
             Get.put(NewPostController());
             await NewPostController.instance.pickMediaFromDevice();
+            // await HiveServices.getPosts().clear();
+            // HiveServices.getPosts().values.forEach((element) {
+            //   print(element);
+            //   logger.d(element.media);
+            // });
           },
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),

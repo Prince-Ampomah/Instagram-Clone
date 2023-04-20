@@ -60,5 +60,8 @@ class Const {
   static const String timeSent = 'timeSent';
 
 // chat type
-  static const String text = 'text';
+  static const String textType = 'text';
+  static const String imageImage = 'image';
+  static const String audioImage = 'audio';
+  static const String videoImage = 'video';
 }
