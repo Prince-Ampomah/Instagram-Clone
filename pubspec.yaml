@@ -91,6 +91,7 @@ dependencies:
   flutter_blurhash: ^0.7.0
   flutter_image_compress: ^1.1.3
   flutter_sound: ^9.2.13
+  camera: ^0.10.4
 
   # animation
   flutter_animate: ^4.1.1+1

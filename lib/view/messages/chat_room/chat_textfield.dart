@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:instagram_clone/core/constants/constants.dart';
 import 'package:instagram_clone/core/utils/helper_functions.dart';
 import 'package:instagram_clone/core/widgets/cus_circular_image.dart';
+import 'package:instagram_clone/view/camera/camera.dart';
 import 'package:instagram_clone/view/messages/chat_room/chat_preview_image.dart';
 
 import '../../../controller/chat_controller/chat_controller.dart';
@@ -39,16 +40,21 @@ class _ChatTextFieldState extends State<ChatTextField> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Container(
-            height: 40,
-            width: 40,
-            decoration: BoxDecoration(
-              color: AppColors.buttonColor,
-              borderRadius: BorderRadius.circular(100),
-            ),
-            child: const Icon(
-              Icons.camera_alt_outlined,
-              color: Colors.white,
+          GestureDetector(
+            onTap: () {
+              sendToPage(context, const Camera());
+            },
+            child: Container(
+              height: 40,
+              width: 40,
+              decoration: BoxDecoration(
+                color: AppColors.buttonColor,
+                borderRadius: BorderRadius.circular(100),
+              ),
+              child: const Icon(
+                Icons.camera_alt_outlined,
+                color: Colors.white,
+              ),
             ),
           ),
           Flexible(
