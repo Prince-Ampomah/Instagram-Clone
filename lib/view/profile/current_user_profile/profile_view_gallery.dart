@@ -144,10 +144,10 @@ class ListPostProfileItem extends StatelessWidget {
               children: [
                 CustomCachedImage(
                   width: size.width,
-                  imageUrl: postModel.media![0],
+                  imageUrl: postModel.media[0]!,
                   fit: BoxFit.cover,
                 ),
-                if (postModel.media!.length != 1)
+                if (postModel.media.length != 1)
                   const Align(
                     alignment: Alignment.topRight,
                     child: Padding(

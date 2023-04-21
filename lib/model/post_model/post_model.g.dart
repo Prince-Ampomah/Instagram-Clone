@@ -18,7 +18,7 @@ class PostModelAdapter extends TypeAdapter<PostModel> {
     };
     return PostModel(
       id: fields[0] as String?,
-      media: (fields[2] as List?)?.cast<dynamic>(),
+      media: (fields[2] as List).cast<dynamic>(),
       userId: fields[10] as String?,
       caption: fields[1] as String?,
       like: fields[3] as num?,

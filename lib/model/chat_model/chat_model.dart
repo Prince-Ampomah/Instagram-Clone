@@ -9,7 +9,7 @@ class ChatModel {
   String? receiverId;
   String? receiverImage;
   DateTime? timeSent;
-  List<dynamic>? media = [];
+  List<dynamic>? media;
 
   ChatModel({
     this.messageId,

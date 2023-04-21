@@ -21,6 +21,7 @@ class ChatBubbleTextMessage extends StatelessWidget {
 
     return Row(
       mainAxisAlignment: isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         if (!isMe && chatModel.receiverImage != null)
           GestureDetector(
@@ -34,12 +35,12 @@ class ChatBubbleTextMessage extends StatelessWidget {
               );
             },
             child: Padding(
-              padding: const EdgeInsets.only(left: 5.0),
+              padding: const EdgeInsets.only(left: 5.0, bottom: 5.0),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(100),
                 child: CustomCachedImage(
-                  height: 35,
-                  width: 35,
+                  height: 30,
+                  width: 30,
                   imageUrl: chatModel.receiverImage!,
                   fit: BoxFit.cover,
                 ),
