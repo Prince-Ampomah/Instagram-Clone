@@ -16,3 +16,5 @@ For help getting started with Flutter development, view the
 samples, guidance on mobile development, and a full API reference.
 
 Hi there, I am working on instagram clone!!!!
+
+-SCREENSHOTS: -!['Screenshot'](https://github.com/Prince-Ampomah/Instagram-Clone/blob/master/assets/images/prince.jpg)
