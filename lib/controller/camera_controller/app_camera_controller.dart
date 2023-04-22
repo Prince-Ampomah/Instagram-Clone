@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:camera/camera.dart';
 import 'package:get/get.dart';
+import 'package:instagram_clone/core/widgets/cust_video_player.dart';
 
 import '../../view/messages/chat_room/chat_preview_image.dart';
 import '../chat_controller/chat_controller.dart';
@@ -87,33 +88,9 @@ class AppCameraController extends GetxController {
     isRecording = false;
     update();
 
-    // Navigator.pop(context);
-
     // send user to video player page when user is done recording
-
-    // sendToPage(
-    //   context,
-    //   MessageBoxVideoPlayer(
-    //     videoFile: video.path,
-    //     onVideoAccepted: widget.onVideoTaken,
-    //   ),
-    // );
+    Get.to(() => CusVideoPlayer(videoPath: video.path));
   }
-
-  // @override
-  // void didChangeAppLifecycleState(AppLifecycleState state) {
-
-  //   // App state changed before we got the chance to initialize.
-  //   if (cameraController == null || !cameraController.value.isInitialized) {
-  //     return;
-  //   }
-
-  //   if (state == AppLifecycleState.inactive) {
-  //     cameraController.dispose();
-  //   } else if (state == AppLifecycleState.resumed) {
-  //     _initializeCameraController(cameraController.description);
-  //   }
-  // }
 
   @override
   void dispose() {

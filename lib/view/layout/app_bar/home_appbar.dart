@@ -1,6 +1,10 @@
+import 'package:appinio_video_player/appinio_video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:instagram_clone/core/services/hive_services.dart';
+import 'package:instagram_clone/core/utils/helper_functions.dart';
+import 'package:instagram_clone/core/widgets/cust_video_player.dart';
+import 'package:instagram_clone/view/home/home_view.dart';
 import 'package:instagram_clone/view/messages/message_view.dart';
 import 'package:instagram_clone/view/notification/notification_view.dart';
 
@@ -79,7 +83,11 @@ class HomeAppBar extends StatelessWidget {
         ),
         GestureDetector(
           onTap: () {
-            Get.to(() => const NotificationView());
+            // Get.to(() => const NotificationView());
+            sendToPage(
+              context,
+              CusVideoPlayer(videoPath: videoUrlPortrait),
+            );
           },
           child: const Icon(Icons.favorite_outline, size: 30),
         ),
