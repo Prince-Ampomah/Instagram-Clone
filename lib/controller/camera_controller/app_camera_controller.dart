@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'dart:ui';
 
 import 'package:camera/camera.dart';
 import 'package:get/get.dart';
@@ -69,7 +70,9 @@ class AppCameraController extends GetxController {
     ChatController.instance.chatMedia = [file.path];
 
     // send user to image view page when user tap on the
-    Get.to(() => const ChatImagePreview());
+    Get.to(() => const ChatImagePreview(
+          isFromGallery: false,
+        ));
 
     isCameraCaptured = false;
     update();
@@ -97,9 +100,25 @@ class AppCameraController extends GetxController {
     // );
   }
 
+  // @override
+  // void didChangeAppLifecycleState(AppLifecycleState state) {
+
+  //   // App state changed before we got the chance to initialize.
+  //   if (cameraController == null || !cameraController.value.isInitialized) {
+  //     return;
+  //   }
+
+  //   if (state == AppLifecycleState.inactive) {
+  //     cameraController.dispose();
+  //   } else if (state == AppLifecycleState.resumed) {
+  //     _initializeCameraController(cameraController.description);
+  //   }
+  // }
+
   @override
   void dispose() {
     cameraController.dispose();
+
     super.dispose();
   }
 }

@@ -16,11 +16,43 @@ class CameraView extends StatefulWidget {
   State<CameraView> createState() => _CameraViewState();
 }
 
-class _CameraViewState extends State<CameraView> {
+class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     AppCameraController.instance.getAvailbleCameras();
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    switch (state) {
+      case AppLifecycleState.inactive:
+        AppCameraController.instance.cameraController.dispose();
+        !AppCameraController.instance.cameraController.value.isInitialized;
+        break;
+      case AppLifecycleState.resumed:
+        AppCameraController.instance.getAvailbleCameras();
+        break;
+      case AppLifecycleState.paused:
+        AppCameraController.instance.cameraController.dispose();
+        !AppCameraController.instance.cameraController.value.isInitialized;
+        break;
+      case AppLifecycleState.detached:
+        AppCameraController.instance.cameraController.dispose();
+        !AppCameraController.instance.cameraController.value.isInitialized;
+        break;
+
+      default:
+        false;
+    }
+    super.didChangeAppLifecycleState(state);
   }
 
   @override

@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:instagram_clone/controller/post_controller/post_controller.dart';
 
 import '../../../controller/chat_controller/chat_controller.dart';
-import '../../../controller/post_controller/post_image_controller.dart';
 import '../../../core/constants/constants.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../core/utils/helper_functions.dart';
 import '../../../core/widgets/cus_appbar.dart';
 import '../../../core/widgets/cus_cached_image.dart';
 import '../../../core/widgets/cus_main_button.dart';
 import '../../../core/widgets/cus_smooth_page_indicator.dart';
 
 class ChatImagePreview extends StatelessWidget {
-  const ChatImagePreview({super.key});
+  const ChatImagePreview({super.key, this.isFromGallery = true});
+
+  final bool isFromGallery;
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +62,12 @@ class ChatImagePreview extends StatelessWidget {
               child: MainButton(
                 onPressed: () {
                   ChatController.instance.sendImageMessage();
-                  Navigator.pop(context);
+
+                  if (isFromGallery) {
+                    Navigator.pop(context);
+                  } else {
+                    popUntil(context, 2);
+                  }
                 },
                 title: 'Send',
                 bgColor: AppColors.buttonColor,
