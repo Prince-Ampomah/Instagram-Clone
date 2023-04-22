@@ -36,8 +36,11 @@ class ChatController extends GetxController {
   static ScrollController listController = ScrollController();
 
   bool isTyping = false;
+
+  // init image count used as a smooth page indicator
   int countImagePreview = 0;
 
+  // chat receiver variables
   String? recieverId, receiverImage;
   UserModel? receiverModel;
 
