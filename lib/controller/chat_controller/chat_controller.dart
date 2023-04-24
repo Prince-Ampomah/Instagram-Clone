@@ -5,11 +5,13 @@ import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:instagram_clone/model/chat_model/recent_chat_model.dart';
-import 'package:instagram_clone/view/messages/chat_room/chat_preview_image.dart';
+import 'package:instagram_clone/view/messages/core/chat_preview_image.dart';
 
 import '../../core/constants/constants.dart';
 import '../../core/services/hive_services.dart';
+import '../../core/utils/helper_functions.dart';
 import '../../core/utils/utils.dart';
 import '../../model/chat_model/chat_model.dart';
 import '../../model/user_model/user_model.dart';
@@ -52,6 +54,16 @@ class ChatController extends GetxController {
   }
 
   sendTextMessage() async {
+    // bool textField = chatTextController.text.trim().isNotEmpty;
+
+    // if (messageType == Const.textType) {
+    //   chatTextController.text.trim().isNotEmpty;
+    // }
+
+    // if (messageType == Const.imageType) {
+    //   chatMedia!.isNotEmpty;
+    // }
+
     try {
       if (chatTextController.text.trim().isNotEmpty) {
         String chatId = HiveServices.getChatId();
@@ -106,7 +118,7 @@ class ChatController extends GetxController {
     }
   }
 
-  sendImageMessage() async {
+  sendMediaMessage(String messageType) async {
     try {
       if (chatMedia!.isNotEmpty) {
         String chatId = HiveServices.getChatId();
@@ -118,7 +130,7 @@ class ChatController extends GetxController {
           messageId: messageId,
           chatId: chatId,
           message: chatTextController.text,
-          messageType: Const.imageImage,
+          messageType: messageType,
           media: chatMedia,
           senderId: FirebaseAuth.instance.currentUser!.uid,
           receiverId: ChatController.instance.recieverId,
@@ -128,7 +140,8 @@ class ChatController extends GetxController {
 
         RecentChatModel recentChatModel = RecentChatModel(
           messageId: messageId,
-          recentMessage: '📷 Photo',
+          recentMessage:
+              messageType == Const.imageType ? '📷 Photo' : '📽️ Video',
           senderId: FirebaseAuth.instance.currentUser!.uid,
           receiverId: ChatController.instance.recieverId,
           receiverModel: ChatController.instance.receiverModel!,
@@ -201,6 +214,13 @@ class ChatController extends GetxController {
   pickImagesFromGallery() async {
     chatMedia = await _pickImagesFromGallery();
 
+    if (chatMedia!.isNotEmpty) {
+      Get.to(() => const ChatImagePreview());
+    }
+  }
+
+  pickImageFromCamera() async {
+    chatMedia = [await getImagePicker(ImageSource.camera)];
     if (chatMedia!.isNotEmpty) {
       Get.to(() => const ChatImagePreview());
     }

@@ -11,6 +11,8 @@ class AppColors {
   static const errorColor = Color(0xFFDF5E55);
   static const successColor = Color(0xFFEFF2FA);
   static const chatColor = Color(0xFF2E6DE5);
+  static const audioButtonColor = Color(0xFFEFEFEF);
+  static const audioButtonColor1 = Color(0xFF1B7DEB);
 
   static const storyBorderColors = [
     Color(0xFFfeda75),

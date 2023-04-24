@@ -1,11 +1,11 @@
 import 'dart:math';
-import 'dart:ui';
 
 import 'package:camera/camera.dart';
 import 'package:get/get.dart';
-import 'package:instagram_clone/core/widgets/cust_video_player.dart';
+import 'package:instagram_clone/view/messages/core/chat_preview_video.dart';
 
-import '../../view/messages/chat_room/chat_preview_image.dart';
+import '../../core/widgets/cus_video_player.dart';
+import '../../view/messages/core/chat_preview_image.dart';
 import '../chat_controller/chat_controller.dart';
 
 late List<CameraDescription> cameras;
@@ -71,9 +71,9 @@ class AppCameraController extends GetxController {
     ChatController.instance.chatMedia = [file.path];
 
     // send user to image view page when user tap on the
-    Get.to(() => const ChatImagePreview(
-          isFromGallery: false,
-        ));
+    Get.to(
+      () => const ChatImagePreview(isFromGallery: false),
+    );
 
     isCameraCaptured = false;
     update();
@@ -88,8 +88,15 @@ class AppCameraController extends GetxController {
     isRecording = false;
     update();
 
+    ChatController.instance.chatMedia!.clear();
+    ChatController.instance.chatMedia = [video.path];
     // send user to video player page when user is done recording
-    Get.to(() => CusVideoPlayer(videoPath: video.path));
+    Get.to(
+      () => ChatPreviewVideo(
+        videoPath: ChatController.instance.chatMedia!.first,
+        showSendButton: true,
+      ),
+    );
   }
 
   @override
