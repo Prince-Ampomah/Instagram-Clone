@@ -1,8 +1,10 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../../controller/camera_controller/app_camera_controller.dart';
+import '../../core/theme/app_colors.dart';
 import '../../core/widgets/cus_circular_progressbar.dart';
 import 'core/camera_close_button.dart';
 import 'core/camera_flash_light.dart';
@@ -57,10 +59,17 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-          backgroundColor: Colors.transparent,
-          body: GetBuilder<AppCameraController>(
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(
+        statusBarColor: AppColors.blackColor,
+        statusBarBrightness: Brightness.light,
+        statusBarIconBrightness: Brightness.light,
+      ),
+    );
+    return Scaffold(
+        backgroundColor: Colors.transparent,
+        body: SafeArea(
+          child: GetBuilder<AppCameraController>(
             builder: (controller) {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
@@ -107,8 +116,8 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
                 ],
               );
             },
-          )),
-    );
+          ),
+        ));
   }
 
 /**

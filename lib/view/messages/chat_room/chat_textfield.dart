@@ -3,11 +3,14 @@ import 'package:get/get.dart';
 import 'package:instagram_clone/core/constants/constants.dart';
 import 'package:instagram_clone/core/utils/helper_functions.dart';
 import 'package:instagram_clone/view/camera/camera_view.dart';
-import 'package:instagram_clone/view/messages/chat_room/chat_preview_image.dart';
+import 'package:instagram_clone/view/messages/chat_room/pick_images_option.dart';
+import 'package:instagram_clone/view/messages/core/chat_preview_image.dart';
 
 import '../../../controller/chat_controller/chat_controller.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../core/widgets/cus_bottom_sheet.dart';
 import '../../../core/widgets/cus_cached_image.dart';
+import '../../../core/widgets/cus_list_tile.dart';
 
 class ChatTextField extends StatefulWidget {
   const ChatTextField({
@@ -106,7 +109,11 @@ class _ChatTextFieldState extends State<ChatTextField> {
                     8.pw,
                     GestureDetector(
                       onTap: () async {
-                        await chatController.pickImagesFromGallery();
+                        showModalBottomSheet(
+                          context: context,
+                          builder: (context) =>
+                              PickImagesOption(chatController: chatController),
+                        );
                       },
                       child: const Padding(
                         padding: EdgeInsets.all(8.0),
@@ -123,66 +130,6 @@ class _ChatTextFieldState extends State<ChatTextField> {
           ),
         ],
       ),
-    );
-  }
-}
-
-class MessageImagePreview extends StatelessWidget {
-  const MessageImagePreview({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          width: 60,
-          height: 60,
-          margin: const EdgeInsets.fromLTRB(5, 10, 10, 0),
-          // padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            border: Border.all(width: 1, color: Colors.grey),
-          ),
-          child: GestureDetector(
-            onTap: () {
-              sendToPage(
-                context,
-                const ChatImagePreview(),
-              );
-            },
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(9),
-              child: CustomCachedImage(
-                imageUrl: ChatController.instance.chatMedia![0]!,
-              ),
-            ),
-          ),
-        ),
-        Positioned(
-          top: 0,
-          right: 0,
-          child: InkWell(
-            onTap: () {},
-            child: Container(
-              height: 20,
-              width: 20,
-              margin: const EdgeInsets.all(2),
-              decoration: BoxDecoration(
-                color: Colors.red,
-                shape: BoxShape.circle,
-                border: Border.all(width: 0.5, color: Colors.black),
-              ),
-              child: const Icon(
-                Icons.close,
-                color: Colors.white,
-                size: 15,
-              ),
-            ),
-          ),
-        ),
-      ],
     );
   }
 }

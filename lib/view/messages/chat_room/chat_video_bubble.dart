@@ -1,22 +1,23 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:instagram_clone/core/utils/helper_functions.dart';
-import 'package:instagram_clone/core/widgets/cus_cached_image.dart';
+import 'package:instagram_clone/core/widgets/cus_video_player.dart';
 import 'package:instagram_clone/model/chat_model/chat_model.dart';
-import 'package:instagram_clone/view/messages/chat_room/chat_image_bubble_details.dart';
 
 import '../../../controller/chat_controller/chat_controller.dart';
 import '../../../controller/models_controller/models_controller.dart';
+import '../../../core/utils/helper_functions.dart';
+import '../../../core/widgets/cus_cached_image.dart';
 import '../../profile/users_profile/users_profile_view.dart';
+import '../core/chat_preview_video.dart';
 
-class ChatBubbleImageMessage extends StatelessWidget {
-  const ChatBubbleImageMessage({super.key, required this.chatModel});
-
+class ChatVideoBubble extends StatelessWidget {
+  const ChatVideoBubble({super.key, required this.chatModel});
   final ChatModel chatModel;
 
   @override
   Widget build(BuildContext context) {
     bool isMe = chatModel.senderId == FirebaseAuth.instance.currentUser!.uid;
+    Size size = MediaQuery.of(context).size;
     return Row(
       mainAxisAlignment: isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.end,
@@ -46,25 +47,44 @@ class ChatBubbleImageMessage extends StatelessWidget {
             ),
           ),
         Flexible(
-          child: GestureDetector(
+          child: InkWell(
             onTap: () {
               sendToPage(
                 context,
-                ChatImageDetails(chatMedia: chatModel.media),
+                ChatPreviewVideo(videoPath: chatModel.media!.first!),
               );
             },
             child: Container(
-              // height: 200,
+              width: size.width,
               margin: EdgeInsets.only(
                 right: isMe ? 10.0 : 170.0,
                 left: isMe ? 170.0 : 10.0,
                 bottom: 10.0,
               ),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+              ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(15),
-                child: CustomCachedImage(
-                  imageUrl: chatModel.media!.first!,
-                  fit: BoxFit.cover,
+                child: Stack(
+                  children: [
+                    CusVideoPlayer(
+                      videoPath: chatModel.media!.first,
+                      showControllBar: false,
+                      showSettingsButton: false,
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.only(right: 5, top: 5),
+                      child: Align(
+                        alignment: Alignment.topRight,
+                        child: Icon(
+                          Icons.play_arrow,
+                          color: Colors.white,
+                          size: 30,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),

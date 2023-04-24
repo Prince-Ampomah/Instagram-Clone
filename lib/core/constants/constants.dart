@@ -61,7 +61,7 @@ class Const {
 
 // chat type
   static const String textType = 'text';
-  static const String imageImage = 'image';
-  static const String audioImage = 'audio';
-  static const String videoImage = 'video';
+  static const String imageType = 'image';
+  static const String audioType = 'audio';
+  static const String videoType = 'video';
 }

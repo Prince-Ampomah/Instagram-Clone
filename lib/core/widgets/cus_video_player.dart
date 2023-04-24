@@ -3,13 +3,24 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 import 'package:appinio_video_player/appinio_video_player.dart';
+import 'package:flutter/services.dart';
 import 'package:instagram_clone/core/widgets/cus_circular_progressbar.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
+import '../theme/app_colors.dart';
+
 class CusVideoPlayer extends StatefulWidget {
-  const CusVideoPlayer({super.key, required this.videoPath});
+  const CusVideoPlayer({
+    super.key,
+    required this.videoPath,
+    this.aspecRatio = 0.6,
+    this.showControllBar = true,
+    this.showSettingsButton = true,
+  });
 
   final String videoPath;
+  final double? aspecRatio;
+  final bool? showControllBar, showSettingsButton;
 
   @override
   State<CusVideoPlayer> createState() => _CusVideoPlayerState();
@@ -21,13 +32,6 @@ class _CusVideoPlayerState extends State<CusVideoPlayer> {
 
   DefaultCacheManager defaultCacheManager = DefaultCacheManager();
 
-  final CustomVideoPlayerSettings _customVideoPlayerSettings =
-      const CustomVideoPlayerSettings(
-    placeholderWidget: Center(child: CustomCircularProgressBar()),
-
-    // customAspectRatio: 0.6,
-  );
-
   @override
   void initState() {
     super.initState();
@@ -36,6 +40,7 @@ class _CusVideoPlayerState extends State<CusVideoPlayer> {
 
   void initControllers() async {
     bool isValidURL = Uri.parse(widget.videoPath).isAbsolute;
+
     if (isValidURL) {
       var file = await defaultCacheManager.getSingleFile(widget.videoPath);
       videoPlayerController = VideoPlayerController.file(file);
@@ -53,30 +58,46 @@ class _CusVideoPlayerState extends State<CusVideoPlayer> {
     _customVideoPlayerController = CustomVideoPlayerController(
       context: context,
       videoPlayerController: videoPlayerController,
-      customVideoPlayerSettings: _customVideoPlayerSettings,
+      customVideoPlayerSettings: CustomVideoPlayerSettings(
+        controlBarAvailable: widget.showControllBar!,
+        settingsButtonAvailable: widget.showSettingsButton!,
+        placeholderWidget: const Center(child: CustomCircularProgressBar()),
+        // enterFullscreenButton: const Icon(
+        //   Icons.fullscreen_outlined,
+        //   color: Colors.white,
+        // ),
+        // exitFullscreenButton: const Icon(
+        //   Icons.fullscreen_exit_outlined,
+        //   color: Colors.white,
+        // ),
+      ),
     );
   }
 
   @override
   void dispose() {
-    _customVideoPlayerController!.dispose();
+    if (_customVideoPlayerController != null) {
+      _customVideoPlayerController!.dispose();
+    }
+
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: SafeArea(
-        child: Center(
-          child: _customVideoPlayerController != null
-              ? CustomVideoPlayer(
-                  customVideoPlayerController: _customVideoPlayerController!,
-                )
-              : const CustomCircularProgressBar(),
-        ),
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(
+        statusBarColor: AppColors.blackColor,
+        statusBarBrightness: Brightness.light,
+        statusBarIconBrightness: Brightness.light,
       ),
     );
+
+    return _customVideoPlayerController != null
+        ? CustomVideoPlayer(
+            customVideoPlayerController: _customVideoPlayerController!,
+          )
+        : const Center(child: CustomCircularProgressBar());
   }
 }
 
