@@ -1,7 +1,9 @@
 import 'package:flutter_sound/flutter_sound.dart';
+import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class AudioRecorderController {
+  // static AudioRecorderController instance = Get.find<AudioRecorderController>();
   FlutterSoundRecorder? _recorder;
   bool get isRecording => _recorder!.isRecording;
   Stream<RecordingDisposition>? get onProgress => _recorder!.onProgress;
@@ -28,6 +30,14 @@ class AudioRecorderController {
     isRecorderReady = false;
   }
 
+  // @override
+  // void dispose() {
+  //   if (!isRecorderReady) return;
+  //   _recorder!.closeRecorder();
+  //   isRecorderReady = false;
+  //   super.dispose();
+  // }
+
   Future record() async {
     if (!isRecorderReady) return;
     await _recorder!
@@ -38,4 +48,14 @@ class AudioRecorderController {
     if (!isRecorderReady) return;
     return await _recorder!.stopRecorder();
   }
+
+  // Future<dynamic> toggleAudioPlay() async {
+  //   if (isRecording) {
+  //     await stop();
+  //   } else {
+  //     await record();
+  //   }
+
+  //   update();
+  // }
 }

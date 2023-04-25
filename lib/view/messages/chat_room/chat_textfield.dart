@@ -88,9 +88,7 @@ class _ChatTextFieldState extends State<ChatTextField> {
                 if (chatController.isTyping &&
                     ChatController.chatTextController.text.trim().isNotEmpty) {
                   return GestureDetector(
-                    onTap: () {
-                      chatController.sendTextMessage();
-                    },
+                    onTap: chatController.sendTextMessage,
                     child: const Padding(
                       padding: EdgeInsets.fromLTRB(5, 8, 15, 8),
                       child: Text(
@@ -126,8 +124,11 @@ class _ChatTextFieldState extends State<ChatTextField> {
                         onTap: () async {
                           showModalBottomSheet(
                             context: context,
-                            builder: (context) => PickImagesOption(
-                                chatController: chatController),
+                            builder: (context) {
+                              return PickImagesOption(
+                                chatController: chatController,
+                              );
+                            },
                           );
                         },
                         child: const Padding(
@@ -149,7 +150,13 @@ class _ChatTextFieldState extends State<ChatTextField> {
     } else {
       return CustomAudioRecorder(
         audioRecorder: audioRecorder,
-        sendRecording: () {},
+        sendRecording: () async {
+          String audioFile = await audioRecorder.stop();
+          ChatController.instance.chatMedia!.clear();
+          ChatController.instance.chatMedia = [audioFile];
+          ChatController.instance.sendMediaMessage(Const.audioType);
+          setState(() {});
+        },
         stopRecording: () async {
           await audioRecorder.stop();
           setState(() {});

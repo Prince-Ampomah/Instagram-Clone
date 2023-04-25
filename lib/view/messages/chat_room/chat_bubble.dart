@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/core/widgets/cus_cached_image.dart';
+import 'package:instagram_clone/view/messages/chat_room/chat_audio_bubble.dart';
 import 'package:instagram_clone/view/messages/chat_room/chat_image_bubble.dart';
 import 'package:instagram_clone/view/messages/chat_room/chat_text_bubble.dart';
 import 'package:instagram_clone/view/messages/chat_room/chat_video_bubble.dart';
@@ -22,7 +23,7 @@ class ChatBubble extends StatelessWidget {
               ? ChatBubbleImageMessage(chatModel: chatModel)
               : chatModel.messageType == Const.videoType
                   ? ChatVideoBubble(chatModel: chatModel)
-                  : Text('Áudio'),
+                  : ChatAudioBubble(chatModel: chatModel),
     );
   }
 }
