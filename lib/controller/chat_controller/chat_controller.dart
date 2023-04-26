@@ -54,16 +54,6 @@ class ChatController extends GetxController {
   }
 
   sendTextMessage() async {
-    // bool textField = chatTextController.text.trim().isNotEmpty;
-
-    // if (messageType == Const.textType) {
-    //   chatTextController.text.trim().isNotEmpty;
-    // }
-
-    // if (messageType == Const.imageType) {
-    //   chatMedia!.isNotEmpty;
-    // }
-
     try {
       if (chatTextController.text.trim().isNotEmpty) {
         String chatId = HiveServices.getChatId();
@@ -140,8 +130,11 @@ class ChatController extends GetxController {
 
         RecentChatModel recentChatModel = RecentChatModel(
           messageId: messageId,
-          recentMessage:
-              messageType == Const.imageType ? '📷 Photo' : '📽️ Video',
+          recentMessage: messageType == Const.imageType
+              ? '📷 Photo'
+              : messageType == Const.videoType
+                  ? '📽️ Video'
+                  : '🎙️ Audio',
           senderId: FirebaseAuth.instance.currentUser!.uid,
           receiverId: ChatController.instance.recieverId,
           receiverModel: ChatController.instance.receiverModel!,
@@ -255,6 +248,21 @@ class ChatController extends GetxController {
       messageId,
       {'media': chatMedia},
     );
+  }
+
+  deleteChatMessage(String messageId) async {
+    String chatId = HiveServices.getChatId();
+
+    try {
+      await firestoreDB.deleteNestedDocsWithId(
+        Const.chatCollection,
+        chatId,
+        Const.messagesCollection,
+        messageId,
+      );
+    } catch (e) {
+      Utils.showErrorMessage(e.toString());
+    }
   }
 
   @override
