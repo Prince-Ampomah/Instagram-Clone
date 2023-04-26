@@ -2,28 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:instagram_clone/core/theme/app_colors.dart';
 import 'package:overlay_support/overlay_support.dart';
 
-class Utils {
-  // static showErrorMessage(String message, {String title = 'Error'}) {
-  //   Get.snackbar(
-  //     'Error',
-  //     message,
-  //     animationDuration: const Duration(seconds: 3),
-  //     duration: const Duration(seconds: 3),
-  //     backgroundColor: AppColors.errorColor,
-  //     colorText: Colors.white,
-  //     titleText: Text(
-  //       title,
-  //       textAlign: TextAlign.center,
-  //       style: const TextStyle(color: Colors.white),
-  //     ),
-  //     messageText: Text(
-  //       message,
-  //       textAlign: TextAlign.center,
-  //       style: const TextStyle(color: Colors.white),
-  //     ),
-  //   );
-  // }
+import '../widgets/cus_dialogs.dart';
 
+class Utils {
   static showErrorMessage(String message) {
     showSimpleNotification(
       Text(
@@ -53,6 +34,46 @@ class Utils {
       position: position,
       elevation: 0.0,
       background: bgColor,
+    );
+  }
+
+  static Future<void> customDialog(
+    context, {
+    String? title,
+    text1,
+    text2,
+    Color? backgroundColor1,
+    backgroundColor2,
+    textColor1,
+    textColor2,
+    VoidCallback? onPressed1,
+    required VoidCallback onPressed2,
+  }) async {
+    showDialog(
+      barrierDismissible: true,
+      context: context,
+      builder: (context) {
+        return CusDefaultAlertDialog(
+          title: Text(
+            title ?? '',
+            textAlign: TextAlign.center,
+          ),
+          titleTextStyle: const TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
+          ),
+          text1: text1,
+          text2: text2,
+          textColor1: Colors.black,
+          textColor2: Colors.red,
+          fontWeight1: FontWeight.bold,
+          fontWeight2: FontWeight.bold,
+          actionsPadding: const EdgeInsets.fromLTRB(10.0, 10.0, 20, 15.0),
+          onPressed1: onPressed1 ?? () => Navigator.pop(context),
+          onPressed2: onPressed2,
+        );
+      },
     );
   }
 }

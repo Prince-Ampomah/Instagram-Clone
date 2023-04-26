@@ -45,7 +45,7 @@ class CustomAudioRecorder extends StatelessWidget {
           margin: const EdgeInsets.fromLTRB(5, 0, 5, 20),
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            color: AppColors.buttonColor,
+            color: AppColors.audioButtonColor1,
             borderRadius: BorderRadius.circular(60),
           ),
           child: Row(

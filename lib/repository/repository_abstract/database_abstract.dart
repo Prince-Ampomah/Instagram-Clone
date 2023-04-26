@@ -26,6 +26,12 @@ abstract class FirestoreDB {
     String docId2,
     Map<String, dynamic> data,
   );
+  Future<void> deleteNestedDocsWithId(
+    String collection1,
+    String docId1,
+    String collection2,
+    String docId2,
+  );
 
   Future<void> updateNestedDocs(String collection1, String docId1,
       String collection2, String docId2, Map<String, dynamic> data);

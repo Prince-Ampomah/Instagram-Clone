@@ -129,4 +129,23 @@ class FirestoreDBImpl implements FirestoreDB {
   static String generateFirestoreId(String collection) {
     return FirebaseFirestore.instance.collection(collection).doc().id;
   }
+
+  @override
+  Future<void> deleteNestedDocsWithId(
+    String collection1,
+    String docId1,
+    String collection2,
+    String docId2,
+  ) {
+    try {
+      return firebaseFirestore
+          .collection(collection1)
+          .doc(docId1)
+          .collection(collection2)
+          .doc(docId2)
+          .delete();
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
 }
