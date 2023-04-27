@@ -54,49 +54,53 @@ class AppCameraController extends GetxController {
             .setFlashMode(FlashMode.off);
   }
 
-  recordVideo() async {
+  Future<void> recordVideo() async {
     await AppCameraController.instance.cameraController.startVideoRecording();
     isRecording = true;
     update();
   }
 
-  void takePhoto() async {
+  Future<XFile> takePhoto() async {
     isCameraCaptured = true;
     update();
 
     XFile file =
         await AppCameraController.instance.cameraController.takePicture();
 
-    ChatController.instance.chatMedia!.clear();
-    ChatController.instance.chatMedia = [file.path];
+    // ChatController.instance.chatMedia!.clear();
+    // ChatController.instance.chatMedia = [file.path];
 
-    // send user to image view page when user tap on the
-    Get.to(
-      () => const ChatImagePreview(isFromGallery: false),
-    );
+    // // send user to image view page when user tap on the
+    // // Get.to(
+    // //   () => const ChatImagePreview(isFromGallery: false),
+    // // );
 
     isCameraCaptured = false;
     update();
+
+    return file;
   }
 
-  void stopAndSaveVideo() async {
+  Future<XFile> stopAndSaveVideo() async {
     // Get the video File form the controller
-    XFile video = await AppCameraController.instance.cameraController
+    XFile videoFile = await AppCameraController.instance.cameraController
         .stopVideoRecording();
 
     // Update the state of the widget
     isRecording = false;
     update();
 
-    ChatController.instance.chatMedia!.clear();
-    ChatController.instance.chatMedia = [video.path];
+    // ChatController.instance.chatMedia!.clear();
+    // ChatController.instance.chatMedia = [videoFile.path];
     // send user to video player page when user is done recording
-    Get.to(
-      () => ChatPreviewVideo(
-        videoPath: ChatController.instance.chatMedia!.first,
-        showSendButton: true,
-      ),
-    );
+    // Get.to(
+    //   () => ChatPreviewVideo(
+    //     videoPath: ChatController.instance.chatMedia!.first,
+    //     showSendButton: true,
+    //   ),
+    // );
+
+    return videoFile;
   }
 
   @override

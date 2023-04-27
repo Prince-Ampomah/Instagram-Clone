@@ -16,11 +16,14 @@ class CusVideoPlayer extends StatefulWidget {
     this.aspecRatio = 0.6,
     this.showControllBar = true,
     this.showSettingsButton = true,
+    this.onInitController,
   });
 
   final String videoPath;
   final double? aspecRatio;
   final bool? showControllBar, showSettingsButton;
+
+  final Function(VideoPlayerController controller)? onInitController;
 
   @override
   State<CusVideoPlayer> createState() => _CusVideoPlayerState();
@@ -53,7 +56,9 @@ class _CusVideoPlayerState extends State<CusVideoPlayer> {
       return;
     }
     videoPlayerController = videoPlayerController
-      ..initialize().then((value) => setState(() {}));
+      ..initialize().then((value) => setState(() {
+            widget.onInitController?.call(videoPlayerController);
+          }));
 
     _customVideoPlayerController = CustomVideoPlayerController(
       context: context,
@@ -62,14 +67,6 @@ class _CusVideoPlayerState extends State<CusVideoPlayer> {
         controlBarAvailable: widget.showControllBar!,
         settingsButtonAvailable: widget.showSettingsButton!,
         placeholderWidget: const Center(child: CustomCircularProgressBar()),
-        // enterFullscreenButton: const Icon(
-        //   Icons.fullscreen_outlined,
-        //   color: Colors.white,
-        // ),
-        // exitFullscreenButton: const Icon(
-        //   Icons.fullscreen_exit_outlined,
-        //   color: Colors.white,
-        // ),
       ),
     );
   }
@@ -92,7 +89,6 @@ class _CusVideoPlayerState extends State<CusVideoPlayer> {
         statusBarIconBrightness: Brightness.light,
       ),
     );
-
     return _customVideoPlayerController != null
         ? CustomVideoPlayer(
             customVideoPlayerController: _customVideoPlayerController!,

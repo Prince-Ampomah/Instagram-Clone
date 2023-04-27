@@ -38,6 +38,9 @@ class PostModel {
   @HiveField(10)
   String? userId;
 
+  @HiveField(11)
+  String? postType;
+
   PostModel({
     this.id,
     this.media = const [],
@@ -47,6 +50,7 @@ class PostModel {
     this.comment = 0,
     this.location,
     this.timePosted,
+    this.postType,
     this.isSavedBy = const [],
     this.isLikedBy = const [],
   });
@@ -62,6 +66,7 @@ class PostModel {
     map['comment'] = comment;
     map['location'] = location!.toJson();
     map['timePosted'] = timePosted;
+    map['postType'] = postType;
     map['isSavedBy'] = isSavedBy;
     map['isLikedBy'] = isLikedBy;
 
@@ -70,18 +75,18 @@ class PostModel {
 
   factory PostModel.fromJson(Map<String, dynamic> json) {
     return PostModel(
-      id: json['id'],
-      userId: json['userId'],
-      caption: json['caption'],
-      media: json['media'],
-      like: json['like'],
-      comment: json['comment'],
-      location: PostLocationModel.fromJson(json['location']),
-      timePosted: (json['timePosted'] is Timestamp)
-          ? json['timePosted'].toDate()
-          : json['timePosted'],
-      isSavedBy: json['isSavedBy'],
-      isLikedBy: json['isLikedBy'],
-    );
+        id: json['id'],
+        userId: json['userId'],
+        caption: json['caption'],
+        media: json['media'],
+        like: json['like'],
+        comment: json['comment'],
+        location: PostLocationModel.fromJson(json['location']),
+        timePosted: (json['timePosted'] is Timestamp)
+            ? json['timePosted'].toDate()
+            : json['timePosted'],
+        isSavedBy: json['isSavedBy'],
+        isLikedBy: json['isLikedBy'],
+        postType: json['postType']);
   }
 }

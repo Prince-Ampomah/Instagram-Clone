@@ -1,25 +1,22 @@
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:instagram_clone/controller/camera_controller/app_camera_controller.dart';
 
-class CameraFlashLight extends StatefulWidget {
+class CameraFlashLight extends StatelessWidget {
   const CameraFlashLight({
     super.key,
+    this.height = 0.06,
   });
 
-  @override
-  State<CameraFlashLight> createState() => _CameraFlashLightState();
-}
+  final double? height;
 
-class _CameraFlashLightState extends State<CameraFlashLight> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
     return Padding(
       padding: EdgeInsets.only(
-        top: size.height * 0.06,
+        top: size.height * height!,
       ),
       child: Align(
         alignment: Alignment.topCenter,

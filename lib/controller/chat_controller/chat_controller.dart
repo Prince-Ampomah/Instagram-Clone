@@ -19,6 +19,7 @@ import '../../repository/repository_abstract/database_abstract.dart';
 import '../../repository/repository_abstract/storage_abstract.dart';
 import '../../repository/respository_implementation/database_implementation.dart';
 import '../../repository/respository_implementation/storage_implementation.dart';
+import '../../view/messages/core/chat_preview_video.dart';
 
 enum ChatType {
   text,
@@ -51,6 +52,13 @@ class ChatController extends GetxController {
   onPageChanged(int i) {
     countImagePreview = i;
     update();
+  }
+
+  void addListenerToChatTextField() {
+    chatTextController.addListener(() {
+      isTyping = chatTextController.text.trim().isNotEmpty;
+      update();
+    });
   }
 
   sendTextMessage() async {
@@ -172,20 +180,26 @@ class ChatController extends GetxController {
     }
   }
 
-  Future<UserModel> queryChatReceiverData() async {
-    DocumentSnapshot doc = await firestoreDB.getDocById(
-      Const.usersCollection,
-      ChatController.instance.recieverId!,
+  getVideoAndPreview(String videoFile) {
+    ChatController.instance.chatMedia!.clear();
+    ChatController.instance.chatMedia = [videoFile];
+    // send user to video player page when user is done recording
+    Get.to(
+      () => ChatPreviewVideo(
+        videoPath: ChatController.instance.chatMedia!.first,
+        showSendButton: true,
+      ),
     );
-
-    return UserModel.fromJson(doc.data() as Map<String, dynamic>);
   }
 
-  void addListenerToChatTextField() {
-    chatTextController.addListener(() {
-      isTyping = chatTextController.text.trim().isNotEmpty;
-      update();
-    });
+  getImageAndPreview(String imageFile) {
+    ChatController.instance.chatMedia!.clear();
+    ChatController.instance.chatMedia = [imageFile];
+
+    // send user to image view page when user tap on the
+    Get.to(
+      () => const ChatImagePreview(isFromGallery: false),
+    );
   }
 
   Future<List<dynamic>> _pickImagesFromGallery() async {

@@ -3,14 +3,17 @@ import 'package:flutter/material.dart';
 class CameraCloseButton extends StatelessWidget {
   const CameraCloseButton({
     super.key,
+    this.height = 0.06,
   });
+
+  final double? height;
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Padding(
       padding: EdgeInsets.only(
-        top: size.height * 0.06,
+        top: size.height * height!,
         right: 10,
       ),
       child: Align(

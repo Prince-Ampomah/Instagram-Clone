@@ -17,6 +17,8 @@ import '../../repository/respository_implementation/database_implementation.dart
 import '../../repository/respository_implementation/storage_implementation.dart';
 import '../../view/add_post/add_new_post.dart';
 import '../../view/layout/app_layout.dart';
+import '../../view/messages/core/chat_preview_video.dart';
+import '../chat_controller/chat_controller.dart';
 
 class NewPostController extends GetxController {
   static NewPostController instance = Get.find<NewPostController>();
@@ -65,7 +67,7 @@ class NewPostController extends GetxController {
     }
   }
 
-  addNewPost() async {
+  addNewPost(String postType) async {
     UserModel? userModel = HiveServices.getUserBox().get(Const.currentUser);
 
     PostModel postModel = PostModel(
@@ -73,6 +75,7 @@ class NewPostController extends GetxController {
       userId: userModel!.userId,
       caption: captionController.text,
       media: media,
+      postType: postType,
       location: PostLocationModel(),
       timePosted: DateTime.now(),
     );
@@ -93,6 +96,24 @@ class NewPostController extends GetxController {
     } catch (e) {
       Get.back();
       Utils.showErrorMessage(e.toString());
+    }
+  }
+
+  getVideoAndPreview(String videoFile) {
+    NewPostController.instance.media.clear();
+    NewPostController.instance.media = [videoFile];
+    // send user to video player page when user is done recording
+    if (media.isNotEmpty) {
+      Get.to(() => const AddNewPost(isAVideoFile: true));
+    }
+  }
+
+  getImageAndPreview(String imageFile) {
+    NewPostController.instance.media.clear();
+    NewPostController.instance.media = [imageFile];
+    // send user to image view page when user tap on the
+    if (media.isNotEmpty) {
+      Get.to(() => const AddNewPost());
     }
   }
 

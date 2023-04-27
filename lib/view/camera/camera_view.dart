@@ -4,8 +4,11 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../../controller/camera_controller/app_camera_controller.dart';
+import '../../controller/chat_controller/chat_controller.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/widgets/cus_circular_progressbar.dart';
+import '../messages/core/chat_preview_image.dart';
+import '../messages/core/chat_preview_video.dart';
 import 'core/camera_close_button.dart';
 import 'core/camera_flash_light.dart';
 import 'core/camera_take_photo_or_video.dart';
@@ -82,11 +85,33 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
                           return CameraPreview(
                             controller.cameraController,
                             child: Stack(
-                              children: const [
-                                UserToMessage(),
-                                CameraFlashLight(),
-                                CameraCloseButton(),
-                                TakePhotoOrVideo(),
+                              children: [
+                                const UserToMessage(),
+                                const CameraFlashLight(),
+                                const CameraCloseButton(),
+                                TakePhotoOrVideo(
+                                  onTap: () async {
+                                    if (!controller.isRecording) {
+                                      XFile imageFile =
+                                          await controller.takePhoto();
+
+                                      // send user to photo preview
+                                      ChatController.instance
+                                          .getImageAndPreview(imageFile.path);
+                                    }
+                                  },
+                                  onLongPressed: () async {
+                                    await controller.recordVideo();
+                                  },
+                                  onLongPressUp: () async {
+                                    XFile videoFile =
+                                        await controller.stopAndSaveVideo();
+
+                                    // send user to video preview
+                                    ChatController.instance
+                                        .getVideoAndPreview(videoFile.path);
+                                  },
+                                ),
                               ],
                             ),
                           );
@@ -119,92 +144,4 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
           ),
         ));
   }
-
-/**
- *   void _takeVideo(BuildContext context) async {
-    // Get the video File form the controller
-    XFile video = await AppCameraController.instance.cameraController
-        .stopVideoRecording();
-
-    // Update the state of the widget
-    setState(() => isRecording = false);
-
-    // Navigator.pop(context);
-
-    // send user to video player page when user is done recording
-    if (!mounted) {
-      return;
-    }
-    // sendToPage(
-    //   context,
-    //   MessageBoxVideoPlayer(
-    //     videoFile: video.path,
-    //     onVideoAccepted: widget.onVideoTaken,
-    //   ),
-    // );
-  }
-
-  void takePhoto(BuildContext context) async {
-    setState(() => isCameraCaptured = true);
-    XFile file =
-        await AppCameraController.instance.cameraController.takePicture();
-
-    ChatController.instance.chatMedia!.clear();
-    ChatController.instance.chatMedia = [file.path];
-
-    // send user to image view page when user tap on the
-    if (!mounted) {
-      return;
-    }
-    sendToPage(context, const ChatImagePreview());
-    setState(() => isCameraCaptured = false);
-  }
- */
 }
-
-
-/**
- * 
-                          Positioned(
-                            bottom: size.height * 0.09,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                if (!isCameraCaptured)
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      GestureDetector(
-                                        onLongPress: () async {
-                                          await cameraController
-                                              .startVideoRecording();
-                                          setState(() => isRecording = true);
-                                        },
-                                        onLongPressUp: () {
-                                          _takeVideo(context);
-                                        },
-                                        onTap: () {
-                                          if (!isRecording) {
-                                            takePhoto(context);
-                                          }
-                                        },
-                                        child: isRecording
-                                            ? const Icon(
-                                                Icons.radio_button_on,
-                                                color: Colors.red,
-                                                size: 80,
-                                              )
-                                            : const Icon(
-                                                Icons.panorama_fish_eye,
-                                                color: Colors.white,
-                                                size: 70,
-                                              ),
-                                      ),
-                                    ],
-                                  ),
-
-                              ],
-                            ),
-                          ),
- */

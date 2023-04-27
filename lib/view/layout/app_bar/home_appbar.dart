@@ -14,6 +14,7 @@ import '../../../core/constants/constants.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/menu_items.dart';
 import '../../../core/widgets/cus_popup_menu.dart';
+import '../../add_post/add_new_post_camera_view.dart';
 
 class HomeAppBar extends StatelessWidget {
   const HomeAppBar({super.key});
@@ -66,12 +67,8 @@ class HomeAppBar extends StatelessWidget {
         GestureDetector(
           onTap: () async {
             Get.put(NewPostController());
-            await NewPostController.instance.pickMediaFromDevice();
-            // await HiveServices.getPosts().clear();
-            // HiveServices.getPosts().values.forEach((element) {
-            //   print(element);
-            //   logger.d(element.media);
-            // });
+            sendToPage(context, const NewPostCameraView());
+            // await NewPostController.instance.pickMediaFromDevice();
           },
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),

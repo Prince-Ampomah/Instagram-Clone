@@ -4,7 +4,16 @@ import 'package:get/get.dart';
 import '../../../controller/camera_controller/app_camera_controller.dart';
 
 class TakePhotoOrVideo extends StatelessWidget {
-  const TakePhotoOrVideo({super.key});
+  const TakePhotoOrVideo({
+    super.key,
+    required this.onLongPressed,
+    required this.onLongPressUp,
+    required this.onTap,
+  });
+
+  final VoidCallback onLongPressed;
+  final VoidCallback onLongPressUp;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -19,17 +28,9 @@ class TakePhotoOrVideo extends StatelessWidget {
         child: GetBuilder<AppCameraController>(
           builder: (controller) {
             return GestureDetector(
-              onLongPress: () async {
-                await controller.recordVideo();
-              },
-              onLongPressUp: () {
-                controller.stopAndSaveVideo();
-              },
-              onTap: () {
-                if (!controller.isRecording) {
-                  controller.takePhoto();
-                }
-              },
+              onTap: onTap,
+              onLongPress: onLongPressed,
+              onLongPressUp: onLongPressUp,
               child: controller.isRecording
                   ? const Icon(
                       Icons.radio_button_on,

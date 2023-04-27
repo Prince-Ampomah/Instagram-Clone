@@ -64,4 +64,8 @@ class Const {
   static const String imageType = 'image';
   static const String audioType = 'audio';
   static const String videoType = 'video';
+
+  // post type
+  static const String imagePostType = 'imagePost';
+  static const String videoPostType = 'videoPost';
 }

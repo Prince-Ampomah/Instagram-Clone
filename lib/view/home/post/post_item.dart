@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/controller/models_controller/models_controller.dart';
+import 'package:instagram_clone/view/home/post/post_video.dart';
 
 import '../../../core/constants/constants.dart';
 import '../../../model/post_model/post_model.dart';
@@ -55,10 +56,15 @@ class _PostItemState extends State<PostItem> {
                 userModel: userModelsnapshot.data,
                 postModel: widget.postModel,
               ),
-              PostImage(
-                images: widget.postModel!.media,
-                postModel: widget.postModel,
-              ),
+              widget.postModel?.postType == Const.videoPostType
+                  ? PostVideoView(
+                      video: widget.postModel!.media,
+                      postModel: widget.postModel,
+                    )
+                  : PostImage(
+                      images: widget.postModel!.media,
+                      postModel: widget.postModel,
+                    ),
               PostReaction(
                 postModel: widget.postModel,
                 userModel: userModelsnapshot.data,

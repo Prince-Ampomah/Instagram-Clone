@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:instagram_clone/core/constants/constants.dart';
 
 import '../../controller/post_controller/new_post_controller.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/utils/helper_functions.dart';
 import '../../core/widgets/cus_appbar.dart';
 import '../../core/widgets/cus_cached_image.dart';
+import '../../core/widgets/cus_video_player.dart';
 import 'add_new_post_preview.dart';
 
 class AddNewPost extends StatelessWidget {
-  const AddNewPost({super.key});
+  const AddNewPost({super.key, this.isAVideoFile = false});
+
+  final bool? isAVideoFile;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +27,9 @@ class AddNewPost extends StatelessWidget {
             padding: const EdgeInsets.only(right: 10),
             child: IconButton(
               onPressed: () async {
-                await NewPostController.instance.addNewPost();
+                await NewPostController.instance.addNewPost(
+                  isAVideoFile! ? Const.videoPostType : Const.imagePostType,
+                );
               },
               icon: const Icon(
                 Icons.check,
@@ -42,31 +48,43 @@ class AddNewPost extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  GestureDetector(
-                    onTap: () => sendToPage(context, const NewPostPreview()),
-                    child: Stack(
-                      children: [
-                        CustomCachedImage(
-                          imageUrl: NewPostController.instance.media.first,
+                  isAVideoFile!
+                      ? SizedBox(
                           height: size.height * 0.12,
                           width: 150,
-                          fit: BoxFit.cover,
-                        ),
-                        if (NewPostController.instance.media.length != 1)
-                          const Align(
-                            alignment: Alignment.topRight,
-                            child: Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Icon(
-                                Icons.bookmarks,
-                                color: Colors.white,
-                                size: 20,
-                              ),
-                            ),
+                          child: CusVideoPlayer(
+                            videoPath: NewPostController.instance.media.first,
+                            showControllBar: false,
+                            showSettingsButton: false,
                           ),
-                      ],
-                    ),
-                  ),
+                        )
+                      : GestureDetector(
+                          onTap: () =>
+                              sendToPage(context, const NewPostPreview()),
+                          child: Stack(
+                            children: [
+                              CustomCachedImage(
+                                imageUrl:
+                                    NewPostController.instance.media.first,
+                                height: size.height * 0.12,
+                                width: 150,
+                                fit: BoxFit.cover,
+                              ),
+                              if (NewPostController.instance.media.length != 1)
+                                const Align(
+                                  alignment: Alignment.topRight,
+                                  child: Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: Icon(
+                                      Icons.bookmarks,
+                                      color: Colors.white,
+                                      size: 20,
+                                    ),
+                                  ),
+                                ),
+                            ],
+                          ),
+                        ),
                   Expanded(
                     flex: 5,
                     child: Padding(
