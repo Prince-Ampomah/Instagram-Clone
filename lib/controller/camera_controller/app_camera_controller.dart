@@ -2,11 +2,6 @@ import 'dart:math';
 
 import 'package:camera/camera.dart';
 import 'package:get/get.dart';
-import 'package:instagram_clone/view/messages/core/chat_preview_video.dart';
-
-import '../../core/widgets/cus_video_player.dart';
-import '../../view/messages/core/chat_preview_image.dart';
-import '../chat_controller/chat_controller.dart';
 
 late List<CameraDescription> cameras;
 

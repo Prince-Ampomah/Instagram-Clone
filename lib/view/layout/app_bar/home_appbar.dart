@@ -1,13 +1,9 @@
-import 'package:appinio_video_player/appinio_video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:instagram_clone/core/services/hive_services.dart';
 import 'package:instagram_clone/core/utils/helper_functions.dart';
 import 'package:instagram_clone/core/widgets/cus_video_player.dart';
-import 'package:instagram_clone/view/home/home_view.dart';
 import 'package:instagram_clone/view/messages/core/chat_preview_video.dart';
 import 'package:instagram_clone/view/messages/message_view.dart';
-import 'package:instagram_clone/view/notification/notification_view.dart';
 
 import '../../../controller/post_controller/new_post_controller.dart';
 import '../../../core/constants/constants.dart';

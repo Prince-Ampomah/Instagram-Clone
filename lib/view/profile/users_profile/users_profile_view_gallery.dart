@@ -8,6 +8,7 @@ import '../../../core/constants/constants.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/widgets/cus_circular_progressbar.dart';
 import '../../../core/widgets/cus_tab_bar.dart';
+import '../../../core/widgets/cus_video_player.dart';
 
 class UsersProfileViewGallery extends StatefulWidget {
   const UsersProfileViewGallery({
@@ -150,11 +151,20 @@ class ListPostProfileItem extends StatelessWidget {
 
           return Stack(
             children: [
-              CustomCachedImage(
-                width: size.width,
-                imageUrl: postModel.media[0]!,
-                fit: BoxFit.cover,
-              ),
+              postModel.postType == Const.videoPostType
+                  ? SizedBox(
+                      width: size.width,
+                      child: CusVideoPlayer(
+                        videoPath: postModel.media.first!,
+                        showControllBar: false,
+                        showSettingsButton: false,
+                      ),
+                    )
+                  : CustomCachedImage(
+                      width: size.width,
+                      imageUrl: postModel.media[0]!,
+                      fit: BoxFit.cover,
+                    ),
               if (postModel.media.length != 1)
                 const Align(
                   alignment: Alignment.topRight,

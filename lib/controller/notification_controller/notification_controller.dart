@@ -6,7 +6,6 @@ import 'package:instagram_clone/core/utils/utils.dart';
 import 'package:instagram_clone/model/notification_model/notification_model.dart';
 
 import '../../core/constants/constants.dart';
-import '../../core/services/hive_services.dart';
 import '../../model/user_model/user_model.dart';
 import '../../repository/repository_abstract/database_abstract.dart';
 import '../../repository/respository_implementation/database_implementation.dart';

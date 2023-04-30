@@ -83,6 +83,7 @@ class ChatController extends GetxController {
         RecentChatModel recentChatModel = RecentChatModel(
           messageId: messageId,
           recentMessage: chatTextController.text,
+          messageType: 'text',
           senderId: FirebaseAuth.instance.currentUser!.uid,
           receiverId: ChatController.instance.recieverId,
           receiverModel: ChatController.instance.receiverModel!,
@@ -138,11 +139,8 @@ class ChatController extends GetxController {
 
         RecentChatModel recentChatModel = RecentChatModel(
           messageId: messageId,
-          recentMessage: messageType == Const.imageType
-              ? '📷 Photo'
-              : messageType == Const.videoType
-                  ? '📽️ Video'
-                  : '🎙️ Audio',
+          recentMessage: 'media',
+          messageType: messageType,
           senderId: FirebaseAuth.instance.currentUser!.uid,
           receiverId: ChatController.instance.recieverId,
           receiverModel: ChatController.instance.receiverModel!,

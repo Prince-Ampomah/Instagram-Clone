@@ -1,14 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:instagram_clone/core/utils/helper_functions.dart';
-import 'package:instagram_clone/core/widgets/cus_cached_image.dart';
-import 'package:instagram_clone/model/chat_model/chat_model.dart';
-import 'package:instagram_clone/view/messages/chat_room/chat_image_bubble_details.dart';
+import 'package:focused_menu/modals.dart';
 
 import '../../../controller/chat_controller/chat_controller.dart';
 import '../../../controller/models_controller/models_controller.dart';
-import '../../../core/utils/utils.dart';
+import '../../../core/utils/helper_functions.dart';
+import '../../../core/widgets/cus_cached_image.dart';
+import '../../../core/widgets/cus_focus_menu.dart';
+import '../../../model/chat_model/chat_model.dart';
 import '../../profile/users_profile/users_profile_view.dart';
+import 'chat_image_bubble_details.dart';
 
 class ChatBubbleImageMessage extends StatelessWidget {
   const ChatBubbleImageMessage({super.key, required this.chatModel});
@@ -18,19 +19,38 @@ class ChatBubbleImageMessage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isMe = chatModel.senderId == FirebaseAuth.instance.currentUser!.uid;
-    return GestureDetector(
-      onLongPress: () {
-        Utils.customDialog(
-          context,
-          onPressed2: () {
+    return CustomFocusMenu(
+      onPressed: () {},
+      menuItems: <FocusedMenuItem>[
+        FocusedMenuItem(
+          onPressed: () {},
+          title: const Text('Reply'),
+          trailingIcon: const Icon(Icons.reply_outlined),
+        ),
+        FocusedMenuItem(
+          onPressed: () {},
+          title: const Text('Forward'),
+          trailingIcon: const Icon(Icons.near_me_outlined),
+        ),
+        FocusedMenuItem(
+          onPressed: () {},
+          title: const Text('Save'),
+          trailingIcon: const Icon(Icons.download_outlined),
+        ),
+        FocusedMenuItem(
+          onPressed: () {
             ChatController.instance.deleteChatMessage(chatModel.messageId!);
-            Navigator.pop(context);
           },
-          title: 'Delete Message',
-          text1: 'Cancel',
-          text2: 'Delete',
-        );
-      },
+          title: const Text(
+            'Unsend',
+            style: TextStyle(color: Colors.redAccent),
+          ),
+          trailingIcon: const Icon(
+            Icons.delete_outline,
+            color: Colors.redAccent,
+          ),
+        ),
+      ],
       child: Row(
         mainAxisAlignment:
             isMe ? MainAxisAlignment.end : MainAxisAlignment.start,

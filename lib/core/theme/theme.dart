@@ -7,6 +7,9 @@ class AppTheme {
     return ThemeData(
       useMaterial3: true,
       colorSchemeSeed: AppColors.whiteColor,
+      //  colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.blue)
+      //       .copyWith(secondary: const Color(0xFF2196f3)),
+      canvasColor: AppColors.whiteColor,
       brightness: Brightness.light,
       textTheme: GoogleFonts.interTextTheme(AppTheme.textStyle(context)),
     );

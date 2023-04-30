@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:instagram_clone/controller/audio_controller/audio_recorder_controller.dart';
 import 'package:instagram_clone/controller/camera_controller/app_camera_controller.dart';
 import 'package:instagram_clone/controller/chat_controller/chat_controller.dart';
 import 'package:instagram_clone/controller/follow_controller/follow_controller.dart';

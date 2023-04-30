@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../core/constants/constants.dart';
+import '../../core/utils/date_time_convertor.dart';
 import '../../core/utils/helper_functions.dart';
 import '../../core/widgets/cus_cached_image.dart';
 import '../../core/widgets/cus_circular_image.dart';
@@ -70,7 +71,7 @@ class MessageListItem extends StatelessWidget {
                       ),
                       5.ph,
                       Text(
-                        recentChatModel.recentMessage ?? '',
+                        '${recentChatModel.recentMessage!.contains('media') ? 'Sent' : recentChatModel.recentMessage} ${DateTimeConvertor.getTimeAgo(recentChatModel.timeSent ?? DateTime.now())}',
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(

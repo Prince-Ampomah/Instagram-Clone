@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/controller/profile_controller/post_profile_controller.dart';
+import 'package:instagram_clone/core/services/hive_services.dart';
+import 'package:instagram_clone/core/utils/helper_functions.dart';
 import 'package:instagram_clone/core/widgets/cus_cached_image.dart';
 import 'package:instagram_clone/model/post_model/post_model.dart';
+import 'package:instagram_clone/view/profile/profile_posts_view.dart';
 import 'package:provider/provider.dart';
 
+import '../../../core/constants/constants.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/widgets/cus_circular_progressbar.dart';
 import '../../../core/widgets/cus_tab_bar.dart';
+import '../../../core/widgets/cus_video_player.dart';
 
 class ProfileViewGallery extends StatefulWidget {
   const ProfileViewGallery({
@@ -86,27 +91,6 @@ class _ProfileViewGalleryState extends State<ProfileViewGallery>
                   return Center(child: Text(controller.getTextState));
                 },
               ),
-              // GetBuilder<PostProfileController>(
-              //   builder: (controller) {
-              //     if (controller.waiting) {
-              //       return const Center(
-              //         child: CustomCircularProgressBar(),
-              //       );
-              //     }
-
-              //     if (controller.hasError) {
-              //       return Center(
-              //         child: Text(controller.getTextState),
-              //       );
-              //     }
-
-              //     if (controller.hasData) {
-              //       return ListPostProfileItem(controller: controller);
-              //     }
-
-              //     return Center(child: Text(controller.getTextState));
-              //   },
-              // ),
               const Center(child: Text('tagged images')),
             ],
           ),
@@ -138,15 +122,30 @@ class ListPostProfileItem extends StatelessWidget {
               PostModel.fromJson(controller.getPostProfileList![index].data());
           return GestureDetector(
             onTap: () {
-              // Get.to(() => const UsersProfileView());
+              sendToPage(
+                context,
+                ProfilePost(
+                  userModel: HiveServices.getUserBox().get(Const.currentUser)!,
+                  postModel: postModel,
+                ),
+              );
             },
             child: Stack(
               children: [
-                CustomCachedImage(
-                  width: size.width,
-                  imageUrl: postModel.media[0]!,
-                  fit: BoxFit.cover,
-                ),
+                postModel.postType == Const.videoPostType
+                    ? SizedBox(
+                        width: size.width,
+                        child: CusVideoPlayer(
+                          videoPath: postModel.media.first!,
+                          showControllBar: false,
+                          showSettingsButton: false,
+                        ),
+                      )
+                    : CustomCachedImage(
+                        width: size.width,
+                        imageUrl: postModel.media[0]!,
+                        fit: BoxFit.cover,
+                      ),
                 if (postModel.media.length != 1)
                   const Align(
                     alignment: Alignment.topRight,

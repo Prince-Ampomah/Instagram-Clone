@@ -1,15 +1,16 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:instagram_clone/core/widgets/cus_video_player.dart';
-import 'package:instagram_clone/model/chat_model/chat_model.dart';
+import 'package:focused_menu/modals.dart';
 
 import '../../../controller/chat_controller/chat_controller.dart';
 import '../../../controller/models_controller/models_controller.dart';
 import '../../../core/utils/helper_functions.dart';
-import '../../../core/utils/utils.dart';
 import '../../../core/widgets/cus_cached_image.dart';
+import '../../../core/widgets/cus_focus_menu.dart';
+import '../../../core/widgets/cus_video_player.dart';
+import '../../../model/chat_model/chat_model.dart';
 import '../../profile/users_profile/users_profile_view.dart';
-import '../core/chat_preview_video.dart';
+import 'chat_video_bubble_details.dart';
 
 class ChatVideoBubble extends StatelessWidget {
   const ChatVideoBubble({super.key, required this.chatModel});
@@ -20,19 +21,38 @@ class ChatVideoBubble extends StatelessWidget {
     bool isMe = chatModel.senderId == FirebaseAuth.instance.currentUser!.uid;
     Size size = MediaQuery.of(context).size;
 
-    return GestureDetector(
-      onLongPress: () {
-        Utils.customDialog(
-          context,
-          onPressed2: () {
+    return CustomFocusMenu(
+      onPressed: () {},
+      menuItems: <FocusedMenuItem>[
+        FocusedMenuItem(
+          onPressed: () {},
+          title: const Text('Reply'),
+          trailingIcon: const Icon(Icons.reply_outlined),
+        ),
+        FocusedMenuItem(
+          onPressed: () {},
+          title: const Text('Forward'),
+          trailingIcon: const Icon(Icons.near_me_outlined),
+        ),
+        FocusedMenuItem(
+          onPressed: () {},
+          title: const Text('Save'),
+          trailingIcon: const Icon(Icons.download_outlined),
+        ),
+        FocusedMenuItem(
+          onPressed: () {
             ChatController.instance.deleteChatMessage(chatModel.messageId!);
-            Navigator.pop(context);
           },
-          title: 'Delete Message',
-          text1: 'Cancel',
-          text2: 'Delete',
-        );
-      },
+          title: const Text(
+            'Unsend',
+            style: TextStyle(color: Colors.redAccent),
+          ),
+          trailingIcon: const Icon(
+            Icons.delete_outline,
+            color: Colors.redAccent,
+          ),
+        ),
+      ],
       child: Row(
         mainAxisAlignment:
             isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
@@ -67,7 +87,10 @@ class ChatVideoBubble extends StatelessWidget {
               onTap: () {
                 sendToPage(
                   context,
-                  ChatPreviewVideo(videoPath: chatModel.media!.first!),
+                  ChatVideoBubbleDetails(
+                    videoPath: chatModel.media!.first!,
+                    time: chatModel.timeSent!,
+                  ),
                 );
               },
               child: Container(

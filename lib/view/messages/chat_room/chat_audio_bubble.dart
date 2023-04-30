@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sound/public/flutter_sound_player.dart';
 import 'package:instagram_clone/model/chat_model/chat_model.dart';
-import 'package:audio_waveforms/audio_waveforms.dart';
 
 import '../../../controller/audio_controller/audio_player_controller.dart';
 import '../../../controller/chat_controller/chat_controller.dart';

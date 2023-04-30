@@ -1,14 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:focused_menu/modals.dart';
 import 'package:instagram_clone/controller/chat_controller/chat_controller.dart';
 import 'package:instagram_clone/controller/models_controller/models_controller.dart';
 import 'package:instagram_clone/core/utils/helper_functions.dart';
-import 'package:instagram_clone/core/widgets/cus_dialogs.dart';
 import 'package:instagram_clone/view/profile/users_profile/users_profile_view.dart';
 
 import '../../../core/theme/app_colors.dart';
-import '../../../core/utils/utils.dart';
 import '../../../core/widgets/cus_cached_image.dart';
+import '../../../core/widgets/cus_focus_menu.dart';
 import '../../../core/widgets/cus_read_more_text.dart';
 import '../../../model/chat_model/chat_model.dart';
 
@@ -21,19 +22,41 @@ class ChatBubbleTextMessage extends StatelessWidget {
   Widget build(BuildContext context) {
     bool isMe = chatModel.senderId == FirebaseAuth.instance.currentUser!.uid;
 
-    return GestureDetector(
-      onLongPress: () {
-        Utils.customDialog(
-          context,
-          onPressed2: () {
-            ChatController.instance.deleteChatMessage(chatModel.messageId!);
-            Navigator.pop(context);
+    return CustomFocusMenu(
+      onPressed: () {},
+      menuItems: <FocusedMenuItem>[
+        FocusedMenuItem(
+          onPressed: () {},
+          title: const Text('Reply'),
+          trailingIcon: const Icon(Icons.reply_outlined),
+        ),
+        FocusedMenuItem(
+          onPressed: () {},
+          title: const Text('Forward'),
+          trailingIcon: const Icon(Icons.near_me_outlined),
+        ),
+        FocusedMenuItem(
+          onPressed: () {
+            Clipboard.setData(ClipboardData(text: chatModel.message));
+            showToast(msg: 'Text Copied');
           },
-          title: 'Delete Message',
-          text1: 'Cancel',
-          text2: 'Delete',
-        );
-      },
+          title: const Text('Copy'),
+          trailingIcon: const Icon(Icons.copy_outlined),
+        ),
+        FocusedMenuItem(
+          onPressed: () {
+            ChatController.instance.deleteChatMessage(chatModel.messageId!);
+          },
+          title: const Text(
+            'Unsend',
+            style: TextStyle(color: Colors.redAccent),
+          ),
+          trailingIcon: const Icon(
+            Icons.delete_outline,
+            color: Colors.redAccent,
+          ),
+        ),
+      ],
       child: Row(
         mainAxisAlignment:
             isMe ? MainAxisAlignment.end : MainAxisAlignment.start,

@@ -7,8 +7,6 @@ import '../../controller/camera_controller/app_camera_controller.dart';
 import '../../controller/chat_controller/chat_controller.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/widgets/cus_circular_progressbar.dart';
-import '../messages/core/chat_preview_image.dart';
-import '../messages/core/chat_preview_video.dart';
 import 'core/camera_close_button.dart';
 import 'core/camera_flash_light.dart';
 import 'core/camera_take_photo_or_video.dart';

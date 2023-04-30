@@ -17,8 +17,6 @@ import '../../repository/respository_implementation/database_implementation.dart
 import '../../repository/respository_implementation/storage_implementation.dart';
 import '../../view/add_post/add_new_post.dart';
 import '../../view/layout/app_layout.dart';
-import '../../view/messages/core/chat_preview_video.dart';
-import '../chat_controller/chat_controller.dart';
 
 class NewPostController extends GetxController {
   static NewPostController instance = Get.find<NewPostController>();

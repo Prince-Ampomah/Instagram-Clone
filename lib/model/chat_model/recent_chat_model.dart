@@ -3,6 +3,7 @@ import 'package:instagram_clone/model/user_model/user_model.dart';
 
 class RecentChatModel {
   String? messageId;
+  String? messageType;
   String? recentMessage;
   String? senderId;
   String? receiverId;
@@ -16,6 +17,7 @@ class RecentChatModel {
     this.receiverId,
     this.receiverModel,
     this.recentMessage, // will use it for images 📷 Photo
+    this.messageType,
     this.media,
     this.timeSent,
   });
@@ -24,6 +26,7 @@ class RecentChatModel {
     Map<String, dynamic> map = {};
 
     map['messageId'] = messageId;
+    map['messageType'] = messageType;
     map['senderId'] = senderId;
     map['receiverId'] = receiverId;
     map['receiverModel'] = receiverModel!.toJson();
@@ -38,9 +41,8 @@ class RecentChatModel {
       messageId: json['messageId'],
       senderId: json['senderId'],
       receiverId: json['receiverId'],
-      // receiverImage: json['receiverImage'],
-      // receiverName: json['receiverName'],
       recentMessage: json['recentMessage'],
+      messageType: json['messageType'],
       receiverModel: UserModel.fromJson(json['receiverModel'] ?? {}),
       timeSent: (json['timeSent'] is Timestamp)
           ? json['timeSent'].toDate()

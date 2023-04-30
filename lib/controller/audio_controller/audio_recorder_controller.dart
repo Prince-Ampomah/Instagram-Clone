@@ -1,5 +1,4 @@
 import 'package:flutter_sound/flutter_sound.dart';
-import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class AudioRecorderController {

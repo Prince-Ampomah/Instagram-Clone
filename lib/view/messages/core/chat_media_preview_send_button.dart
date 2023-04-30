@@ -3,7 +3,6 @@ import 'package:instagram_clone/core/constants/constants.dart';
 
 import '../../../controller/chat_controller/chat_controller.dart';
 import '../../../core/theme/app_colors.dart';
-import '../../../core/utils/helper_functions.dart';
 import '../../../core/widgets/cus_cached_image.dart';
 import '../../../core/widgets/cus_circular_image.dart';
 
