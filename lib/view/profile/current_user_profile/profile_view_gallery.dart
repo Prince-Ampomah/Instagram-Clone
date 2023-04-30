@@ -4,7 +4,7 @@ import 'package:instagram_clone/core/services/hive_services.dart';
 import 'package:instagram_clone/core/utils/helper_functions.dart';
 import 'package:instagram_clone/core/widgets/cus_cached_image.dart';
 import 'package:instagram_clone/model/post_model/post_model.dart';
-import 'package:instagram_clone/view/profile/profile_posts_view.dart';
+import 'package:instagram_clone/view/profile/current_user_profile/profile_posts_view.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/constants/constants.dart';
@@ -120,13 +120,14 @@ class ListPostProfileItem extends StatelessWidget {
         (index) {
           PostModel postModel =
               PostModel.fromJson(controller.getPostProfileList![index].data());
+
           return GestureDetector(
             onTap: () {
               sendToPage(
                 context,
-                ProfilePost(
+                UserProfilePostView(
                   userModel: HiveServices.getUserBox().get(Const.currentUser)!,
-                  postModel: postModel,
+                  profileController: controller,
                 ),
               );
             },

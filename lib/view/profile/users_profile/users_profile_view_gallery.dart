@@ -1,14 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/controller/profile_controller/post_profile_controller.dart';
+import 'package:instagram_clone/core/utils/helper_functions.dart';
 import 'package:instagram_clone/core/widgets/cus_cached_image.dart';
 import 'package:instagram_clone/model/post_model/post_model.dart';
+import 'package:instagram_clone/view/profile/users_profile/users_profile_posts_view.dart';
 
 import '../../../core/constants/constants.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/widgets/cus_circular_progressbar.dart';
 import '../../../core/widgets/cus_tab_bar.dart';
 import '../../../core/widgets/cus_video_player.dart';
+import '../../../model/user_model/user_model.dart';
+import '../../../repository/repository_abstract/database_abstract.dart';
+import '../../../repository/respository_implementation/database_implementation.dart';
 
 class UsersProfileViewGallery extends StatefulWidget {
   const UsersProfileViewGallery({
@@ -127,57 +132,64 @@ class ListPostProfileItem extends StatelessWidget {
   const ListPostProfileItem({
     super.key,
     this.snapshot,
-    this.controller,
   });
 
-  final PostProfileController? controller;
   final AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>? snapshot;
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+
     return GridView.count(
       crossAxisCount: 3,
       mainAxisSpacing: 1.0,
       crossAxisSpacing: 1.0,
       children: List.generate(
         snapshot!.data!.docs.length,
-        // controller!.getPostProfileList!.length,
         (index) {
           PostModel postModel = PostModel.fromJson(
             snapshot!.data!.docs[index].data(),
-            // controller!.getPostProfileList![index].data(),
           );
 
-          return Stack(
-            children: [
-              postModel.postType == Const.videoPostType
-                  ? SizedBox(
-                      width: size.width,
-                      child: CusVideoPlayer(
-                        videoPath: postModel.media.first!,
-                        showControllBar: false,
-                        showSettingsButton: false,
+          return GestureDetector(
+            onTap: () {
+              sendToPage(
+                  context,
+                  UsersProfilePostView(
+                    posts: snapshot,
+                    userId: postModel.userId!,
+                  ));
+            },
+            child: Stack(
+              children: [
+                postModel.postType == Const.videoPostType
+                    ? SizedBox(
+                        width: size.width,
+                        child: CusVideoPlayer(
+                          videoPath: postModel.media.first!,
+                          showControllBar: false,
+                          showSettingsButton: false,
+                        ),
+                      )
+                    : CustomCachedImage(
+                        width: size.width,
+                        imageUrl: postModel.media[0]!,
+                        fit: BoxFit.cover,
                       ),
-                    )
-                  : CustomCachedImage(
-                      width: size.width,
-                      imageUrl: postModel.media[0]!,
-                      fit: BoxFit.cover,
-                    ),
-              if (postModel.media.length != 1)
-                const Align(
-                  alignment: Alignment.topRight,
-                  child: Padding(
-                    padding: EdgeInsets.only(right: 8),
-                    child: Icon(
-                      Icons.bookmarks,
-                      color: Colors.white,
-                      size: 20,
+                if (postModel.media.length != 1)
+                  const Align(
+                    alignment: Alignment.topRight,
+                    child: Padding(
+                      padding: EdgeInsets.only(right: 8),
+                      child: Icon(
+                        Icons.bookmarks,
+                        color: Colors.white,
+                        size: 20,
+                      ),
                     ),
                   ),
-                ),
-            ],
+              ],
+            ),
           );
         },
       ),
