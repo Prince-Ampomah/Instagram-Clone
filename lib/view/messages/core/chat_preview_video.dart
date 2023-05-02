@@ -28,7 +28,7 @@ class ChatPreviewVideo extends StatelessWidget {
             CusVideoPlayer(videoPath: videoPath),
             10.ph,
             if (showSendButton!)
-              ChatMediaPreviewSendButton(
+              MediaPreviewSendButton(
                 onTap: () {
                   ChatController.instance.sendMediaMessage(Const.videoType);
                   popUntil(context, 2);

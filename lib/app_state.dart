@@ -4,6 +4,7 @@ import 'package:instagram_clone/controller/chat_controller/chat_controller.dart'
 import 'package:instagram_clone/controller/follow_controller/follow_controller.dart';
 import 'package:instagram_clone/controller/notification_controller/notification_controller.dart';
 import 'package:instagram_clone/controller/post_controller/comment_controller.dart';
+import 'package:instagram_clone/controller/story_controller/story_controller.dart';
 
 import 'controller/auth_controller/auth_controller.dart';
 import 'controller/models_controller/models_controller.dart';
@@ -30,6 +31,7 @@ class AppState {
     Get.put(NotificationController());
     Get.put(ChatController());
     Get.put(AppCameraController());
+    Get.put(StoryController());
     // Get.put(AudioRecorderController());
   }
 }

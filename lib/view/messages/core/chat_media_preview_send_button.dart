@@ -6,8 +6,8 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/widgets/cus_cached_image.dart';
 import '../../../core/widgets/cus_circular_image.dart';
 
-class ChatMediaPreviewSendButton extends StatelessWidget {
-  const ChatMediaPreviewSendButton({
+class MediaPreviewSendButton extends StatelessWidget {
+  const MediaPreviewSendButton({
     super.key,
     this.isFromGallery = false,
     required this.onTap,

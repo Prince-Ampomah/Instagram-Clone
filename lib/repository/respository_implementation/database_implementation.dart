@@ -1,4 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../core/constants/constants.dart';
+import '../../core/utils/utils.dart';
+import '../../model/user_model/user_model.dart';
 import '../repository_abstract/database_abstract.dart';
 
 class FirestoreDBImpl implements FirestoreDB {
@@ -147,5 +150,25 @@ class FirestoreDBImpl implements FirestoreDB {
     } catch (e) {
       throw Exception(e);
     }
+  }
+
+  /// Query the user who posted the feed from the [Users] collection in
+  /// the database.
+  ///
+  static Future<UserModel> getUserData(String userId) async {
+    UserModel userModel = UserModel();
+
+    try {
+      // use post [userId] field to fetch the user the db
+      DocumentSnapshot doc = await FirebaseFirestore.instance
+          .collection(Const.usersCollection)
+          .doc(userId)
+          .get();
+      return userModel = UserModel.fromJson(doc.data() as Map<String, dynamic>);
+    } catch (e) {
+      Utils.showErrorMessage(e.toString());
+    }
+
+    return userModel;
   }
 }

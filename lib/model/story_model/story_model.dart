@@ -1,32 +1,45 @@
 import 'package:instagram_clone/core/constants/constants.dart';
 
 class StoryModel {
+  String? id;
+  String? userId;
   String? userProfileImage;
   String? userHandle;
   DateTime? timePosted;
   List<dynamic>? media;
+  String? storyType;
 
   StoryModel({
+    this.id,
+    this.userId,
     this.userProfileImage,
     this.userHandle,
     this.timePosted,
+    this.storyType,
     this.media = const [],
   });
 
   factory StoryModel.fromJson(Map<String, dynamic> json) {
     return StoryModel(
-        userProfileImage: json['profileImage'],
-        userHandle: json['userHandle'],
-        timePosted: DateTime(json['timePosted']),
-        media: json['media']);
+      id: json['id'],
+      userId: json['userId'],
+      userProfileImage: json['profileImage'],
+      userHandle: json['userHandle'],
+      timePosted: DateTime(json['timePosted']),
+      media: json['media'],
+      storyType: json['type'],
+    );
   }
 
   Map<String, dynamic> toJson() {
     return {
+      'id': id,
+      'userId': userId,
       'profileImage': userProfileImage,
       'userHandle': userHandle,
       'media': media,
       'timePosted': timePosted,
+      'type': storyType,
     };
   }
 

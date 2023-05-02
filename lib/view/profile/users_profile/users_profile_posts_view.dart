@@ -13,31 +13,11 @@ import '../../home/post/post_reaction.dart';
 import '../../home/post/post_user.dart';
 import '../../home/post/post_video.dart';
 
-class UsersProfilePostView extends StatefulWidget {
+class UsersProfilePostView extends StatelessWidget {
   const UsersProfilePostView({super.key, this.posts, required this.userId});
 
   final AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>? posts;
   final String userId;
-
-  @override
-  State<UsersProfilePostView> createState() => _UsersProfilePostViewState();
-}
-
-class _UsersProfilePostViewState extends State<UsersProfilePostView> {
-  FirestoreDB firestoreDB = FirestoreDBImpl();
-
-  /// Query the user who posted the feed from the [Users] collection in
-  /// the database.
-  ///
-  Future<UserModel> getUserData() async {
-    // use post [userId] field to fetch the user the db
-    DocumentSnapshot doc = await firestoreDB.getDocById(
-      Const.usersCollection,
-      widget.userId,
-    );
-
-    return UserModel.fromJson(doc.data() as Map<String, dynamic>);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,14 +27,14 @@ class _UsersProfilePostViewState extends State<UsersProfilePostView> {
         title: 'Posts',
       ),
       body: FutureBuilder(
-        future: getUserData(),
+        future: FirestoreDBImpl.getUserData(userId),
         builder: (BuildContext context, AsyncSnapshot<UserModel> snapshot) {
           if (snapshot.hasData) {
             return ListView.builder(
-              itemCount: widget.posts!.data!.docs.length,
+              itemCount: posts!.data!.docs.length,
               itemBuilder: (BuildContext context, int index) {
                 PostModel postModel =
-                    PostModel.fromJson(widget.posts!.data!.docs[index].data());
+                    PostModel.fromJson(posts!.data!.docs[index].data());
                 return Padding(
                   padding: const EdgeInsets.only(top: 10),
                   child: Column(

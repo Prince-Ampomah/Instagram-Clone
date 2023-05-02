@@ -11,7 +11,7 @@ import 'post_image.dart';
 import 'post_reaction.dart';
 import 'post_user.dart';
 
-class PostItem extends StatefulWidget {
+class PostItem extends StatelessWidget {
   const PostItem({
     super.key,
     this.postModel,
@@ -20,29 +20,9 @@ class PostItem extends StatefulWidget {
   final PostModel? postModel;
 
   @override
-  State<PostItem> createState() => _PostItemState();
-}
-
-class _PostItemState extends State<PostItem> {
-  FirestoreDB firestoreDB = FirestoreDBImpl();
-
-  /// Query the user who posted the feed from the [Users] collection in
-  /// the database.
-  ///
-  Future<UserModel> getUserData() async {
-    // use post [userId] field to fetch the user the db
-    DocumentSnapshot doc = await firestoreDB.getDocById(
-      Const.usersCollection,
-      widget.postModel!.userId!,
-    );
-
-    return UserModel.fromJson(doc.data() as Map<String, dynamic>);
-  }
-
-  @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: getUserData(),
+      future: FirestoreDBImpl.getUserData(postModel!.userId!),
       builder: (
         BuildContext context,
         AsyncSnapshot<UserModel> userModelsnapshot,
@@ -53,19 +33,19 @@ class _PostItemState extends State<PostItem> {
             children: [
               PostUser(
                 userModel: userModelsnapshot.data,
-                postModel: widget.postModel,
+                postModel: postModel,
               ),
-              widget.postModel?.postType == Const.videoPostType
+              postModel?.postType == Const.videoPostType
                   ? PostVideoView(
-                      video: widget.postModel!.media,
-                      postModel: widget.postModel,
+                      video: postModel!.media,
+                      postModel: postModel,
                     )
                   : PostImage(
-                      images: widget.postModel!.media,
-                      postModel: widget.postModel,
+                      images: postModel!.media,
+                      postModel: postModel,
                     ),
               PostReaction(
-                postModel: widget.postModel,
+                postModel: postModel,
                 userModel: userModelsnapshot.data,
               ),
             ],

@@ -80,6 +80,18 @@ class NewPostController extends GetxController {
 
     try {
       Get.off(() => const AppLayoutView(pageIndex: 0));
+
+      // Future.wait([
+      //   //   upload to firestore database
+      //   saveToDB(postModel, userModel),
+
+      //   // upload media to frebase storage
+      //   uploadMediaFiles(),
+
+      //   // update the media fields in firestore database
+      //   updateMediaUrl(),
+      // ]);
+
       //   upload to firestore database
       await saveToDB(postModel, userModel);
 
