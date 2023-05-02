@@ -1,19 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../../controller/chat_controller/chat_controller.dart';
+import '../../../controller/story_controller/story_controller.dart';
 import '../../../core/constants/constants.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/helper_functions.dart';
 import '../../../core/widgets/cus_cached_image.dart';
-import 'chat_media_preview_back_button.dart';
-import 'chat_media_preview_indicator.dart';
-import 'chat_media_preview_send_button.dart';
+import '../../messages/core/chat_media_preview_back_button.dart';
 
-class ChatImagePreview extends StatelessWidget {
-  const ChatImagePreview({super.key, this.isFromGallery = true});
-
-  final bool isFromGallery;
+class StoryImagePreview extends StatelessWidget {
+  const StoryImagePreview({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -35,33 +31,41 @@ class ChatImagePreview extends StatelessWidget {
               child: Stack(
                 children: [
                   PageView.builder(
-                    itemCount: ChatController.instance.chatMedia!.length,
-                    onPageChanged: ChatController.instance.onPageChanged,
+                    itemCount: StoryController.instance.media.length,
+                    onPageChanged: StoryController.instance.onPageChanged,
                     itemBuilder: (context, index) {
                       return CustomCachedImage(
-                        imageUrl: ChatController.instance.chatMedia![index]!,
+                        imageUrl: StoryController.instance.media[index]!,
                         fit: BoxFit.cover,
                       );
                     },
                   ),
                   const MediaPreviewBackButton(),
-                  if (ChatController.instance.chatMedia!.length != 1)
-                    const MeidaPreviewIndicator(),
                 ],
               ),
             ),
             10.ph,
-            MediaPreviewSendButton(
+            GestureDetector(
               onTap: () {
-                ChatController.instance.sendMediaMessage(Const.imageType);
-
-                if (isFromGallery) {
-                  Navigator.pop(context);
-                } else {
-                  popUntil(context, 2);
-                }
+                StoryController.instance.addNewStory(Const.imageStoryType);
+                popUntil(context, 2);
               },
-              isFromGallery: isFromGallery,
+              child: Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 13,
+                  vertical: 13,
+                ),
+                margin: const EdgeInsets.fromLTRB(5, 3, 20, 25),
+                decoration: BoxDecoration(
+                  color: AppColors.whiteColor,
+                  borderRadius: BorderRadius.circular(100),
+                ),
+                child: const Icon(
+                  Icons.chevron_right,
+                  color: Colors.black,
+                  size: 25,
+                ),
+              ),
             ),
           ],
         ),

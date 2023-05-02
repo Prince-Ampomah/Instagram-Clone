@@ -51,6 +51,7 @@ class Const {
   // Firestore contants
   static const String usersCollection = 'users';
   static const String postsCollection = 'posts';
+  static const String storyCollection = 'stories';
   static const String commentsCollection = 'comments';
   static const String likesCollection = 'likes';
   static const String notificationCollection = 'notifications';
@@ -68,4 +69,6 @@ class Const {
   // post type
   static const String imagePostType = 'imagePost';
   static const String videoPostType = 'videoPost';
+  static const String imageStoryType = 'imageStory';
+  static const String videoStoryType = 'videoStory';
 }
