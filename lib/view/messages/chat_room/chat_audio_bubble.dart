@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sound/public/flutter_sound_player.dart';
+import 'package:focused_menu/modals.dart';
+import 'package:instagram_clone/core/widgets/cus_focus_menu.dart';
 import 'package:instagram_clone/model/chat_model/chat_model.dart';
 
 import '../../../controller/audio_controller/audio_player_controller.dart';
@@ -41,20 +43,29 @@ class _ChatAudioBubbleState extends State<ChatAudioBubble> {
     bool isMe =
         widget.chatModel.senderId == FirebaseAuth.instance.currentUser!.uid;
 
-    return GestureDetector(
-      onLongPress: () {
-        Utils.customDialog(
-          context,
-          onPressed2: () {
+    return CustomFocusMenu(
+      onPressed: () {},
+      menuItems: <FocusedMenuItem>[
+        FocusedMenuItem(
+          onPressed: () {},
+          title: const Text('Reply'),
+          trailingIcon: const Icon(Icons.reply_outlined),
+        ),
+        FocusedMenuItem(
+          onPressed: () {
             ChatController.instance
                 .deleteChatMessage(widget.chatModel.messageId!);
-            Navigator.pop(context);
           },
-          title: 'Delete Message',
-          text1: 'Cancel',
-          text2: 'Delete',
-        );
-      },
+          title: const Text(
+            'Unsend',
+            style: TextStyle(color: Colors.redAccent),
+          ),
+          trailingIcon: const Icon(
+            Icons.delete_outline,
+            color: Colors.redAccent,
+          ),
+        ),
+      ],
       child: Row(
         mainAxisAlignment:
             isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
@@ -139,7 +150,7 @@ class _ChatAudioBubbleState extends State<ChatAudioBubble> {
                             thumbColor: isMe
                                 ? AppColors.whiteColor
                                 : AppColors.blackColor,
-                            activeTrackColor: AppColors.blackColor,
+                            activeTrackColor: AppColors.whiteColor,
                             inactiveTrackColor: isMe
                                 ? AppColors.whiteColor
                                 : const Color(0xFFC6C6C6),

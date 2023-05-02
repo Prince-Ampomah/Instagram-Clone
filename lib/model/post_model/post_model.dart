@@ -75,18 +75,19 @@ class PostModel {
 
   factory PostModel.fromJson(Map<String, dynamic> json) {
     return PostModel(
-        id: json['id'],
-        userId: json['userId'],
-        caption: json['caption'],
-        media: json['media'],
-        like: json['like'],
-        comment: json['comment'],
-        location: PostLocationModel.fromJson(json['location']),
-        timePosted: (json['timePosted'] is Timestamp)
-            ? json['timePosted'].toDate()
-            : json['timePosted'],
-        isSavedBy: json['isSavedBy'],
-        isLikedBy: json['isLikedBy'],
-        postType: json['postType']);
+      id: json['id'],
+      userId: json['userId'],
+      caption: json['caption'],
+      media: json['media'],
+      like: json['like'],
+      comment: json['comment'],
+      location: PostLocationModel.fromJson(json['location']),
+      timePosted: (json['timePosted'] is Timestamp)
+          ? json['timePosted'].toDate()
+          : json['timePosted'],
+      isSavedBy: json['isSavedBy'],
+      isLikedBy: json['isLikedBy'],
+      postType: json['postType'],
+    );
   }
 }

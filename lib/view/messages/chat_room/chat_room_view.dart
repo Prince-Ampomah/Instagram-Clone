@@ -65,6 +65,17 @@ class _ChatRoomViewState extends State<ChatRoomView> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
+          // Expanded(
+          //   child: SingleChildScrollView(
+          //     child: Column(
+          //       children: [
+          //         UserProfileHeader(userModel: widget.userModel),
+          //         20.ph,
+          //         const ChatMessagesList(),
+          //       ],
+          //     ),
+          //   ),
+          // ),
           Expanded(
             child: ListView(
               reverse: true,
