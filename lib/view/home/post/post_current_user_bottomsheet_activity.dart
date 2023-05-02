@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:instagram_clone/controller/post_controller/post_controller.dart';
 import 'package:instagram_clone/core/constants/constants.dart';
 import 'package:instagram_clone/core/theme/app_colors.dart';
+import 'package:instagram_clone/core/utils/utils.dart';
 import 'package:instagram_clone/model/post_model/post_model.dart';
 import 'package:instagram_clone/model/user_model/user_model.dart';
 import 'dart:math' as math;
@@ -160,7 +163,17 @@ class PostCurrentUserBottomSheetActivity extends StatelessWidget {
 
             // delete post
             CustomListTile(
-              onTap: () {},
+              onTap: () async {
+                Navigator.pop(context);
+                Utils.dialog(
+                  context,
+                  onTap: () async {
+                    await PostController.instance.deletePost(postModel!.id!);
+                  },
+                  content:
+                      'You can restore this post from Recently deleted in Your Activity withing 30 days. After that, it will be permanently deleted.',
+                );
+              },
               minLeadingWidth: 20,
               leading: const Icon(
                 Icons.delete_outline,

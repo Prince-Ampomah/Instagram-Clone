@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:instagram_clone/core/utils/utils.dart';
 
 import '../../../controller/auth_controller/auth_controller.dart';
 import '../../../core/constants/constants.dart';
@@ -23,17 +24,27 @@ class ProfileActivity extends StatelessWidget {
           shrinkWrap: true,
           children: [
             ActivityListItem(
-              onTap: () async {
-                await AuthController.instance.signOutUser();
-                await HiveServices.getUserBox()
-                    .delete(Const.currentUser)
-                    .whenComplete(
-                      () => Get.offAll(() => const SignInView()),
-                      // noReturnPushReplacement(
-                      //   context,
-                      //   const SignInView(),
-                      // ),
-                    );
+              onTap: () {
+                Navigator.pop(context);
+
+                Utils.dialog(
+                  context,
+                  height: 0.28,
+                  title: 'Log out of your account?',
+                  text1: 'Log out',
+                  onTap: () async {
+                    await AuthController.instance.signOutUser();
+                    await HiveServices.getUserBox()
+                        .delete(Const.currentUser)
+                        .whenComplete(
+                          () => Get.offAll(() => const SignInView()),
+                          // noReturnPushReplacement(
+                          //   context,
+                          //   const SignInView(),
+                          // ),
+                        );
+                  },
+                );
               },
               iconData: Icons.logout,
               text: 'Logout',

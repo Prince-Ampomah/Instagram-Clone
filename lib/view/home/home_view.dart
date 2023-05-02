@@ -34,19 +34,28 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
-    return RefreshIndicator(
-      onRefresh: _refreshPosts,
-      color: Colors.white,
-      backgroundColor: const Color(0xFF5B5B5B),
-      strokeWidth: 2,
-      child: ListView(
-        controller: scrollController,
-        children: const [
-          Story(),
-          Divider(),
-          PostList(),
-        ],
-      ),
+    return ListView(
+      controller: scrollController,
+      children: const [
+        Story(),
+        Divider(),
+        PostList(),
+      ],
     );
+
+    // return RefreshIndicator(
+    //   onRefresh: _refreshPosts,
+    //   color: Colors.white,
+    //   backgroundColor: const Color(0xFF5B5B5B),
+    //   strokeWidth: 2,
+    //   child: ListView(
+    //     controller: scrollController,
+    //     children: const [
+    //       Story(),
+    //       Divider(),
+    //       PostList(),
+    //     ],
+    //   ),
+    // );
   }
 }

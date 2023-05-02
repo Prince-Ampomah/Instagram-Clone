@@ -5,8 +5,16 @@ import 'package:get/get.dart';
 import 'package:instagram_clone/core/constants/constants.dart';
 import 'package:instagram_clone/core/services/hive_services.dart';
 import 'package:instagram_clone/model/post_model/post_model.dart';
+import 'package:instagram_clone/repository/repository_abstract/database_abstract.dart';
+import 'package:instagram_clone/repository/respository_implementation/database_implementation.dart';
+
+import '../../core/utils/utils.dart';
 
 class PostController extends GetxController {
+  static PostController instance = Get.find<PostController>();
+
+  FirestoreDB firestoreDB = FirestoreDBImpl();
+
   StreamSubscription? _streamSubscription;
   bool hasError = false, hasData = true, waiting = true, done = false;
 
@@ -73,6 +81,26 @@ class PostController extends GetxController {
     if (_streamSubscription != null) {
       _streamSubscription!.cancel();
     }
+  }
+
+  Future<void> deletePost(String postId) async {
+    try {
+      await firestoreDB.deleteDoc(Const.postsCollection, postId);
+      deletePostComment(postId);
+      Get.back();
+    } catch (e) {
+      Utils.showErrorMessage(e.toString());
+    }
+  }
+
+  deletePostComment(String postId) {
+    firestoreDB
+        .getDocByField(Const.commentsCollection, 'postId', postId)
+        .then((value) {
+      for (var doc in value.docs) {
+        firestoreDB.deleteDoc(Const.commentsCollection, doc.id);
+      }
+    });
   }
 
   @override

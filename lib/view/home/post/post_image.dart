@@ -144,13 +144,11 @@ class _PostImageState extends State<PostImage> with TickerProviderStateMixin {
                   itemBuilder: (context, index) {
                     return Stack(
                       children: [
-                        InteractiveViewer(
-                          child: CustomCachedImage(
-                            imageUrl: widget.images![index],
-                            width: size.width,
-                            shimmerHeight: size.height * 0.70,
-                            fit: BoxFit.fitWidth,
-                          ),
+                        CustomCachedImage(
+                          imageUrl: widget.images![index],
+                          width: size.width,
+                          shimmerHeight: size.height * 0.50,
+                          fit: BoxFit.fitWidth,
                         ),
 
                         // like button widget
