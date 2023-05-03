@@ -15,10 +15,14 @@ class AppColors {
   static const audioButtonColor1 = Color(0xFF1B7DEB);
 
   static const storyBorderColors = [
-    Color(0xFFfeda75),
-    Color(0xFFfa7e1e),
-    Color(0xFFd62976),
-    Color(0xFF962fbf),
-    Color(0xFF4f5bd5),
+    // Color(0xFFfeda75),
+    // Color(0xFFfa7e1e),
+    // Color(0xFFd62976),
+    // Color(0xFF962fbf),
+    // Color(0xFF4f5bd5),
+
+    Colors.orange,
+    Colors.pink,
+    Colors.purple,
   ];
 }

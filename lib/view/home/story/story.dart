@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../model/story_model/story_model.dart';
-import 'current_user_story.dart';
-import 'users_story.dart';
+import 'current_user_story/current_user_story.dart';
+import 'other_stories/others_story_list.dart';
 
 class Story extends StatelessWidget {
   const Story({
@@ -15,15 +14,9 @@ class Story extends StatelessWidget {
       scrollDirection: Axis.horizontal,
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Row(
-        children: [
-          const CurrentUserStory(),
-          ...List.generate(
-            StoryModel.story.length,
-            (index) {
-              StoryModel storyModel = StoryModel.story[index];
-              return UsersStory(storyModel: storyModel);
-            },
-          ),
+        children: const [
+          CurrentUserStory(),
+          OthersStoryList(),
         ],
       ),
     );

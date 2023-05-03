@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../../model/story_model/story_model.dart';
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/widgets/cus_cached_image.dart';
+import '../../../../model/story_model/story_model.dart';
 
 class UsersStory extends StatelessWidget {
   const UsersStory({
@@ -28,16 +30,15 @@ class UsersStory extends StatelessWidget {
             gradient: const LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-              colors: [
-                Colors.orange,
-                Colors.pink,
-                Colors.purple,
-              ],
+              colors: AppColors.storyBorderColors,
             ),
           ),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(70),
-            child: Image.asset(storyModel.userProfileImage!),
+            child: CustomCachedImage(
+              imageUrl: storyModel.userProfileImage!,
+              fit: BoxFit.cover,
+            ),
           ),
         ),
         Padding(
