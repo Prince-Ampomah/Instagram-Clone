@@ -1,10 +1,11 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:get/get.dart';
 import 'package:instagram_clone/model/story_model/story_model.dart';
-import 'package:instagram_clone/view/home/story/story_image_preview.dart';
-import 'package:instagram_clone/view/home/story/story_video_preview.dart';
+import 'package:instagram_clone/view/home/story/core/story_image_preview.dart';
+import 'package:instagram_clone/view/home/story/core/story_video_preview.dart';
 
 import '../../core/constants/constants.dart';
 import '../../core/services/hive_services.dart';
@@ -109,9 +110,33 @@ class StoryController extends GetxController {
 
     await firestoreDB.addDocWithId(
       Const.storyCollection,
-      storyId,
+      currentUser.userId!,
       storyModel.toJson(),
     );
+
+    // DocumentSnapshot document = await firestoreDB.getDocById(
+    //   Const.storyCollection,
+    //   currentUser.userId!,
+    // );
+
+    // if (document.exists) {
+    //   // update the story
+    //   await firestoreDB.updateDoc(
+    //     Const.storyCollection,
+    //     currentUser.userId!,
+    //     {
+    //       'media': FieldValue.arrayUnion(media),
+    //       'timePosted': DateTime.now(),
+    //     },
+    //   );
+    // } else {
+    //   // add new story
+    //   await firestoreDB.addDocWithId(
+    //     Const.storyCollection,
+    //     currentUser.userId!,
+    //     storyModel.toJson(),
+    //   );
+    // }
   }
 
   Future<void> uploadMediaFiles() async {
@@ -122,7 +147,7 @@ class StoryController extends GetxController {
         if (!isValidURL) {
           List<String> mediaUrls = await storageContract.uploadMultipleFiles(
             Const.storyCollection,
-            storyId,
+            HiveServices.getUserBox().get(Const.currentUser)!.userId!,
             media.map((data) => File(data)).toList(),
           );
           media = mediaUrls;
@@ -132,7 +157,12 @@ class StoryController extends GetxController {
   }
 
   Future<void> updateMediaUrl() async {
-    await firestoreDB
-        .updateDoc(Const.storyCollection, storyId, {'media': media});
+    await firestoreDB.updateDoc(
+      Const.storyCollection,
+      HiveServices.getUserBox().get(Const.currentUser)!.userId!,
+      {
+        'media': media,
+      },
+    );
   }
 }

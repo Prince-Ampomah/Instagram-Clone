@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:instagram_clone/core/utils/helper_functions.dart';
-import 'package:instagram_clone/view/home/story/new_story_camera_view.dart';
 
-import '../../../core/constants/constants.dart';
-import '../../add_post/add_new_post_camera_view.dart';
+import '../../../../core/constants/constants.dart';
+import '../../../../core/services/hive_services.dart';
+import '../../../../core/utils/helper_functions.dart';
+import '../../../../core/widgets/cus_cached_image.dart';
+import '../core/new_story_camera_view.dart';
 
-class CurrentUserStory extends StatelessWidget {
-  const CurrentUserStory({
+class NonActiveStory extends StatelessWidget {
+  const NonActiveStory({
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+
+    var currentUser = HiveServices.getUserBox().get(Const.currentUser)!;
 
     return Column(
       children: [
@@ -34,7 +37,10 @@ class CurrentUserStory extends StatelessWidget {
                 ),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(70),
-                  child: Image.asset(Const.princeImage),
+                  child: CustomCachedImage(
+                    imageUrl: currentUser.profileImage!,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
               Positioned(
@@ -64,9 +70,10 @@ class CurrentUserStory extends StatelessWidget {
         const Padding(
           padding: EdgeInsets.only(left: 5, right: 5, top: 5),
           child: Text(
-            'userHandle',
+            'Your story',
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
+            style: TextStyle(fontSize: 12),
           ),
         ),
       ],

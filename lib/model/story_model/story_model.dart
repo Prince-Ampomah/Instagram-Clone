@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:instagram_clone/core/constants/constants.dart';
 
 class StoryModel {
@@ -25,7 +26,9 @@ class StoryModel {
       userId: json['userId'],
       userProfileImage: json['profileImage'],
       userHandle: json['userHandle'],
-      timePosted: DateTime(json['timePosted']),
+      timePosted: (json['timePosted'] is Timestamp)
+          ? json['timePosted'].toDate()
+          : json['timePosted'],
       media: json['media'],
       storyType: json['type'],
     );

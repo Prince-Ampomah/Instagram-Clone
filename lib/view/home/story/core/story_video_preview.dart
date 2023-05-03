@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../../../controller/story_controller/story_controller.dart';
-import '../../../core/constants/constants.dart';
-import '../../../core/theme/app_colors.dart';
-import '../../../core/utils/helper_functions.dart';
-import '../../../core/widgets/cus_video_player.dart';
+import '../../../../controller/story_controller/story_controller.dart';
+import '../../../../core/constants/constants.dart';
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/utils/helper_functions.dart';
+import '../../../../core/widgets/cus_video_player.dart';
 
 class StoryVideoPreview extends StatelessWidget {
   const StoryVideoPreview({

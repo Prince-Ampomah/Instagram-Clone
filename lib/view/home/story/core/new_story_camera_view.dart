@@ -5,11 +5,11 @@ import 'package:get/get.dart';
 import 'package:instagram_clone/controller/camera_controller/app_camera_controller.dart';
 import 'package:instagram_clone/controller/story_controller/story_controller.dart';
 
-import '../../../core/theme/app_colors.dart';
-import '../../../core/widgets/cus_circular_progressbar.dart';
-import '../../camera/core/camera_close_button.dart';
-import '../../camera/core/camera_flash_light.dart';
-import '../../camera/core/camera_take_photo_or_video.dart';
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/widgets/cus_circular_progressbar.dart';
+import '../../../camera/core/camera_close_button.dart';
+import '../../../camera/core/camera_flash_light.dart';
+import '../../../camera/core/camera_take_photo_or_video.dart';
 
 class NewStoryPostCameraView extends StatefulWidget {
   const NewStoryPostCameraView({super.key});
