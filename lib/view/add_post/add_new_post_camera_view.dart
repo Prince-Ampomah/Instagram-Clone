@@ -2,6 +2,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:instagram_clone/core/theme/ui_layout_preference.dart';
 
 import '../../controller/camera_controller/app_camera_controller.dart';
 import '../../controller/post_controller/new_post_controller.dart';
@@ -25,6 +26,11 @@ class _NewPostCameraViewState extends State<NewPostCameraView>
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     AppCameraController.instance.getAvailbleCameras();
+    UIPreferenceLayout.setPreferences(
+      statusBarColor: AppColors.blackColor,
+      statusBarBrightness: Brightness.light,
+      statusBarIconBrightness: Brightness.light,
+    );
   }
 
   @override
@@ -60,13 +66,6 @@ class _NewPostCameraViewState extends State<NewPostCameraView>
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(
-        statusBarColor: AppColors.blackColor,
-        statusBarBrightness: Brightness.light,
-        statusBarIconBrightness: Brightness.light,
-      ),
-    );
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: SafeArea(
