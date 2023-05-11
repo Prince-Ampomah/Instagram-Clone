@@ -16,7 +16,6 @@ class OthersStoryList extends StatelessWidget {
         final controller = Provider.of<QueryStoryController>(context);
 
         if (controller.waiting) {
-          // return const Center(child: CustomCircularProgressBar());
           return const SizedBox();
         }
 

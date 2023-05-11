@@ -4,7 +4,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/utils/helper_functions.dart';
 import '../../../../core/widgets/cus_cached_image.dart';
 import '../../../../model/story_model/story_model.dart';
-import '../story_highlight.dart';
+import '../story_highlight/story_highlight.dart';
 
 class UsersStory extends StatelessWidget {
   const UsersStory({

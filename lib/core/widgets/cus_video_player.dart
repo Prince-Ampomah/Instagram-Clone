@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 
 import 'package:appinio_video_player/appinio_video_player.dart';
 import 'package:flutter/services.dart';
+import 'package:instagram_clone/core/widgets/cus.shimmer.effect.dart';
 import 'package:instagram_clone/core/widgets/cus_circular_progressbar.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../theme/app_colors.dart';
 
@@ -94,6 +96,114 @@ class _CusVideoPlayerState extends State<CusVideoPlayer> {
             customVideoPlayerController: _customVideoPlayerController!,
           )
         : const Center(child: CustomCircularProgressBar());
+  }
+}
+
+class CustomOriginalVideoPlayer extends StatefulWidget {
+  const CustomOriginalVideoPlayer({
+    // required this.controller,
+    required this.videoPath,
+    // this.width,
+    // this.height,
+    this.aspectRatio = 1,
+    this.onInitController,
+    // this.rawPlayer = true,
+    super.key,
+  });
+
+  /// Invoked when the `VideoPlayerController` is initiated
+  /// You can use this method to get the controller
+  final Function(VideoPlayerController controller)? onInitController;
+
+  /// The aspect ratio of the video
+  final double aspectRatio;
+
+  /// Path to the video file
+  /// Can be a Valid `URI` or a `Directory`
+  final String videoPath;
+
+  @override
+  State<CustomOriginalVideoPlayer> createState() =>
+      _CustomOriginalVideoPlayerState();
+}
+
+class _CustomOriginalVideoPlayerState extends State<CustomOriginalVideoPlayer> {
+  VideoPlayerController? controller;
+  // Future<void>? _initializeVideoPlayerFuture;
+  bool isLoaded = false;
+
+  @override
+  void initState() {
+    _initController(widget.videoPath).then((_) {
+      controller?.initialize().then((value) {
+        setState(() {
+          isLoaded = true;
+          widget.onInitController?.call(controller!);
+        });
+      });
+    });
+    super.initState();
+  }
+
+  @override
+  void setState(fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
+
+  Future<void> _initController(String videoPath) async {
+    /// Initialize the [isValid] if the [videoFilePath] provided in a valid URL
+    bool isValidURL = Uri.parse(videoPath).isAbsolute;
+
+    if (isValidURL) {
+      var file = await DefaultCacheManager().getSingleFile(videoPath);
+      controller = VideoPlayerController.file(file);
+    } else {
+      controller = VideoPlayerController.file(File(videoPath));
+    }
+  }
+
+  @override
+  void dispose() {
+    // dispose off the video player controller when not in use
+
+    controller?.dispose();
+    super.dispose();
+  }
+
+  void didChangeAppLifecycleState() {
+    if (WidgetsBinding.instance.lifecycleState == AppLifecycleState.paused) {
+      controller?.pause();
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return isLoaded && controller != null
+        ? AspectRatio(
+            aspectRatio: widget.aspectRatio,
+            child: VideoPlayer(controller!),
+          )
+        : AspectRatio(
+            aspectRatio: widget.aspectRatio,
+            child: Container(
+              height: 200,
+              decoration: const BoxDecoration(
+                color: Colors.transparent,
+              ),
+              child: const ShimmerEffect.rectangular(height: 200),
+              // child: Shimmer.fromColors(
+              //   baseColor: Colors.grey,
+              //   highlightColor: Colors.grey[600]!,
+              //   period: const Duration(seconds: 2),
+              //   child: const Icon(
+              //     Icons.videocam_outlined,
+              //     size: 70,
+              //   ),
+              // ),
+            ),
+          );
   }
 }
 

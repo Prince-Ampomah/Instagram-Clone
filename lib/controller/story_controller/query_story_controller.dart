@@ -44,8 +44,6 @@ class QueryStoryController extends ChangeNotifier {
           isNotEqualTo:
               HiveServices.getUserBox().get(Const.currentUser)!.userId,
         )
-        // .orderBy('timePosted', descending: true)
-
         .snapshots()
         .listen((data) async {
       _setStoryList = data.docs.toList();

@@ -24,9 +24,7 @@ class _PostVideoViewState extends State<PostVideoView>
   late Animation _heartAnimation;
   late AnimationController _heartAnimationController;
 
-  late VideoPlayerController videoPlayerController;
-
-  DefaultCacheManager defaultCacheManager = DefaultCacheManager();
+  VideoPlayerController? videoPlayerController;
 
   Timer? timer;
 
@@ -52,23 +50,6 @@ class _PostVideoViewState extends State<PostVideoView>
     super.initState();
 
     initAnimationController();
-  }
-
-  initVideoPlayer() async {
-    bool isValidURL = Uri.parse(widget.video!.first).isAbsolute;
-
-    if (isValidURL) {
-      var file = await defaultCacheManager.getSingleFile(widget.video!.first);
-      videoPlayerController = VideoPlayerController.file(file);
-    } else {
-      videoPlayerController =
-          VideoPlayerController.file(File(widget.video!.first));
-    }
-
-    if (!mounted) return;
-
-    videoPlayerController = videoPlayerController
-      ..initialize().then((value) => setState(() {}));
   }
 
   void initAnimationController() {
@@ -117,15 +98,29 @@ class _PostVideoViewState extends State<PostVideoView>
         }
       },
       child: Stack(
-        alignment: Alignment.center,
+        alignment: AlignmentDirectional.center,
         children: [
-          SizedBox(
-            height: size.height * 0.50,
-            width: size.width,
-            child: CusVideoPlayer(
-              videoPath: widget.video!.first,
-              showControllBar: true,
-              showSettingsButton: false,
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                videoPlayerController != null &&
+                        videoPlayerController!.value.isPlaying
+                    ? videoPlayerController!.pause()
+                    : videoPlayerController!.play();
+              });
+            },
+            child: SizedBox(
+              height: size.height * 0.50,
+              width: size.width,
+              child: CustomOriginalVideoPlayer(
+                videoPath: widget.video!.first,
+                aspectRatio: videoPlayerController?.value.aspectRatio ?? 1,
+                onInitController: (controller) {
+                  setState(() {
+                    videoPlayerController = controller;
+                  });
+                },
+              ),
             ),
           ),
           if (showLikeIcon)
@@ -142,6 +137,17 @@ class _PostVideoViewState extends State<PostVideoView>
                 );
               },
             ),
+
+          // Align(
+          //   alignment: Alignment.bottomRight,
+          //   child: IconButton(
+          //     onPressed: () {},
+          //     icon: const Icon(
+          //       Icons.volume_up,
+          //       color: Colors.white,
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );
