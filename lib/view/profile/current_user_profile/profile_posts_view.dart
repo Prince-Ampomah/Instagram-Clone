@@ -23,7 +23,7 @@ class UserProfilePostView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
+      appBar: const CustomAppBar(
         implyLeading: true,
         title: 'Posts',
       ),

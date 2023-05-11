@@ -6,7 +6,6 @@ import '../../../core/constants/constants.dart';
 import '../../../core/widgets/cus_appbar.dart';
 import '../../../model/post_model/post_model.dart';
 import '../../../model/user_model/user_model.dart';
-import '../../../repository/repository_abstract/database_abstract.dart';
 import '../../../repository/respository_implementation/database_implementation.dart';
 import '../../home/post/post_image.dart';
 import '../../home/post/post_reaction.dart';
@@ -22,7 +21,7 @@ class UsersProfilePostView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
+      appBar: const CustomAppBar(
         implyLeading: true,
         title: 'Posts',
       ),

@@ -14,7 +14,7 @@ class ChatViewFullImage extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Colors.black,
-      appBar: CustomAppBar(
+      appBar: const CustomAppBar(
         implyLeading: true,
         bgColor: Colors.black,
       ),

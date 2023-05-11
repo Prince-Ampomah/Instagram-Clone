@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class CustomTabBar extends StatelessWidget with PreferredSizeWidget {
+class CustomTabBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomTabBar({
     Key? key,
     required this.tabs,
@@ -22,8 +22,10 @@ class CustomTabBar extends StatelessWidget with PreferredSizeWidget {
   final double indicatorWeight;
   final MaterialStateProperty<Color?>? overlayColor;
   final bool? isScrollable;
+
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+
   @override
   Widget build(BuildContext context) {
     return TabBar(

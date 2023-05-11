@@ -98,8 +98,8 @@ class SendMessage extends StatelessWidget {
               border: Border.all(width: .5, color: Colors.white),
               borderRadius: BorderRadius.circular(30),
             ),
-            child: Row(
-              children: const [
+            child: const Row(
+              children: [
                 Flexible(
                   child: TextField(
                     maxLines: 7,

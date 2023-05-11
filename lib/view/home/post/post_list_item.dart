@@ -5,7 +5,6 @@ import 'package:instagram_clone/core/widgets/cus_circular_progressbar.dart';
 import 'package:instagram_clone/model/post_model/post_model.dart';
 import 'package:instagram_clone/view/home/post/post_item.dart';
 
-import '../../../core/widgets/cus_cached_image.dart';
 
 class PostListItem extends StatelessWidget {
   const PostListItem({

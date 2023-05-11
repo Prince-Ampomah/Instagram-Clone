@@ -2,13 +2,11 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:instagram_clone/core/utils/utils.dart';
 import 'package:instagram_clone/repository/repository_abstract/database_abstract.dart';
 import 'package:instagram_clone/repository/respository_implementation/database_implementation.dart';
 
 import '../../core/constants/constants.dart';
 import '../../core/services/hive_services.dart';
-import '../../model/story_model/story_model.dart';
 
 class QueryStoryController extends ChangeNotifier {
   StreamSubscription? _streamSubscription;

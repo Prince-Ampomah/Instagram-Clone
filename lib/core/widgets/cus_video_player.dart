@@ -7,7 +7,6 @@ import 'package:flutter/services.dart';
 import 'package:instagram_clone/core/widgets/cus.shimmer.effect.dart';
 import 'package:instagram_clone/core/widgets/cus_circular_progressbar.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-import 'package:shimmer/shimmer.dart';
 
 import '../theme/app_colors.dart';
 

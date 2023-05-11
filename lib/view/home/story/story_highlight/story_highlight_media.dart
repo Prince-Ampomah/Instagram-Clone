@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:instagram_clone/core/widgets/cus_video_player.dart';
 
 import "package:story_view/story_view.dart";
 
 import '../../../../core/constants/constants.dart';
-import '../../../../core/widgets/cus_cached_image.dart';
-import '../../../../core/widgets/cus_circular_progressbar.dart';
 
 class StoryMedia extends StatefulWidget {
   const StoryMedia({
