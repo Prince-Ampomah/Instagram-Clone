@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:instagram_clone/controller/profile_controller/post_profile_controller.dart';
 import 'package:instagram_clone/core/utils/helper_functions.dart';
 import 'package:instagram_clone/core/widgets/cus_cached_image.dart';
 import 'package:instagram_clone/model/post_model/post_model.dart';
@@ -11,9 +10,6 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/widgets/cus_circular_progressbar.dart';
 import '../../../core/widgets/cus_tab_bar.dart';
 import '../../../core/widgets/cus_video_player.dart';
-import '../../../model/user_model/user_model.dart';
-import '../../../repository/repository_abstract/database_abstract.dart';
-import '../../../repository/respository_implementation/database_implementation.dart';
 
 class UsersProfileViewGallery extends StatefulWidget {
   const UsersProfileViewGallery({

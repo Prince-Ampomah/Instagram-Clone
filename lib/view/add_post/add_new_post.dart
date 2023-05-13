@@ -110,9 +110,9 @@ class AddNewPost extends StatelessWidget {
               ),
               Container(
                 padding: const EdgeInsets.all(5),
-                child: Column(
+                child: const Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
+                  children: [
                     Divider(),
                     SizedBox(height: 10),
                     Text('Tag People'),

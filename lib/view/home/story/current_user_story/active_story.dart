@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:instagram_clone/core/utils/helper_functions.dart';
+import 'package:instagram_clone/view/home/story/story_highlight/story_highlight.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/widgets/cus_cached_image.dart';
@@ -18,7 +20,15 @@ class ActiveCurrentStory extends StatelessWidget {
     return Column(
       children: [
         GestureDetector(
-          onTap: () {},
+          onTap: () {
+            sendToPage(
+              context,
+              StoryHighlightView(
+                storyModel: storyModel,
+                isCurrentUserStory: true,
+              ),
+            );
+          },
           child: Stack(
             children: [
               Container(

@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import '../../../core/theme/app_colors.dart';
-import '../../../core/utils/utils.dart';
 
+import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/theme.dart';
+import '../../../core/utils/utils.dart';
 import '../../../core/widgets/cus_appbar.dart';
 import '../../../core/widgets/cus_main_button.dart';
 import '../../../repository/respository_implementation/auth_implementation.dart';
@@ -53,7 +53,7 @@ class _VerifyUserEmailViewState extends State<VerifyUserEmailView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
+      appBar: const CustomAppBar(
         implyLeading: true,
         title: 'Verify Email',
       ),

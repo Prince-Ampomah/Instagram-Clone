@@ -14,7 +14,7 @@ class Utils {
         style: const TextStyle(color: Colors.white),
       ),
       elevation: 0.0,
-      background: const Color(0xFFDD3529),
+      background: const Color(0xFFDE4C42),
     );
   }
 

@@ -20,10 +20,9 @@ void main() async {
 
   // set up hive services before inject controller since hive service is initialize in the auth controller
   await initHiveServices();
+  AppState.injectControllers();
 
   runApp(const MyApp());
-
-  AppState.injectControllers();
 }
 
 class MyApp extends StatelessWidget {

@@ -37,7 +37,7 @@ class ChatBubbleTextMessage extends StatelessWidget {
         ),
         FocusedMenuItem(
           onPressed: () {
-            Clipboard.setData(ClipboardData(text: chatModel.message));
+            Clipboard.setData(ClipboardData(text: chatModel.message!));
             showToast(msg: 'Text Copied');
           },
           title: const Text('Copy'),

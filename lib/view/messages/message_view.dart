@@ -56,11 +56,11 @@ class MessageView extends StatelessWidget {
           25.ph,
           const UsersOnlineView(),
           20.ph,
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
+              children: [
                 Text(
                   'Messages',
                   style: TextStyle(

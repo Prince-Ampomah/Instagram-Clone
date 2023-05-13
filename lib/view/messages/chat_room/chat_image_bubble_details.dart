@@ -13,7 +13,7 @@ class ChatImageDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(implyLeading: true),
+      appBar: const CustomAppBar(implyLeading: true),
       body: GridView(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: chatMedia!.length != 1 ? 2 : 1,

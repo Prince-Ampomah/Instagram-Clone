@@ -1,11 +1,11 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../../controller/camera_controller/app_camera_controller.dart';
 import '../../controller/chat_controller/chat_controller.dart';
 import '../../core/theme/app_colors.dart';
+import '../../core/theme/ui_layout_preference.dart';
 import '../../core/widgets/cus_circular_progressbar.dart';
 import 'core/camera_close_button.dart';
 import 'core/camera_flash_light.dart';
@@ -25,6 +25,11 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     AppCameraController.instance.getAvailbleCameras();
+    UIPreferenceLayout.setPreferences(
+      statusBarColor: AppColors.blackColor,
+      statusBarBrightness: Brightness.light,
+      statusBarIconBrightness: Brightness.light,
+    );
   }
 
   @override
@@ -60,13 +65,6 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(
-        statusBarColor: AppColors.blackColor,
-        statusBarBrightness: Brightness.light,
-        statusBarIconBrightness: Brightness.light,
-      ),
-    );
     return Scaffold(
         backgroundColor: Colors.transparent,
         body: SafeArea(

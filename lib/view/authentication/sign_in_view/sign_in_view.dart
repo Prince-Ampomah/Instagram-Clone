@@ -47,9 +47,9 @@ class _SignInViewState extends State<SignInView> {
             padding: const EdgeInsets.symmetric(vertical: 50),
             child: Column(
               children: [
-                Row(
+                const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
+                  children: [
                     Text('English (United States)'),
                     Icon(
                       Icons.expand_more_outlined,

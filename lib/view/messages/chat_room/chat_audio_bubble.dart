@@ -11,7 +11,6 @@ import '../../../controller/models_controller/models_controller.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/date_time_convertor.dart';
 import '../../../core/utils/helper_functions.dart';
-import '../../../core/utils/utils.dart';
 import '../../../core/widgets/cus_cached_image.dart';
 import '../../profile/users_profile/users_profile_view.dart';
 

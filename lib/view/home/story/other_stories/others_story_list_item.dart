@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/utils/helper_functions.dart';
 import '../../../../core/widgets/cus_cached_image.dart';
 import '../../../../model/story_model/story_model.dart';
+import '../story_highlight/story_highlight.dart';
 
 class UsersStory extends StatelessWidget {
   const UsersStory({
@@ -16,28 +18,36 @@ class UsersStory extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
-          height: 75,
-          width: 75,
-          padding: const EdgeInsets.all(2.0),
-          margin: const EdgeInsets.symmetric(horizontal: 7),
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            border: Border.all(
-              color: Colors.transparent,
-              width: 0.00,
+        GestureDetector(
+          onTap: () {
+            sendToPage(
+              context,
+              StoryHighlightView(storyModel: storyModel),
+            );
+          },
+          child: Container(
+            height: 75,
+            width: 75,
+            padding: const EdgeInsets.all(2.0),
+            margin: const EdgeInsets.symmetric(horizontal: 7),
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              border: Border.all(
+                color: Colors.transparent,
+                width: 0.00,
+              ),
+              gradient: const LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: AppColors.storyBorderColors,
+              ),
             ),
-            gradient: const LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: AppColors.storyBorderColors,
-            ),
-          ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(70),
-            child: CustomCachedImage(
-              imageUrl: storyModel.userProfileImage!,
-              fit: BoxFit.cover,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(70),
+              child: CustomCachedImage(
+                imageUrl: storyModel.userProfileImage!,
+                fit: BoxFit.cover,
+              ),
             ),
           ),
         ),
