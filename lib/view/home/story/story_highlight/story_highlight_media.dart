@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import "package:story_view/story_view.dart";
 
 import '../../../../core/constants/constants.dart';
@@ -38,8 +37,6 @@ class _StoryMediaState extends State<StoryMedia> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-
     return ClipRRect(
       borderRadius: const BorderRadius.only(
         bottomLeft: Radius.circular(20),
