@@ -5,6 +5,7 @@ import 'package:instagram_clone/core/widgets/cus_cached_image.dart';
 import 'package:instagram_clone/core/widgets/cus_read_more_text.dart';
 import 'package:instagram_clone/model/user_model/user_model.dart';
 import 'package:instagram_clone/view/profile/edit_profile/edit_profile_view.dart';
+
 import '../../../controller/profile_controller/edit_profile_controller.dart';
 import '../../../core/constants/constants.dart';
 import '../../../core/theme/app_colors.dart';
@@ -28,33 +29,37 @@ class ProfileViewInfo extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              userModel!.profileImage != null
-                  ? GetBuilder<EditProfileController>(
-                      builder: (controller) {
-                        return ClipRRect(
-                          borderRadius: BorderRadius.circular(100),
-                          child: CustomCachedImage(
-                            height: 75,
-                            width: 75,
-                            imageUrl: userModel.profileImage!,
-                            fit: BoxFit.cover,
-                          ),
-                        );
-                      },
-                    )
-                  : Container(
-                      height: 65,
-                      width: 65,
-                      margin: const EdgeInsets.all(8.0),
-                      decoration: const BoxDecoration(shape: BoxShape.circle),
+              if (userModel!.profileImage != null)
+                GetBuilder<EditProfileController>(
+                  builder: (controller) {
+                    return GestureDetector(
+                      onTap: () {},
                       child: ClipRRect(
-                        borderRadius: BorderRadius.circular(70),
-                        child: Image.asset(
-                          Const.userImage,
+                        borderRadius: BorderRadius.circular(100),
+                        child: CustomCachedImage(
+                          height: 75,
+                          width: 75,
+                          imageUrl: userModel.profileImage!,
                           fit: BoxFit.cover,
                         ),
                       ),
+                    );
+                  },
+                )
+              else
+                Container(
+                  height: 65,
+                  width: 65,
+                  margin: const EdgeInsets.all(8.0),
+                  decoration: const BoxDecoration(shape: BoxShape.circle),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(70),
+                    child: Image.asset(
+                      Const.userImage,
+                      fit: BoxFit.cover,
                     ),
+                  ),
+                ),
 
               // number of post, followers and following
               Row(
@@ -148,7 +153,6 @@ class ProfileViewInfo extends StatelessWidget {
                   Get.to(() => EditProfileView(userInfo: userModel));
                 },
                 buttonHeight: 34,
-                buttonWidth: 120,
                 title: 'Edit profile',
                 fontWeight: FontWeight.bold,
                 foregroundColor: Colors.black,
@@ -162,7 +166,6 @@ class ProfileViewInfo extends StatelessWidget {
               AppButton(
                 onPressed: () {},
                 buttonHeight: 34,
-                buttonWidth: 120,
                 title: 'Share profile',
                 fontWeight: FontWeight.bold,
                 foregroundColor: Colors.black,

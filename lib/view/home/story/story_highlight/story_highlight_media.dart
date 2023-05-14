@@ -47,7 +47,9 @@ class _StoryMediaState extends State<StoryMedia> {
         controller: storyController,
         repeat: false,
         onStoryShow: (s) {},
-        onComplete: () {},
+        onComplete: () {
+          Navigator.pop(context);
+        },
         onVerticalSwipeComplete: (direction) {
           if (direction == Direction.down) {
             Navigator.pop(context);

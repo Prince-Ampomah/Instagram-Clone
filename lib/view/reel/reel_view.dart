@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+
+import '../../core/constants/constants.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/theme.dart';
 import '../../core/widgets/cus_circular_image.dart';
-
-import '../../core/constants/constants.dart';
 
 class ReelView extends StatelessWidget {
   const ReelView({super.key});
@@ -18,7 +18,7 @@ class ReelView extends StatelessWidget {
         return Stack(
           children: [
             Image.asset(
-              Const.reelImage,
+              Const.logo,
               height: size.height,
               width: size.width,
             ),
