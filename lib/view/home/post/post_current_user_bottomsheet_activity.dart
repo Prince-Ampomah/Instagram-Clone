@@ -173,7 +173,7 @@ class PostCurrentUserBottomSheetActivity extends StatelessWidget {
                     await PostController.instance.deletePost(postModel!.id!);
                   },
                   content:
-                      'You can restore this post from Recently deleted in Your Activity withing 30 days. After that, it will be permanently deleted.',
+                      'You can restore this post from Recently deleted in Your Activity within 30 days. After that, it will be permanently deleted.',
                 );
               },
               minLeadingWidth: 20,

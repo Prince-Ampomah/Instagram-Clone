@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:overlay_support/overlay_support.dart';
+import 'package:instagram_clone/core/utils/helper_functions.dart';
 
 import '../../core/constants/constants.dart';
 import '../../core/services/hive_services.dart';
@@ -41,11 +42,10 @@ class SavePostController extends GetxController {
           },
         );
 
-        Utils.showNotificationMessage(
-          'Saved Successfully',
-          bgColor: Colors.grey,
-          textColor: Colors.white,
-          position: NotificationPosition.bottom,
+        showToast(
+          msg: 'Post Saved',
+          gravity: ToastGravity.CENTER,
+          bgColor: Colors.blue,
         );
       } else {
         // remove user from the saved list and decrease the like
@@ -57,11 +57,10 @@ class SavePostController extends GetxController {
           },
         );
 
-        Utils.showNotificationMessage(
-          'Removed Successfully',
-          bgColor: Colors.grey,
-          textColor: Colors.white,
-          position: NotificationPosition.bottom,
+        showToast(
+          msg: 'Post Removed',
+          gravity: ToastGravity.CENTER,
+          bgColor: Colors.blue,
         );
       }
     } catch (e) {

@@ -3,13 +3,23 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:instagram_clone/core/utils/utils.dart';
-import '../widgets/cus_circular_progressbar.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../theme/theme.dart';
+import '../widgets/cus_circular_progressbar.dart';
 
-void showToast({required String msg}) {
-  Fluttertoast.showToast(msg: msg);
+void showToast({
+  required String msg,
+  ToastGravity? gravity,
+  Color? bgColor,
+  Color? textColor,
+}) {
+  Fluttertoast.showToast(
+    msg: msg,
+    gravity: gravity,
+    backgroundColor: bgColor,
+    textColor: textColor,
+  );
 }
 
 Future<dynamic> showFlushBar(

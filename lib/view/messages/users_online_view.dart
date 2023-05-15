@@ -15,7 +15,7 @@ class UsersOnlineView extends StatelessWidget {
       child: Row(
         children: [
           ...List.generate(
-            5,
+            2,
             (index) {
               return const ListUsers();
             },
@@ -35,6 +35,13 @@ class ListUsers extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
+//     var currentUser = HiveServices.getUserBox().get(Const.currentUser);
+//     List<dynamic> f = currentUser!.listOfFollowing!.map((data) {
+//       logger.d(data);
+//       return data;
+//     }).toList();
+
+// currentUser!.listOfFollowing.
     return Column(
       children: [
         Stack(

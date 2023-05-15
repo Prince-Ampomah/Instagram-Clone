@@ -19,6 +19,6 @@ samples, guidance on mobile development, and a full API reference.
 
 ## Screenshots
 
--!['Screenshot 1'](https://github.com/Prince-Ampomah/Instagram-Clone/blob/story_feature/assets/images/screenshot1.png)
+<!-- -!['Screenshot 1'](https://github.com/Prince-Ampomah/Instagram-Clone/blob/story_feature/assets/images/screenshot1.png)
 
--!['Screenshot 2'](https://github.com/Prince-Ampomah/Instagram-Clone/blob/story_feature/assets/images/screenshot2.png)
+-!['Screenshot 2'](https://github.com/Prince-Ampomah/Instagram-Clone/blob/story_feature/assets/images/screenshot2.png) -->

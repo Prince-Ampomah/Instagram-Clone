@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:instagram_clone/controller/profile_controller/profile_image_overlay_controller.dart';
 import 'package:instagram_clone/core/theme/app_colors.dart';
 import 'package:instagram_clone/view/messages/chat_room/chat_room_view.dart';
 
@@ -13,8 +14,9 @@ import '../../../model/post_model/post_model.dart';
 import '../../../model/user_model/user_model.dart';
 import '../../core/follow_button.dart';
 import '../../core/unfollow_button.dart';
+import '../profile_image_overlay.dart';
 
-class UsersProfileViewInfo extends StatelessWidget {
+class UsersProfileViewInfo extends StatefulWidget {
   const UsersProfileViewInfo({
     super.key,
     this.userModel,
@@ -23,6 +25,25 @@ class UsersProfileViewInfo extends StatelessWidget {
 
   final UserModel? userModel;
   final PostModel? postModel;
+
+  @override
+  State<UsersProfileViewInfo> createState() => _UsersProfileViewInfoState();
+}
+
+class _UsersProfileViewInfoState extends State<UsersProfileViewInfo> {
+  ProfileImageOverlayController overlayController =
+      ProfileImageOverlayController();
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    overlayController.removeProfilePicOverlay();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,29 +56,41 @@ class UsersProfileViewInfo extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              userModel!.profileImage != null
-                  ? ClipRRect(
-                      borderRadius: BorderRadius.circular(100),
-                      child: CustomCachedImage(
-                        height: 75,
-                        width: 75,
-                        imageUrl: userModel!.profileImage!,
-                        fit: BoxFit.cover,
+              if (widget.userModel!.profileImage != null)
+                GestureDetector(
+                  onTap: () {
+                    overlayController.createProfilePicOverlay(
+                      context,
+                      ProfileImageOverlay(
+                        onTap: overlayController.removeProfilePicOverlay,
+                        imageUrl: widget.userModel!.profileImage!,
                       ),
-                    )
-                  : Container(
-                      height: 65,
-                      width: 65,
-                      margin: const EdgeInsets.all(8.0),
-                      decoration: const BoxDecoration(shape: BoxShape.circle),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(70),
-                        child: Image.asset(
-                          Const.userImage,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
+                    );
+                  },
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(100),
+                    child: CustomCachedImage(
+                      height: 75,
+                      width: 75,
+                      imageUrl: widget.userModel!.profileImage!,
+                      fit: BoxFit.cover,
                     ),
+                  ),
+                )
+              else
+                Container(
+                  height: 65,
+                  width: 65,
+                  margin: const EdgeInsets.all(8.0),
+                  decoration: const BoxDecoration(shape: BoxShape.circle),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(70),
+                    child: Image.asset(
+                      Const.userImage,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
 
               // number of post, followers and following
               Row(
@@ -65,7 +98,7 @@ class UsersProfileViewInfo extends StatelessWidget {
                   Column(
                     children: [
                       Text(
-                        '${userModel!.numberOfPost}',
+                        '${widget.userModel!.numberOfPost}',
                         style: Theme.of(context)
                             .textTheme
                             .labelLarge!
@@ -78,7 +111,7 @@ class UsersProfileViewInfo extends StatelessWidget {
                   Column(
                     children: [
                       Text(
-                        '${userModel!.numberOfFollowers}',
+                        '${widget.userModel!.numberOfFollowers}',
                         style: Theme.of(context)
                             .textTheme
                             .labelLarge!
@@ -91,7 +124,7 @@ class UsersProfileViewInfo extends StatelessWidget {
                   Column(
                     children: [
                       Text(
-                        '${userModel!.numberOfFollowing}',
+                        '${widget.userModel!.numberOfFollowing}',
                         style: Theme.of(context)
                             .textTheme
                             .labelLarge!
@@ -113,16 +146,16 @@ class UsersProfileViewInfo extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                userModel?.fullname ?? 'full name',
+                widget.userModel?.fullname ?? 'full name',
                 style: Theme.of(context)
                     .textTheme
                     .labelLarge!
                     .copyWith(fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 5),
-              if (userModel!.bio != null)
+              if (widget.userModel!.bio != null)
                 CustomReadMore(
-                  text: userModel!.bio!,
+                  text: widget.userModel!.bio!,
                   trimLines: 3,
                 )
             ],
@@ -139,39 +172,45 @@ class UsersProfileViewInfo extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               // listen to the user model hive box
-              ValueListenableBuilder<Box<UserModel>>(
-                valueListenable: HiveServices.getUserBox().listenable(),
-                builder: (BuildContext context, currentUserBox, _) {
-                  bool isInListOFFollowers = currentUserBox
-                      .get(Const.currentUser)!
-                      .listOfFollowing!
-                      .contains(userModel!.userId!);
+              Expanded(
+                child: ValueListenableBuilder<Box<UserModel>>(
+                  valueListenable: HiveServices.getUserBox().listenable(),
+                  builder: (BuildContext context, currentUserBox, _) {
+                    bool isInListOFFollowers = currentUserBox
+                        .get(Const.currentUser)!
+                        .listOfFollowing!
+                        .contains(widget.userModel!.userId!);
 
-                  if (isInListOFFollowers) {
-                    return UnfollowButton(userToUnfollowId: postModel!.userId!);
-                  } else {
-                    return FollowButton(userToFollowerId: postModel!.userId!);
-                  }
-                },
+                    if (isInListOFFollowers) {
+                      return UnfollowButton(
+                          userToUnfollowId: widget.postModel!.userId!);
+                    } else {
+                      return FollowButton(
+                          userToFollowerId: widget.postModel!.userId!);
+                    }
+                  },
+                ),
               ),
 
-              const SizedBox(width: 10),
+              10.pw,
 
               // message button
-              AppButton(
-                buttonHeight: 36,
-                buttonWidth: 120,
-                onPressed: () {
-                  sendToPage(context, ChatRoomView(userModel: userModel!));
-                },
-                title: 'Message',
-                foregroundColor: Colors.black,
-                bgColor: AppColors.buttonBgColor,
-                borderRadius: 8,
+              Expanded(
+                child: AppButton(
+                  buttonHeight: 36,
+                  // buttonWidth: 120,
+                  onPressed: () {
+                    sendToPage(
+                        context, ChatRoomView(userModel: widget.userModel!));
+                  },
+                  title: 'Message',
+                  foregroundColor: Colors.black,
+                  bgColor: AppColors.buttonBgColor,
+                  borderRadius: 8,
+                ),
               ),
 
-              const Spacer(),
-
+              10.pw,
               // icon
               Container(
                 alignment: Alignment.center,

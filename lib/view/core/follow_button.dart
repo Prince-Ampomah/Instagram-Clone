@@ -16,7 +16,7 @@ class FollowButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppButton(
       buttonHeight: 36,
-      buttonWidth: 120,
+      // buttonWidth: 120,
       onPressed: () {
         FollowController.instance.followUser(userToFollowerId!);
       },

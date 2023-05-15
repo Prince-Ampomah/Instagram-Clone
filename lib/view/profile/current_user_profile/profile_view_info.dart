@@ -7,19 +7,41 @@ import 'package:instagram_clone/model/user_model/user_model.dart';
 import 'package:instagram_clone/view/profile/edit_profile/edit_profile_view.dart';
 
 import '../../../controller/profile_controller/edit_profile_controller.dart';
+import '../../../controller/profile_controller/profile_image_overlay_controller.dart';
 import '../../../core/constants/constants.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/widgets/cus_main_button.dart';
+import '../profile_image_overlay.dart';
 
-class ProfileViewInfo extends StatelessWidget {
+class ProfileViewInfo extends StatefulWidget {
   const ProfileViewInfo({
     super.key,
   });
 
   @override
-  Widget build(BuildContext context) {
-    UserModel? userModel = HiveServices.getUserBox().get(Const.currentUser);
+  State<ProfileViewInfo> createState() => _ProfileViewInfoState();
+}
 
+class _ProfileViewInfoState extends State<ProfileViewInfo> {
+  late UserModel? userModel;
+
+  ProfileImageOverlayController overlayController =
+      ProfileImageOverlayController();
+
+  @override
+  void dispose() {
+    overlayController.removeProfilePicOverlay();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    userModel = HiveServices.getUserBox().get(Const.currentUser);
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -33,13 +55,21 @@ class ProfileViewInfo extends StatelessWidget {
                 GetBuilder<EditProfileController>(
                   builder: (controller) {
                     return GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        overlayController.createProfilePicOverlay(
+                          context,
+                          ProfileImageOverlay(
+                            onTap: overlayController.removeProfilePicOverlay,
+                            imageUrl: userModel!.profileImage!,
+                          ),
+                        );
+                      },
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(100),
                         child: CustomCachedImage(
                           height: 75,
                           width: 75,
-                          imageUrl: userModel.profileImage!,
+                          imageUrl: userModel!.profileImage!,
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -67,7 +97,7 @@ class ProfileViewInfo extends StatelessWidget {
                   Column(
                     children: [
                       Text(
-                        '${userModel.numberOfPost}',
+                        '${userModel?.numberOfPost}',
                         style: Theme.of(context)
                             .textTheme
                             .labelLarge!
@@ -80,7 +110,7 @@ class ProfileViewInfo extends StatelessWidget {
                   Column(
                     children: [
                       Text(
-                        '${userModel.numberOfFollowers}',
+                        '${userModel?.numberOfFollowers}',
                         style: Theme.of(context)
                             .textTheme
                             .labelLarge!
@@ -93,7 +123,7 @@ class ProfileViewInfo extends StatelessWidget {
                   Column(
                     children: [
                       Text(
-                        '${userModel.numberOfFollowing}',
+                        '${userModel?.numberOfFollowing}',
                         style: Theme.of(context)
                             .textTheme
                             .labelLarge!
@@ -117,23 +147,18 @@ class ProfileViewInfo extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    userModel.fullname ?? 'full name',
+                    userModel?.fullname ?? 'full name',
                     style: Theme.of(context)
                         .textTheme
                         .labelLarge!
                         .copyWith(fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 5),
-                  if (userModel.bio != null)
+                  if (userModel?.bio != null)
                     CustomReadMore(
-                      text: userModel.bio!,
+                      text: userModel!.bio!,
                       trimLines: 3,
                     )
-                  // Text(
-                  //   userModel.bio!,
-                  //   maxLines: 3,
-                  //   overflow: TextOverflow.clip,
-                  // ),
                 ],
               ),
             );

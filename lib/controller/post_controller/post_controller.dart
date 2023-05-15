@@ -9,6 +9,7 @@ import 'package:instagram_clone/repository/repository_abstract/database_abstract
 import 'package:instagram_clone/repository/respository_implementation/database_implementation.dart';
 
 import '../../core/utils/utils.dart';
+import '../../repository/respository_implementation/auth_implementation.dart';
 
 class PostController extends GetxController {
   static PostController instance = Get.find<PostController>();
@@ -86,7 +87,11 @@ class PostController extends GetxController {
   Future<void> deletePost(String postId) async {
     try {
       await firestoreDB.deleteDoc(Const.postsCollection, postId);
+
       deletePostComment(postId);
+
+      await updateNumOfPostLocally();
+
       Get.back();
     } catch (e) {
       Utils.showErrorMessage(e.toString());
@@ -101,6 +106,42 @@ class PostController extends GetxController {
         firestoreDB.deleteDoc(Const.commentsCollection, doc.id);
       }
     });
+  }
+
+  Future<void> updateNumOfPostLocally() async {
+    try {
+      var countPost = await updateAndGetUserPost();
+
+      var userModel = HiveServices.getUserBox().get(Const.currentUser);
+
+      userModel?.numberOfPost = countPost;
+
+      userModel?.save();
+    } catch (e) {
+      Utils.showErrorMessage(e.toString());
+    }
+  }
+
+  Future<int> updateAndGetUserPost() async {
+    try {
+      var posts = await firestoreDB.getDocByField(
+        Const.postsCollection,
+        'userId',
+        firebaseAuth.currentUser!.uid,
+      );
+
+      await firestoreDB.updateDoc(
+        Const.usersCollection,
+        firebaseAuth.currentUser!.uid,
+        {
+          'numberOfPost': posts.docs.length,
+        },
+      );
+
+      return posts.docs.length;
+    } catch (e) {
+      rethrow;
+    }
   }
 
   @override
