@@ -43,6 +43,9 @@ class CustomCachedImage extends StatelessWidget {
                   color: containerColor,
                 ),
                 child: placeholderWidget ??
+                    // const BlurHash(
+                    //   hash: 'L5H2EC=PM+yV0g-mq.wG9c010J}I',
+                    // )
                     ShimmerEffect.rectangular(height: shimmerHeight),
               ),
             ),

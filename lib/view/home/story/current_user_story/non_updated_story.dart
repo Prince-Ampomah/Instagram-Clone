@@ -6,17 +6,19 @@ import '../../../../core/utils/helper_functions.dart';
 import '../../../../core/widgets/cus_cached_image.dart';
 import '../core/new_story_camera_view.dart';
 
-class NonActiveStory extends StatelessWidget {
-  const NonActiveStory({
+class NonUpdatedStory extends StatelessWidget {
+  const NonUpdatedStory({
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    // Size size = MediaQuery.of(context).size;
 
     var currentUser = HiveServices.getUserBox().get(Const.currentUser)!;
 
+//  top: size.height * 0.06,
+//                 left: size.width * 0.17,
     return Column(
       children: [
         GestureDetector(
@@ -24,6 +26,7 @@ class NonActiveStory extends StatelessWidget {
             sendToPage(context, const NewStoryPostCameraView());
           },
           child: Stack(
+            alignment: AlignmentDirectional.bottomEnd,
             children: [
               Container(
                 height: 75,
@@ -43,12 +46,12 @@ class NonActiveStory extends StatelessWidget {
                   ),
                 ),
               ),
-              Positioned(
-                top: size.height * 0.06,
-                left: size.width * 0.17,
+              Align(
+                alignment: Alignment.bottomCenter,
                 child: Container(
                   height: 22,
                   width: 22,
+                  margin: const EdgeInsets.only(right: 7),
                   decoration: BoxDecoration(
                     color: Colors.blue,
                     shape: BoxShape.circle,

@@ -1,10 +1,12 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:appinio_video_player/appinio_video_player.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:instagram_clone/core/widgets/cus_video_player.dart';
 
 import '../../../controller/post_controller/like_controller.dart';
-import '../../../core/widgets/cus_video_player.dart';
 import '../../../model/post_model/post_model.dart';
 
 class PostVideoView extends StatefulWidget {
@@ -48,6 +50,29 @@ class _PostVideoViewState extends State<PostVideoView>
     super.initState();
 
     initAnimationController();
+    initVideoPlayerController();
+  }
+
+  initVideoPlayerController() async {
+    bool isValidURL = Uri.parse(widget.video!.first).isAbsolute;
+
+    if (isValidURL) {
+      var file = await DefaultCacheManager().getSingleFile(widget.video!.first);
+      videoPlayerController = VideoPlayerController.file(file);
+    } else {
+      videoPlayerController =
+          VideoPlayerController.file(File(widget.video!.first));
+    }
+
+    if (!mounted) {
+      return;
+    }
+    videoPlayerController = videoPlayerController!
+      ..initialize().then(
+        (value) => setState(() {
+          // videoPlayerController!.play();
+        }),
+      );
   }
 
   void initAnimationController() {
@@ -79,7 +104,7 @@ class _PostVideoViewState extends State<PostVideoView>
   void dispose() {
     timer?.cancel();
     _heartAnimationController.dispose();
-    // videoPlayerController.dispose();
+    // videoPlayerController?.dispose();
     super.dispose();
   }
 
@@ -88,7 +113,14 @@ class _PostVideoViewState extends State<PostVideoView>
     Size size = MediaQuery.of(context).size;
 
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        setState(() {
+          videoPlayerController != null &&
+                  videoPlayerController!.value.isPlaying
+              ? videoPlayerController!.pause()
+              : videoPlayerController!.play();
+        });
+      },
       onDoubleTap: () async {
         if (widget.postModel!.id != null) {
           await LikeController.instance.likePostOnly(widget.postModel!.id!);
@@ -98,54 +130,62 @@ class _PostVideoViewState extends State<PostVideoView>
       child: Stack(
         alignment: AlignmentDirectional.center,
         children: [
-          GestureDetector(
-            onTap: () {
-              setState(() {
-                videoPlayerController != null &&
-                        videoPlayerController!.value.isPlaying
-                    ? videoPlayerController!.pause()
-                    : videoPlayerController!.play();
-              });
-            },
-            child: SizedBox(
-              height: size.height * 0.50,
-              width: size.width,
-              child: CustomOriginalVideoPlayer(
-                videoPath: widget.video!.first,
-                aspectRatio: videoPlayerController?.value.aspectRatio ?? 1,
-                onInitController: (controller) {
-                  setState(() {
-                    videoPlayerController = controller;
-                  });
-                },
-              ),
+          SizedBox(
+            height: size.height * 0.70,
+            width: size.width,
+            child: CustomOriginalVideoPlayer(
+              videoPath: widget.video!.first,
+              aspectRatio: videoPlayerController?.value.aspectRatio ?? 1,
+              onInitController: (controller) {
+                setState(() {
+                  videoPlayerController = controller;
+                });
+              },
             ),
           ),
+          if (videoPlayerController != null &&
+              !videoPlayerController!.value.isPlaying)
+            Positioned(
+              top: size.height * 0.30,
+              width: size.width * 0.40,
+              child: Container(
+                height: 60,
+                width: 60,
+                decoration: BoxDecoration(
+                  color: Colors.black.withOpacity(0.3),
+                  shape: BoxShape.circle,
+                ),
+                child: IconButton(
+                  onPressed: () {
+                    setState(() {
+                      videoPlayerController != null &&
+                              videoPlayerController!.value.isPlaying
+                          ? videoPlayerController!.pause()
+                          : videoPlayerController!.play();
+                    });
+                  },
+                  icon: const Icon(
+                    Icons.play_arrow,
+                    size: 30,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
           if (showLikeIcon)
-            AnimatedBuilder(
-              animation: _heartAnimationController,
-              builder: (context, child) {
-                return Align(
-                  alignment: Alignment.center,
-                  child: Icon(
+            Align(
+              alignment: Alignment.center,
+              child: AnimatedBuilder(
+                animation: _heartAnimationController,
+                builder: (context, child) {
+                  return Icon(
                     Icons.favorite,
                     size: _heartAnimation.value,
                     color: Colors.white,
-                  ),
-                );
-              },
+                  );
+                },
+              ),
             ),
-
-          // Align(
-          //   alignment: Alignment.bottomRight,
-          //   child: IconButton(
-          //     onPressed: () {},
-          //     icon: const Icon(
-          //       Icons.volume_up,
-          //       color: Colors.white,
-          //     ),
-          //   ),
-          // ),
         ],
       ),
     );

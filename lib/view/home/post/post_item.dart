@@ -33,15 +33,16 @@ class PostItem extends StatelessWidget {
                 userModel: userModelsnapshot.data,
                 postModel: postModel,
               ),
-              postModel?.postType == Const.videoPostType
-                  ? PostVideoView(
-                      video: postModel!.media,
-                      postModel: postModel,
-                    )
-                  : PostImage(
-                      images: postModel!.media,
-                      postModel: postModel,
-                    ),
+              if (postModel?.postType == Const.videoPostType)
+                PostVideoView(
+                  video: postModel!.media,
+                  postModel: postModel,
+                )
+              else
+                PostImage(
+                  images: postModel!.media,
+                  postModel: postModel,
+                ),
               PostReaction(
                 postModel: postModel,
                 userModel: userModelsnapshot.data,

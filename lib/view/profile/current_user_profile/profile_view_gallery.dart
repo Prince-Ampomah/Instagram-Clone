@@ -30,7 +30,7 @@ class _ProfileViewGalleryState extends State<ProfileViewGallery>
   @override
   void initState() {
     tabController = TabController(length: 2, vsync: this);
-    // Get.put(PostProfileController());
+
     super.initState();
   }
 
