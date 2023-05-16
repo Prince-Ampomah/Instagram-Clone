@@ -2,13 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:instagram_clone/core/theme/app_colors.dart';
 import 'package:instagram_clone/core/widgets/cus_tab.dart';
 import 'package:instagram_clone/core/widgets/cus_tab_bar.dart';
+import 'package:instagram_clone/view/profile/followers_following_view/list_followers.dart';
+import 'package:instagram_clone/view/profile/followers_following_view/list_following.dart';
 
-import '../../model/user_model/user_model.dart';
+import '../../../model/user_model/user_model.dart';
 
 class FollowersAndFollowingView extends StatefulWidget {
-  const FollowersAndFollowingView({super.key, this.userModel});
+  const FollowersAndFollowingView({
+    super.key,
+    this.userModel,
+    this.pageIndex = 0,
+  });
 
   final UserModel? userModel;
+  final int? pageIndex;
 
   @override
   State<FollowersAndFollowingView> createState() =>
@@ -23,6 +30,7 @@ class _FollowersAndFollowingViewState extends State<FollowersAndFollowingView>
   void initState() {
     super.initState();
     tabController = TabController(length: 2, vsync: this);
+    tabController.animateTo(widget.pageIndex!);
   }
 
   @override
@@ -46,17 +54,23 @@ class _FollowersAndFollowingViewState extends State<FollowersAndFollowingView>
           indicatorColor: AppColors.blackColor,
           unselectedLabelColor: const Color(0xFFA7A7A7),
           tabBarIndicatorSize: TabBarIndicatorSize.tab,
-          tabs: const [
-            CustomTab(tabName: 'Followers'),
-            CustomTab(tabName: 'Following'),
+          tabs: [
+            CustomTab(
+              tabName: widget.userModel!.listOfFollowers!.length <= 1
+                  ? '${widget.userModel!.listOfFollowers!.length} Follower'
+                  : '${widget.userModel!.listOfFollowers!.length} Followers',
+            ),
+            CustomTab(
+              tabName: '${widget.userModel!.listOfFollowing!.length} Following',
+            ),
           ],
         ),
       ),
       body: TabBarView(
         controller: tabController,
-        children: const [
-          Center(child: Text('Followers list')),
-          Center(child: Text('Following list')),
+        children: [
+          ListFollowers(userModel: widget.userModel!),
+          ListFollowing(userModel: widget.userModel!),
         ],
       ),
     );

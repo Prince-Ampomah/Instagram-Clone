@@ -52,7 +52,7 @@ class FollowMessageAndContact extends StatelessWidget {
 
           // message button
           Expanded(
-            child: AppButton(
+            child: PrimaryButton(
               buttonHeight: 36,
               // buttonWidth: 120,
               onPressed: () {

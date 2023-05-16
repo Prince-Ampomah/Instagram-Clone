@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/core/utils/helper_functions.dart';
-import 'package:instagram_clone/view/profile/followers_and_following_view.dart';
+import 'package:instagram_clone/view/profile/followers_following_view/followers_and_following_view.dart';
 
 import '../../../../model/user_model/user_model.dart';
 
@@ -33,7 +33,10 @@ class CurrentUserPostFollowersFollowing extends StatelessWidget {
           onTap: () {
             sendToPage(
               context,
-              FollowersAndFollowingView(userModel: userModel),
+              FollowersAndFollowingView(
+                userModel: userModel,
+                pageIndex: 0,
+              ),
             );
           },
           child: Column(
@@ -54,7 +57,10 @@ class CurrentUserPostFollowersFollowing extends StatelessWidget {
           onTap: () {
             sendToPage(
               context,
-              FollowersAndFollowingView(userModel: userModel),
+              FollowersAndFollowingView(
+                userModel: userModel,
+                pageIndex: 1,
+              ),
             );
           },
           child: Column(

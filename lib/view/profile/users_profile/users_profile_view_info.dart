@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:instagram_clone/controller/models_controller/models_controller.dart';
 import 'package:instagram_clone/controller/profile_controller/profile_image_overlay_controller.dart';
 
 import '../../../core/constants/constants.dart';
@@ -32,6 +33,7 @@ class _UsersProfileViewInfoState extends State<UsersProfileViewInfo> {
   @override
   void initState() {
     super.initState();
+    ModelController.instance.postModel = widget.postModel!;
   }
 
   @override

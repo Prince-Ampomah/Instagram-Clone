@@ -21,7 +21,7 @@ class CurrentUserEditAndShareProfile extends StatelessWidget {
       child: Row(
         children: [
           // edit profile
-          AppButton(
+          PrimaryButton(
             onPressed: () {
               Get.to(() => EditProfileView(userInfo: userModel));
             },
@@ -36,7 +36,7 @@ class CurrentUserEditAndShareProfile extends StatelessWidget {
           const SizedBox(width: 10),
 
           // share profile
-          AppButton(
+          PrimaryButton(
             onPressed: () {},
             buttonHeight: 34,
             title: 'Share profile',

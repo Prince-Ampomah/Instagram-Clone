@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+
 import '../../core/constants/constants.dart';
 import '../../core/utils/utils.dart';
 import '../../model/user_model/user_model.dart';
@@ -170,5 +171,22 @@ class FirestoreDBImpl implements FirestoreDB {
     }
 
     return userModel;
+  }
+
+  static Future<List<UserModel>> getEitherFollowersOrFollowingUsersData(
+      List usersId) async {
+    List<UserModel> usersData = [];
+    for (String userId in usersId) {
+      DocumentSnapshot doc = await FirebaseFirestore.instance
+          .collection(Const.usersCollection)
+          .doc(userId)
+          .get();
+
+      if (doc.exists) {
+        usersData.add(UserModel.fromJson(doc.data() as Map<String, dynamic>));
+      }
+    }
+
+    return usersData;
   }
 }

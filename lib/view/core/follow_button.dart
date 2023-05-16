@@ -14,7 +14,7 @@ class FollowButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppButton(
+    return PrimaryButton(
       buttonHeight: 36,
       // buttonWidth: 120,
       onPressed: () {

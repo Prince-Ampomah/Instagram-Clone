@@ -112,7 +112,7 @@ class UserProfileHeader extends StatelessWidget {
           ),
           10.ph,
 
-          AppButton(
+          PrimaryButton(
             buttonHeight: 30,
             onPressed: () {
               sendToPage(
