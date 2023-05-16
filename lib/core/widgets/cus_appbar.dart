@@ -14,6 +14,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.bottom,
     this.elevation = 0.0,
     this.scrolledUnderElevation = 0.0,
+    this.toolbarHeight = 56.0,
   }) : super(key: key);
 
   final Widget? leadingIcon;
@@ -25,7 +26,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Color? bgColor, titleColor;
   final PreferredSizeWidget? bottom;
   final TextStyle? titleStyle;
-  final double? scrolledUnderElevation;
+  final double? scrolledUnderElevation, toolbarHeight;
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +40,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         title ?? '',
         style: titleStyle ?? TextStyle(color: titleColor),
       ),
+      toolbarHeight: kToolbarHeight,
       centerTitle: centerTitle,
       actions: actions,
       bottom: bottom,
