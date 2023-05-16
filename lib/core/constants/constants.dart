@@ -31,6 +31,7 @@ class Const {
   static const String userImage = 'assets/images/user.png';
   static const String princeImage = 'assets/images/prince.jpg';
   static const String reelImage = 'assets/images/reel_image.jpg';
+  static const String logo = 'assets/images/logo.png';
 
   static const String loadingGif = 'assets/gif/spinner.gif';
   static const String loadingGif1 = 'assets/gif/loading.gif';

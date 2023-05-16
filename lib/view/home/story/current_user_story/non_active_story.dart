@@ -44,7 +44,7 @@ class NonActiveStory extends StatelessWidget {
                 ),
               ),
               Positioned(
-                top: size.height * 0.07,
+                top: size.height * 0.06,
                 left: size.width * 0.17,
                 child: Container(
                   height: 22,

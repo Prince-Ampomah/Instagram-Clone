@@ -131,8 +131,8 @@ class MainButton extends StatelessWidget {
   }
 }
 
-class AppButton extends StatelessWidget {
-  const AppButton({
+class PrimaryButton extends StatelessWidget {
+  const PrimaryButton({
     super.key,
     this.onPressed,
     required this.title,

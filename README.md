@@ -17,4 +17,8 @@ samples, guidance on mobile development, and a full API reference.
 
 <!-- Hi there, I am working on instagram clone!!!! -->
 
-<!-- -!['Screenshot'](https://github.com/Prince-Ampomah/Instagram-Clone/blob/master/assets/images/prince.jpg) -->
+## Screenshots
+
+<!-- -!['Screenshot 1'](https://github.com/Prince-Ampomah/Instagram-Clone/blob/story_feature/assets/images/screenshot1.png)
+
+-!['Screenshot 2'](https://github.com/Prince-Ampomah/Instagram-Clone/blob/story_feature/assets/images/screenshot2.png) -->

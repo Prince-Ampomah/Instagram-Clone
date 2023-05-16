@@ -33,10 +33,12 @@ class CustomListTile extends StatelessWidget {
         minLeadingWidth: minLeadingWidth,
         leading: leading,
         title: Text(title, style: titleStyle),
-        subtitle: Text(
-          subTitle ?? '',
-          style: subTitleStyle,
-        ),
+        subtitle: subTitle != null
+            ? Text(
+                subTitle!,
+                style: subTitleStyle,
+              )
+            : null,
         trailing: trailing,
       ),
     );

@@ -53,9 +53,11 @@ class PostUserBottomSheetActivity extends StatelessWidget {
                 ),
               ],
             ),
+
             10.ph,
             const Divider(thickness: 0.7),
-            5.ph,
+
+            10.ph,
 
             // share link
             CustomListTile(
@@ -75,7 +77,8 @@ class PostUserBottomSheetActivity extends StatelessWidget {
               ),
             ),
             const Divider(thickness: 0.7),
-            5.ph,
+
+            10.ph,
 
             // favorites
             CustomListTile(
@@ -88,7 +91,8 @@ class PostUserBottomSheetActivity extends StatelessWidget {
               ),
               title: 'Add to favorites',
             ),
-            5.ph,
+
+            10.ph,
 
             // follow or unfollow
             CustomListTile(
@@ -111,7 +115,8 @@ class PostUserBottomSheetActivity extends StatelessWidget {
                   : 'Follow',
             ),
             const Divider(thickness: 0.7),
-            5.ph,
+
+            10.ph,
 
             //why you see the post
             CustomListTile(
@@ -124,7 +129,8 @@ class PostUserBottomSheetActivity extends StatelessWidget {
               ),
               title: "Why you're seeing this post",
             ),
-            5.ph,
+
+            10.ph,
 
             // hide
             CustomListTile(
@@ -137,7 +143,7 @@ class PostUserBottomSheetActivity extends StatelessWidget {
               ),
               title: "Hide",
             ),
-            5.ph,
+            10.ph,
 
             // about this account
             CustomListTile(
@@ -150,7 +156,7 @@ class PostUserBottomSheetActivity extends StatelessWidget {
               ),
               title: 'About this account',
             ),
-            5.ph,
+            10.ph,
 
             // report
             CustomListTile(
@@ -164,7 +170,7 @@ class PostUserBottomSheetActivity extends StatelessWidget {
               title: 'Report',
               titleStyle: const TextStyle(color: Colors.red),
             ),
-            5.ph,
+            10.ph,
           ],
         ),
       ),

@@ -1,9 +1,9 @@
 import 'dart:io';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:instagram_clone/controller/post_controller/post_controller.dart';
 
 import '../../core/constants/constants.dart';
 import '../../core/services/hive_services.dart';
@@ -81,17 +81,6 @@ class NewPostController extends GetxController {
     try {
       Get.off(() => const AppLayoutView(pageIndex: 0));
 
-      // Future.wait([
-      //   //   upload to firestore database
-      //   saveToDB(postModel, userModel),
-
-      //   // upload media to frebase storage
-      //   uploadMediaFiles(),
-
-      //   // update the media fields in firestore database
-      //   updateMediaUrl(),
-      // ]);
-
       //   upload to firestore database
       await saveToDB(postModel, userModel);
 
@@ -134,30 +123,7 @@ class NewPostController extends GetxController {
       postModel.toJson(),
     );
 
-    await updateNumberOfPost(userModel);
-  }
-
-  Future<void> updateNumberOfPost(UserModel userModel) async {
-    await firestoreDB.updateDoc(
-      Const.usersCollection,
-      userModel.userId!,
-      {
-        'numberOfPost': FieldValue.increment(1),
-      },
-    );
-
-    //Query the new update from db and update locally
-    DocumentSnapshot doc = await firestoreDB.getDocById(
-      Const.usersCollection,
-      userModel.userId!,
-    );
-
-    if (doc.exists) {
-      userModel.numberOfPost =
-          UserModel.fromJson(doc.data() as Map<String, dynamic>).numberOfPost;
-      //save number of post locally
-      await userModel.save();
-    }
+    PostController.instance.updateNumOfPostLocally();
   }
 
   Future<void> uploadMediaFiles() async {

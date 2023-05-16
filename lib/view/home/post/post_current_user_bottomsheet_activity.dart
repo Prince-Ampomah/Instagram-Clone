@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/controller/post_controller/post_controller.dart';
 import 'package:instagram_clone/core/constants/constants.dart';
@@ -5,7 +7,6 @@ import 'package:instagram_clone/core/theme/app_colors.dart';
 import 'package:instagram_clone/core/utils/utils.dart';
 import 'package:instagram_clone/model/post_model/post_model.dart';
 import 'package:instagram_clone/model/user_model/user_model.dart';
-import 'dart:math' as math;
 
 import '../../../controller/post_controller/save_controller.dart';
 import '../../../core/services/hive_services.dart';
@@ -89,7 +90,8 @@ class PostCurrentUserBottomSheetActivity extends StatelessWidget {
               ),
               title: 'Archive',
             ),
-            5.ph,
+
+            10.ph,
 
             // hide or unhide like count
             CustomListTile(
@@ -103,7 +105,7 @@ class PostCurrentUserBottomSheetActivity extends StatelessWidget {
               title: 'Hide like count',
             ),
 
-            5.ph,
+            10.ph,
 
             // turn of comments
             CustomListTile(
@@ -116,7 +118,7 @@ class PostCurrentUserBottomSheetActivity extends StatelessWidget {
               ),
               title: 'Turn off commenting',
             ),
-            5.ph,
+            10.ph,
 
             // edit
             CustomListTile(
@@ -129,7 +131,7 @@ class PostCurrentUserBottomSheetActivity extends StatelessWidget {
               ),
               title: 'Edit',
             ),
-            5.ph,
+            10.ph,
 
             // pin profile
             CustomListTile(
@@ -145,7 +147,7 @@ class PostCurrentUserBottomSheetActivity extends StatelessWidget {
               ),
               title: 'Pin to your profile',
             ),
-            5.ph,
+            10.ph,
 
             // share post
             CustomListTile(
@@ -158,7 +160,8 @@ class PostCurrentUserBottomSheetActivity extends StatelessWidget {
               ),
               title: 'Post to other apps...',
             ),
-            5.ph,
+
+            10.ph,
 
             // delete post
             CustomListTile(
@@ -170,7 +173,7 @@ class PostCurrentUserBottomSheetActivity extends StatelessWidget {
                     await PostController.instance.deletePost(postModel!.id!);
                   },
                   content:
-                      'You can restore this post from Recently deleted in Your Activity withing 30 days. After that, it will be permanently deleted.',
+                      'You can restore this post from Recently deleted in Your Activity within 30 days. After that, it will be permanently deleted.',
                 );
               },
               minLeadingWidth: 20,
@@ -182,7 +185,7 @@ class PostCurrentUserBottomSheetActivity extends StatelessWidget {
               title: 'Delete',
               titleStyle: const TextStyle(color: Colors.red),
             ),
-            5.ph,
+            10.ph,
           ],
         ),
       ),
