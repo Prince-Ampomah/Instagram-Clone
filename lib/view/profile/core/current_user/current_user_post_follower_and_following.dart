@@ -42,7 +42,7 @@ class CurrentUserPostFollowersFollowing extends StatelessWidget {
           child: Column(
             children: [
               Text(
-                '${userModel?.numberOfFollowers}',
+                '${userModel?.listOfFollowers!.length}',
                 style: Theme.of(context)
                     .textTheme
                     .labelLarge!
@@ -66,7 +66,7 @@ class CurrentUserPostFollowersFollowing extends StatelessWidget {
           child: Column(
             children: [
               Text(
-                '${userModel?.numberOfFollowing}',
+                '${userModel?.listOfFollowing!.length}',
                 style: Theme.of(context)
                     .textTheme
                     .labelLarge!

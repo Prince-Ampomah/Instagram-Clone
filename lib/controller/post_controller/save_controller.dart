@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:instagram_clone/core/utils/helper_functions.dart';
 
@@ -42,11 +41,7 @@ class SavePostController extends GetxController {
           },
         );
 
-        showToast(
-          msg: 'Post Saved',
-          gravity: ToastGravity.CENTER,
-          bgColor: Colors.blue,
-        );
+        showToast(msg: 'Post Saved', bgColor: Colors.blue);
       } else {
         // remove user from the saved list and decrease the like
         await firestoreDB.updateDoc(
@@ -57,11 +52,7 @@ class SavePostController extends GetxController {
           },
         );
 
-        showToast(
-          msg: 'Post Removed',
-          gravity: ToastGravity.CENTER,
-          bgColor: Colors.blue,
-        );
+        showToast(msg: 'Post Removed', bgColor: Colors.blue);
       }
     } catch (e) {
       Utils.showErrorMessage(e.toString());

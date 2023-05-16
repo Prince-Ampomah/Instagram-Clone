@@ -27,8 +27,6 @@ class UserModelAdapter extends TypeAdapter<UserModel> {
       isEmailVerified: fields[8] as bool?,
       bio: fields[7] as String?,
       numberOfPost: fields[11] as num,
-      numberOfFollowers: fields[9] as num,
-      numberOfFollowing: fields[10] as num,
       listOfFollowers: (fields[12] as List?)?.cast<dynamic>(),
       listOfFollowing: (fields[13] as List?)?.cast<dynamic>(),
     );
@@ -37,7 +35,7 @@ class UserModelAdapter extends TypeAdapter<UserModel> {
   @override
   void write(BinaryWriter writer, UserModel obj) {
     writer
-      ..writeByte(14)
+      ..writeByte(12)
       ..writeByte(0)
       ..write(obj.userId)
       ..writeByte(1)
@@ -56,10 +54,6 @@ class UserModelAdapter extends TypeAdapter<UserModel> {
       ..write(obj.bio)
       ..writeByte(8)
       ..write(obj.isEmailVerified)
-      ..writeByte(9)
-      ..write(obj.numberOfFollowers)
-      ..writeByte(10)
-      ..write(obj.numberOfFollowing)
       ..writeByte(11)
       ..write(obj.numberOfPost)
       ..writeByte(12)

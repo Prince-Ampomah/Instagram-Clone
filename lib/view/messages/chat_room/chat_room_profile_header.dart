@@ -84,7 +84,7 @@ class UserProfileHeader extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                '${userModel.numberOfFollowers} ${userModel.numberOfFollowers > 1 ? 'followers' : 'follower'}',
+                '${userModel.listOfFollowers!.length} ${userModel.listOfFollowers!.length > 1 ? 'followers' : 'follower'}',
                 style: const TextStyle(
                   fontWeight: FontWeight.normal,
                   fontSize: 16,
