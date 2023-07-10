@@ -9,6 +9,11 @@ extension EmptyPadding on num {
 }
 
 class Const {
+  static const List<String> contentTypes = [
+    'Post',
+    'Story',
+    'Reel',
+  ];
   // app bar icons
   static const String instragramLogoIcon = 'assets/icons/logo.png';
   static const String instragramAddIcon = 'assets/icons/more.png';
@@ -42,8 +47,10 @@ class Const {
   static const int hiveTypeId1 = 1; // used for post model
   static const int hiveTypeId2 = 2;
   static const int hiveTypeId3 = 3;
+  static const int hiveTypeId4 = 4;
   static const String userBoxName = 'userBox';
   static const String postBoxName = 'postBox';
+  static const String reelBoxName = 'reelBox';
   static const String postIdName = 'postIdName';
   static const String currentUser = 'currentUser';
   static const String postId = 'postId';
@@ -52,6 +59,7 @@ class Const {
   // Firestore contants
   static const String usersCollection = 'users';
   static const String postsCollection = 'posts';
+  static const String reelCollection = 'reels';
   static const String storyCollection = 'stories';
   static const String commentsCollection = 'comments';
   static const String likesCollection = 'likes';

@@ -62,7 +62,9 @@ class _ChatRoomViewState extends State<ChatRoomView> {
         children: [
           // Expanded(
           //   child: SingleChildScrollView(
+          //     // reverse: true,
           //     child: Column(
+          //       // mainAxisAlignment: MainAxisAlignment.spaceBetween,
           //       children: [
           //         UserProfileHeader(userModel: widget.userModel),
           //         20.ph,

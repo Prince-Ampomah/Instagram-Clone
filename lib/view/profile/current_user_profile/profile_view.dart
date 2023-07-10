@@ -7,7 +7,7 @@ class ProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.sizeOf(context);
     return NestedScrollView(
       physics: const NeverScrollableScrollPhysics(),
       headerSliverBuilder: (context, bool innerBoxIsScrolled) {

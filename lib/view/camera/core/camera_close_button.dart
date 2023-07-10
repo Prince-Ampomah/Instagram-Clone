@@ -10,7 +10,7 @@ class CameraCloseButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.sizeOf(context);
     return Padding(
       padding: EdgeInsets.only(
         top: size.height * height!,

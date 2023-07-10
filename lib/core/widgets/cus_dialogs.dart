@@ -128,7 +128,7 @@ class CustomAlertDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
+    var size = MediaQuery.sizeOf(context);
     return Dialog(
       insetAnimationCurve: Curves.easeIn,
       insetAnimationDuration: const Duration(milliseconds: 3000),

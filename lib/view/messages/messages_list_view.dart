@@ -1,20 +1,33 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:instagram_clone/repository/respository_implementation/auth_implementation.dart';
 import 'package:instagram_clone/view/messages/message_list_item_view.dart';
 
 import '../../core/constants/constants.dart';
 import '../../core/widgets/cus_circular_progressbar.dart';
 
-class MessagesListView extends StatelessWidget {
+class MessagesListView extends StatefulWidget {
   const MessagesListView({super.key});
+
+  @override
+  State<MessagesListView> createState() => _MessagesListViewState();
+}
+
+class _MessagesListViewState extends State<MessagesListView> {
+  //   late String? chatId;
+
+  // @override
+  // void initState() {
+  //   super.initState();
+
+  //   chatId = HiveServices.getChatId();
+  // }
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
       stream: FirebaseFirestore.instance
           .collection(Const.chatCollection)
-          .where('senderId', isEqualTo: firebaseAuth.currentUser!.uid)
+          // .where('senderId', isEqualTo: firebaseAuth.currentUser!.uid)
           .orderBy(Const.timeSent, descending: true)
           .snapshots(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {

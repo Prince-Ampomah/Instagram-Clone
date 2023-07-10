@@ -13,7 +13,7 @@ class NonUpdatedStory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Size size = MediaQuery.of(context).size;
+    // Size size = MediaQuery.sizeOf(context);
 
     var currentUser = HiveServices.getUserBox().get(Const.currentUser)!;
 

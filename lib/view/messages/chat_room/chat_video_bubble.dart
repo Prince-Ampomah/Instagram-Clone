@@ -19,7 +19,7 @@ class ChatVideoBubble extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isMe = chatModel.senderId == FirebaseAuth.instance.currentUser!.uid;
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.sizeOf(context);
 
     return CustomFocusMenu(
       onPressed: () {},

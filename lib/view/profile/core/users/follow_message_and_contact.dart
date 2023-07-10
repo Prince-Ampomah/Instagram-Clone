@@ -4,7 +4,7 @@ import 'package:instagram_clone/core/constants/constants.dart';
 import 'package:instagram_clone/core/services/hive_services.dart';
 import 'package:instagram_clone/core/theme/app_colors.dart';
 import 'package:instagram_clone/core/utils/helper_functions.dart';
-import 'package:instagram_clone/core/widgets/cus_main_button.dart';
+import 'package:instagram_clone/core/widgets/cus_primary_button.dart';
 import 'package:instagram_clone/model/post_model/post_model.dart';
 import 'package:instagram_clone/model/user_model/user_model.dart';
 import 'package:instagram_clone/view/core/follow_button.dart';
@@ -34,12 +34,12 @@ class FollowMessageAndContact extends StatelessWidget {
             child: ValueListenableBuilder<Box<UserModel>>(
               valueListenable: HiveServices.getUserBox().listenable(),
               builder: (BuildContext context, currentUserBox, _) {
-                bool isInListOFFollowers = currentUserBox
+                bool isInFollowersList = currentUserBox
                     .get(Const.currentUser)!
                     .listOfFollowing!
                     .contains(userModel.userId!);
 
-                if (isInListOFFollowers) {
+                if (isInFollowersList) {
                   return UnfollowButton(userToUnfollowId: postModel.userId!);
                 } else {
                   return FollowButton(userToFollowerId: postModel.userId!);

@@ -27,7 +27,7 @@ class CustomFocusMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     return FocusedMenuHolder(
       onPressed: onPressed,
-      menuWidth: MediaQuery.of(context).size.width * menuWidth!,
+      menuWidth: MediaQuery.sizeOf(context).width * menuWidth!,
       blurSize: blurSize,
       menuItemExtent: menuItemExtent,
       menuOffset: menuOffset,

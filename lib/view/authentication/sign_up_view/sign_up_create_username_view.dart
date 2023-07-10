@@ -22,7 +22,7 @@ class _CreateUsernameViewState extends State<CreateUsernameView> {
   final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.sizeOf(context);
 
     return Scaffold(
       body: SizedBox(

@@ -47,7 +47,7 @@ class _ChatMessagesListState extends State<ChatMessagesList> {
         }
 
         if (snapshot.data!.docs.isEmpty) {
-          return const Center(child: Text('You can start a conversation now'));
+          return const SizedBox();
         }
 
         if (snapshot.hasData) {

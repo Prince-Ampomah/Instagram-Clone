@@ -110,7 +110,7 @@ class _PostVideoViewState extends State<PostVideoView>
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.sizeOf(context);
 
     return GestureDetector(
       onTap: () {

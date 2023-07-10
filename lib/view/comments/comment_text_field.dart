@@ -15,7 +15,7 @@ class CommentTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.sizeOf(context);
 
     UserModel? userModel = HiveServices.getUserBox().get(Const.currentUser);
 

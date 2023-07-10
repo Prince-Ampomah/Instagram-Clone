@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:instagram_clone/core/utils/helper_functions.dart';
-import 'package:instagram_clone/core/widgets/cus_video_player.dart';
-import 'package:instagram_clone/view/messages/core/chat_preview_video.dart';
 import 'package:instagram_clone/view/messages/message_view.dart';
 
 import '../../../controller/post_controller/new_post_controller.dart';
@@ -77,11 +75,10 @@ class HomeAppBar extends StatelessWidget {
         ),
         GestureDetector(
           onTap: () {
-            // Get.to(() => const NotificationView());
-            sendToPage(
-              context,
-              ChatPreviewVideo(videoPath: videoUrlPortrait),
-            );
+            // sendToPage(
+            //   context,
+            //   ChatPreviewVideo(videoPath: videoUrlPortrait),
+            // );
           },
           child: const Icon(Icons.favorite_outline, size: 30),
         ),

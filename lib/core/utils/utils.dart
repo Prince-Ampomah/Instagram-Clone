@@ -97,7 +97,7 @@ class Utils {
       builder: (context) {
         return Dialog(
           child: Container(
-            height: MediaQuery.of(context).size.height * height,
+            height: MediaQuery.sizeOf(context).height * height,
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(20),

@@ -87,7 +87,7 @@ class _PostImageState extends State<PostImage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.sizeOf(context);
 
     return GetBuilder<PostImageController>(
       builder: (controller) {

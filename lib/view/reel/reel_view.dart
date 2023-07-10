@@ -1,226 +1,78 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:instagram_clone/view/reel/reel_list_item.dart';
 
-import '../../core/constants/constants.dart';
-import '../../core/theme/app_colors.dart';
-import '../../core/theme/theme.dart';
-import '../../core/widgets/cus_circular_image.dart';
+import '../../../core/constants/constants.dart';
+import '../../../core/widgets/cus_circular_progressbar.dart';
+import '../../../model/post_model/post_model.dart';
 
 class ReelView extends StatelessWidget {
   const ReelView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return PageView.builder(
-      scrollDirection: Axis.vertical,
-      itemCount: 10,
-      itemBuilder: (context, index) {
-        return Stack(
-          children: [
-            Image.asset(
-              Const.logo,
-              height: size.height,
-              width: size.width,
-            ),
-            const Align(
-              alignment: Alignment.center,
-              child: Icon(
-                Icons.favorite,
-                color: Colors.red,
-                size: 100,
-              ),
-            ),
-            const ReelReactionButtons(),
-            const ReelUserProfile(),
-          ],
-        );
-      },
-    );
-  }
-}
+    // Box<PostModel> postBox = HiveServices.getPosts();
 
-class ReelReactionButtons extends StatelessWidget {
-  const ReelReactionButtons({
-    super.key,
-  });
+    return FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
+      future: FirebaseFirestore.instance
+          .collection(Const.reelCollection)
+          .orderBy('timePosted', descending: true)
+          .get(),
+      builder: (BuildContext context, snapshot) {
+        if (snapshot.hasError) {
+          return Center(
+            child: Text(snapshot.error.toString()),
+          );
+        }
 
-  @override
-  Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.centerRight,
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(0, 0, 20, 50),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Column(
-              children: [
-                SizedBox(
-                  height: 30,
-                  child: Image.asset(
-                    Const.instragramfavoriteIcon,
-                    color: Colors.white,
-                  ),
-                ),
-                const SizedBox(height: 5),
-                Text(
-                  '20k',
-                  style: Theme.of(context)
-                      .textTheme
-                      .labelMedium!
-                      .copyWith(color: AppColors.whiteColor),
-                ),
-              ],
-            ),
-            const SizedBox(height: 20),
-            Column(
-              children: [
-                SizedBox(
-                  height: 25,
-                  child: Image.asset(
-                    Const.instragramCommentIcon,
-                    color: Colors.white,
-                  ),
-                ),
-                const SizedBox(height: 5),
-                Text(
-                  '320',
-                  style: Theme.of(context)
-                      .textTheme
-                      .labelMedium!
-                      .copyWith(color: AppColors.whiteColor),
-                ),
-              ],
-            ),
-            const SizedBox(height: 20),
-            SizedBox(
-              height: 25,
-              child: Image.asset(
-                Const.instragramSendIcon,
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CustomCircularProgressBar());
+        }
+
+        if (snapshot.data!.docs.isEmpty) {
+          return const Center(child: Text('No Reel posted yet'));
+        }
+
+        if (snapshot.hasData) {
+          // saveDataOffline(snapshot, postBox);
+          return ReelListItem(snapshot: snapshot);
+        }
+
+        if (!snapshot.hasData) {
+          return Center(
+            child: Text(
+              'Something went wrong: ${snapshot.error}',
+              style: const TextStyle(
                 color: Colors.white,
               ),
             ),
-            // const Icon(
-            //   Icons.near_me_outlined,
-            //   size: 35,
-            //   color: Colors.white,
-            // ),
-            const SizedBox(height: 20),
-            const Icon(
-              Icons.more_vert_outlined,
-              size: 35,
-              color: Colors.white,
-            ),
-            const SizedBox(height: 20),
-            const Icon(
-              Icons.music_note_outlined,
-              size: 30,
-              color: Colors.white,
-            ),
-          ],
-        ),
-      ),
+          );
+        }
+
+        return Center(child: Text('Something went wrong: ${snapshot.error}'));
+      },
     );
   }
-}
 
-class ReelUserProfile extends StatelessWidget {
-  const ReelUserProfile({
-    super.key,
-  });
+  saveDataOffline(snapshot, Box<PostModel> postBox) async {
+    Map<String, PostModel> postChanges = {};
+    List<String> postsRemoved = [];
 
-  @override
-  Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.bottomLeft,
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(8, 0, 8, 20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                CircularImageContainer(
-                  border: Border.all(
-                    width: 1.0,
-                    color: Colors.white,
-                  ),
-                ),
-                Text(
-                  'User Data',
-                  style: Theme.of(context)
-                      .textTheme
-                      .labelMedium!
-                      .copyWith(color: AppColors.whiteColor),
-                ),
-                const SizedBox(width: 4),
-                Text(
-                  '4w',
-                  style: Theme.of(context)
-                      .textTheme
-                      .labelMedium!
-                      .copyWith(color: AppColors.greyColor),
-                ),
-                const SizedBox(width: 20),
-                OutlinedButton(
-                  onPressed: () {},
-                  style: ButtonStyle(
-                    shape: MaterialStateProperty.all(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                    ),
-                    side: MaterialStateProperty.all(
-                      const BorderSide(color: AppColors.whiteColor),
-                    ),
-                  ),
-                  child: Text(
-                    'Follow',
-                    style: Theme.of(context)
-                        .textTheme
-                        .labelMedium!
-                        .copyWith(color: AppColors.whiteColor),
-                  ),
-                ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Remote Jobs - requires no talking',
-                    style: Theme.of(context)
-                        .textTheme
-                        .labelMedium!
-                        .copyWith(color: AppColors.whiteColor),
-                  ),
-                  const SizedBox(height: 10),
-                  Row(
-                    children: [
-                      const Icon(
-                        Icons.sort_rounded,
-                        color: Colors.white,
-                      ),
-                      const SizedBox(width: 10),
-                      Text(
-                        'sarkcess music prod...',
-                        style:
-                            AppTheme.textStyle(context).labelMedium!.copyWith(
-                                  color: AppColors.whiteColor,
-                                ),
-                      )
-                    ],
-                  )
-                ],
-              ),
-            )
-          ],
-        ),
-      ),
-    );
+    for (var docRef in snapshot.data!.docChanges) {
+      if (docRef.type == DocumentChangeType.removed) {
+        postsRemoved.add(docRef.doc.id);
+      } else {
+        postChanges[docRef.doc.id] = PostModel.fromJson({
+          ...docRef.doc.data()!,
+        });
+      }
+    }
+    // save post offline
+    await postBox.putAll(postChanges);
+
+    // delete all post data from offline db
+    //that has been deleted online
+    await postBox.deleteAll(postsRemoved);
   }
 }

@@ -5,7 +5,7 @@ import '../../../controller/models_controller/models_controller.dart';
 import '../../../core/utils/helper_functions.dart';
 import '../../../core/widgets/cus_cached_image.dart';
 import '../../../core/widgets/cus_circular_image.dart';
-import '../../../core/widgets/cus_main_button.dart';
+import '../../../core/widgets/cus_primary_button.dart';
 import '../../../model/user_model/user_model.dart';
 import '../../profile/users_profile/users_profile_view.dart';
 
