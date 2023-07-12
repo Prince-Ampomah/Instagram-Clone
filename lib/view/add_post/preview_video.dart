@@ -58,33 +58,36 @@ class _PreviewVideoState extends State<PreviewVideo> {
       body: SafeArea(
         child: Stack(
           children: [
-            Stack(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
-                  child: CustomOriginalVideoPlayer(
-                    videoPath: widget.videoPath,
-                    aspectRatio: videoPlayerController?.value.aspectRatio ?? 1,
-                    onInitController: (controller) {
-                      setState(() {
-                        videoPlayerController = controller;
-                      });
-                    },
-                  ),
-                ),
-                if (videoPlayerController != null &&
-                    !videoPlayerController!.value.isPlaying)
-                  Align(
-                    alignment: Alignment.center,
-                    child: GestureDetector(
-                      onTap: () {
+            GestureDetector(
+              onTap: () {
+                setState(() {
+                  if (videoPlayerController != null &&
+                      !videoPlayerController!.value.isPlaying) {
+                    videoPlayerController!.play();
+                  } else {
+                    videoPlayerController!.pause();
+                  }
+                });
+              },
+              child: Stack(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: CustomOriginalVideoPlayer(
+                      videoPath: widget.videoPath,
+                      aspectRatio:
+                          videoPlayerController?.value.aspectRatio ?? 1,
+                      onInitController: (controller) {
                         setState(() {
-                          videoPlayerController != null &&
-                                  videoPlayerController!.value.isPlaying
-                              ? videoPlayerController!.pause()
-                              : videoPlayerController!.play();
+                          videoPlayerController = controller;
                         });
                       },
+                    ),
+                  ),
+                  if (videoPlayerController != null &&
+                      !videoPlayerController!.value.isPlaying)
+                    Align(
+                      alignment: Alignment.center,
                       child: Container(
                         padding: const EdgeInsets.all(8),
                         margin: const EdgeInsets.fromLTRB(15, 10, 0, 0),
@@ -99,57 +102,57 @@ class _PreviewVideoState extends State<PreviewVideo> {
                         ),
                       ),
                     ),
-                  ),
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: GestureDetector(
-                    onTap: () => Navigator.pop(context),
-                    child: Container(
-                      padding: const EdgeInsets.all(8),
-                      margin: const EdgeInsets.fromLTRB(15, 10, 0, 0),
-                      decoration: BoxDecoration(
-                        color: Colors.black.withOpacity(0.7),
-                        shape: BoxShape.circle,
-                      ),
-                      child: const Icon(
-                        Icons.arrow_back_ios_outlined,
-                        color: Colors.white,
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: GestureDetector(
+                      onTap: () => Navigator.pop(context),
+                      child: Container(
+                        padding: const EdgeInsets.all(8),
+                        margin: const EdgeInsets.fromLTRB(15, 10, 0, 0),
+                        decoration: BoxDecoration(
+                          color: Colors.black.withOpacity(0.7),
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Icon(
+                          Icons.arrow_back_ios_outlined,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 10, 15, 0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          color: Colors.black.withOpacity(0.7),
-                          shape: BoxShape.circle,
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 10, 15, 0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            color: Colors.black.withOpacity(0.7),
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(
+                            Icons.music_note,
+                            color: Colors.white,
+                          ),
                         ),
-                        child: const Icon(
-                          Icons.music_note,
-                          color: Colors.white,
+                        8.pw,
+                        Container(
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            color: Colors.black.withOpacity(0.7),
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(
+                            Icons.emoji_emotions_outlined,
+                            color: Colors.white,
+                          ),
                         ),
-                      ),
-                      8.pw,
-                      Container(
-                        padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          color: Colors.black.withOpacity(0.7),
-                          shape: BoxShape.circle,
-                        ),
-                        child: const Icon(
-                          Icons.emoji_emotions_outlined,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             Align(
               alignment: Alignment.bottomRight,

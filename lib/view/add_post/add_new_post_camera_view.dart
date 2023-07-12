@@ -95,8 +95,21 @@ class _NewPostCameraViewState extends State<NewPostCameraView>
                                   if (!controller.isRecording) {
                                     XFile imageFile =
                                         await controller.takePhoto();
-                                    NewPostController.instance
-                                        .getImageAndPreview(imageFile.path);
+
+                                    switch (currentIndex) {
+                                      case 0:
+                                        NewPostController.instance
+                                            .getImageAndPreview(imageFile.path);
+                                        break;
+
+                                      case 1:
+                                        StoryController.instance
+                                            .getImageAndPreview(imageFile.path);
+                                        break;
+
+                                      default:
+                                        false;
+                                    }
                                   }
                                 },
                                 onLongPressUp: () async {
@@ -151,8 +164,20 @@ class _NewPostCameraViewState extends State<NewPostCameraView>
                       ),
                       child: IconButton(
                         onPressed: () async {
-                          await NewPostController.instance
-                              .pickMediaFromDevice();
+                          switch (currentIndex) {
+                            case 0:
+                              await NewPostController.instance
+                                  .pickMediaFromDevice();
+                              break;
+
+                            case 1:
+                              await StoryController.instance
+                                  .pickMediaFromDevice();
+                              break;
+
+                            default:
+                              false;
+                          }
                         },
                         icon: const Icon(
                           Icons.image,

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -15,101 +16,141 @@ import '../../core/widgets/cus_circular_image.dart';
 String vd =
     'https://firebasestorage.googleapis.com/v0/b/instagram-clone-b31aa.appspot.com/o/reels%2FurraCrHDeY0V4D0gcnF7%2FREC1820518638010963750.mp4?alt=media&token=00bbaa2f-46fa-4f76-a233-a4c1fd3096bd';
 
-class ReelListItem extends StatefulWidget {
+class ReelListItem extends StatelessWidget {
   const ReelListItem({super.key, required this.snapshot});
 
   final AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot;
 
   @override
-  State<ReelListItem> createState() => _ReelListItemState();
+  Widget build(BuildContext context) {
+    return PageView.builder(
+      scrollDirection: Axis.vertical,
+      itemCount: snapshot.data!.docs.length,
+      itemBuilder: (context, index) {
+        ReelModel reelModel =
+            ReelModel.fromJson(snapshot.data!.docs[index].data());
+        return ReelVideo(reelModel: reelModel);
+      },
+    );
+  }
 }
 
-class _ReelListItemState extends State<ReelListItem> {
+class ReelVideo extends StatefulWidget {
+  const ReelVideo({super.key, required this.reelModel});
+
+  final ReelModel reelModel;
+
+  @override
+  State<ReelVideo> createState() => _ReelVideoState();
+}
+
+class _ReelVideoState extends State<ReelVideo> with WidgetsBindingObserver {
   VideoPlayerController? videoPlayerController;
+
+  bool showVolumeIcon = false;
+
+  Timer? timer;
 
   @override
   void initState() {
     super.initState();
-    initVideoPlayerController();
+
+    muteAndUnmuteSound();
   }
 
   initVideoPlayerController() async {
-    bool isValidURL = Uri.parse(vd).isAbsolute;
+    bool isValidURL = Uri.parse(widget.reelModel.media).isAbsolute;
 
     if (isValidURL) {
-      var file = await DefaultCacheManager().getSingleFile(vd);
+      File file =
+          await DefaultCacheManager().getSingleFile(widget.reelModel.media);
       videoPlayerController = VideoPlayerController.file(file);
     } else {
-      videoPlayerController = VideoPlayerController.file(File(vd));
+      videoPlayerController =
+          VideoPlayerController.file(File(widget.reelModel.media));
     }
 
-    if (!mounted) {
-      return;
-    }
+    if (!mounted) return;
+
     videoPlayerController = videoPlayerController!
       ..initialize().then(
-        (value) => setState(() {
-          // videoPlayerController!.play();
-        }),
+        (value) {},
       );
+  }
+
+  void muteAndUnmuteSound() {
+    setState(() {
+      showVolumeIcon = true;
+    });
+
+    timer?.cancel();
+    timer = Timer(const Duration(milliseconds: 1000), () {
+      setState(() {
+        showVolumeIcon = false;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
 
-    return PageView.builder(
-      scrollDirection: Axis.vertical,
-      itemCount: widget.snapshot.data!.docs.length,
-      itemBuilder: (context, index) {
-        ReelModel reelModel =
-            ReelModel.fromJson(widget.snapshot.data!.docs[index].data());
+    return SizedBox(
+      height: size.height,
+      width: size.width,
+      child: GestureDetector(
+        onTap: () {
+          setState(() {
+            if (videoPlayerController != null &&
+                videoPlayerController!.value.volume == 1.0) {
+              videoPlayerController!.setVolume(0.0);
+            } else {
+              videoPlayerController!.setVolume(1.0);
+            }
 
-        return Stack(
+            showVolumeIcon = !showVolumeIcon;
+          });
+        },
+        child: Stack(
           children: [
             CustomOriginalVideoPlayer(
-              videoPath: vd,
+              videoPath: widget.reelModel.media,
               aspectRatio: videoPlayerController?.value.aspectRatio ?? 1,
               onInitController: (controller) {
+                // play playing automatically and repeat
+                controller.play();
+                controller.setLooping(true);
+
                 setState(() {
                   videoPlayerController = controller;
                 });
               },
             ),
-            if (videoPlayerController != null &&
-                !videoPlayerController!.value.isPlaying)
-              Align(
-                alignment: Alignment.center,
-                child: GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      videoPlayerController != null &&
-                              videoPlayerController!.value.isPlaying
-                          ? videoPlayerController!.pause()
-                          : videoPlayerController!.play();
-                    });
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.all(8),
-                    margin: const EdgeInsets.fromLTRB(15, 10, 0, 0),
-                    decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(0.4),
-                      shape: BoxShape.circle,
-                    ),
-                    child: const Icon(
-                      Icons.play_arrow,
-                      color: Colors.white,
-                      size: 50,
-                    ),
-                  ),
+            Align(
+              alignment: Alignment.center,
+              child: Container(
+                padding: const EdgeInsets.all(8),
+                margin: const EdgeInsets.fromLTRB(15, 10, 0, 0),
+                decoration: BoxDecoration(
+                  color: Colors.black.withOpacity(0.4),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  showVolumeIcon
+                      ? Icons.volume_up_outlined
+                      : Icons.volume_off_outlined,
+                  color: Colors.white,
+                  size: 50,
                 ),
               ),
-
-            // CusVideoPlayer(
-            //   videoPath: reelModel.media,
-            //   showControllBar: true,
-            //   showSettingsButton: false,
-            // ),
+            ),
             // const Align(
             //   alignment: Alignment.center,
             //   child: Icon(
@@ -121,8 +162,8 @@ class _ReelListItemState extends State<ReelListItem> {
             const ReelReactionButtons(),
             const ReelUserProfile(),
           ],
-        );
-      },
+        ),
+      ),
     );
   }
 }

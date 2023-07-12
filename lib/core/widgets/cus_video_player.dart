@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 
 import 'package:appinio_video_player/appinio_video_player.dart';
 import 'package:flutter/services.dart';
-import 'package:instagram_clone/core/widgets/cus.shimmer.effect.dart';
 import 'package:instagram_clone/core/widgets/cus_circular_progressbar.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
+import '../constants/constants.dart';
 import '../theme/app_colors.dart';
 
 class CusVideoPlayer extends StatefulWidget {
@@ -17,12 +17,23 @@ class CusVideoPlayer extends StatefulWidget {
     this.aspecRatio = 0.6,
     this.showControllBar = true,
     this.showSettingsButton = true,
+    this.playOnlyOnce = true,
+    this.showProgressBar = true,
+    this.showDurationPlayed = true,
     this.onInitController,
+    this.controlBarDecoration = const BoxDecoration(
+      borderRadius: BorderRadius.zero,
+    ),
   });
 
   final String videoPath;
   final double? aspecRatio;
-  final bool? showControllBar, showSettingsButton;
+  final bool? showControllBar,
+      showSettingsButton,
+      playOnlyOnce,
+      showProgressBar,
+      showDurationPlayed;
+  final BoxDecoration controlBarDecoration;
 
   final Function(VideoPlayerController controller)? onInitController;
 
@@ -40,6 +51,13 @@ class _CusVideoPlayerState extends State<CusVideoPlayer> {
   void initState() {
     super.initState();
     initControllers();
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(
+        statusBarColor: AppColors.blackColor,
+        statusBarBrightness: Brightness.light,
+        statusBarIconBrightness: Brightness.light,
+      ),
+    );
   }
 
   void initControllers() async {
@@ -53,9 +71,8 @@ class _CusVideoPlayerState extends State<CusVideoPlayer> {
           VideoPlayerController.file(File(widget.videoPath));
     }
 
-    if (!mounted) {
-      return;
-    }
+    if (!mounted) return;
+
     videoPlayerController = videoPlayerController
       ..initialize().then((value) => setState(() {
             widget.onInitController?.call(videoPlayerController);
@@ -65,8 +82,15 @@ class _CusVideoPlayerState extends State<CusVideoPlayer> {
       context: context,
       videoPlayerController: videoPlayerController,
       customVideoPlayerSettings: CustomVideoPlayerSettings(
+        controlBarDecoration: widget.controlBarDecoration,
         controlBarAvailable: widget.showControllBar!,
         settingsButtonAvailable: widget.showSettingsButton!,
+        playOnlyOnce: widget.playOnlyOnce!,
+        showDurationPlayed: widget.showDurationPlayed!,
+        customVideoPlayerProgressBarSettings:
+            CustomVideoPlayerProgressBarSettings(
+          showProgressBar: widget.showProgressBar!,
+        ),
         placeholderWidget: const Center(child: CustomCircularProgressBar()),
       ),
     );
@@ -83,18 +107,13 @@ class _CusVideoPlayerState extends State<CusVideoPlayer> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(
-        statusBarColor: AppColors.blackColor,
-        statusBarBrightness: Brightness.light,
-        statusBarIconBrightness: Brightness.light,
-      ),
-    );
-    return _customVideoPlayerController != null
-        ? CustomVideoPlayer(
-            customVideoPlayerController: _customVideoPlayerController!,
-          )
-        : const Center(child: CustomCircularProgressBar());
+    if (_customVideoPlayerController != null) {
+      return CustomVideoPlayer(
+        customVideoPlayerController: _customVideoPlayerController!,
+      );
+    } else {
+      return const Center(child: CustomCircularProgressBar());
+    }
   }
 }
 
@@ -126,7 +145,8 @@ class CustomOriginalVideoPlayer extends StatefulWidget {
       _CustomOriginalVideoPlayerState();
 }
 
-class _CustomOriginalVideoPlayerState extends State<CustomOriginalVideoPlayer> {
+class _CustomOriginalVideoPlayerState extends State<CustomOriginalVideoPlayer>
+    with WidgetsBindingObserver {
   VideoPlayerController? controller;
   // Future<void>? _initializeVideoPlayerFuture;
   bool isLoaded = false;
@@ -171,38 +191,66 @@ class _CustomOriginalVideoPlayerState extends State<CustomOriginalVideoPlayer> {
     super.dispose();
   }
 
-  void didChangeAppLifecycleState() {
-    if (WidgetsBinding.instance.lifecycleState == AppLifecycleState.paused) {
-      controller?.pause();
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    switch (state) {
+      case AppLifecycleState.inactive:
+        controller?.dispose();
+        logger.i('Inactive');
+        break;
+
+      case AppLifecycleState.resumed:
+        controller?.initialize();
+        logger.i('Resumed');
+        break;
+
+      case AppLifecycleState.paused:
+        controller?.pause();
+        logger.i('Paused');
+        break;
+
+      case AppLifecycleState.detached:
+        controller?.dispose();
+        logger.i('detached');
+        break;
+
+      default:
+        controller?.dispose();
+        logger.i('default');
     }
+    super.didChangeAppLifecycleState(state);
   }
 
   @override
   Widget build(BuildContext context) {
-    return isLoaded && controller != null
-        ? AspectRatio(
-            aspectRatio: widget.aspectRatio,
-            child: VideoPlayer(controller!),
-          )
-        : AspectRatio(
-            aspectRatio: widget.aspectRatio,
-            child: Container(
-              height: 200,
-              decoration: const BoxDecoration(
-                color: Colors.transparent,
-              ),
-              child: const ShimmerEffect.rectangular(height: 200),
-              // child: Shimmer.fromColors(
-              //   baseColor: Colors.grey,
-              //   highlightColor: Colors.grey[600]!,
-              //   period: const Duration(seconds: 2),
-              //   child: const Icon(
-              //     Icons.videocam_outlined,
-              //     size: 70,
-              //   ),
-              // ),
-            ),
-          );
+    if (isLoaded && controller != null) {
+      return AspectRatio(
+        aspectRatio: widget.aspectRatio,
+        child: VideoPlayer(controller!),
+      );
+    } else {
+      return const Center(child: CustomCircularProgressBar());
+
+      // return AspectRatio(
+      //   aspectRatio: widget.aspectRatio,
+      //   child: Container(
+      //     height: 200,
+      //     decoration: const BoxDecoration(
+      //       color: Colors.transparent,
+      //     ),
+      //     child: const ShimmerEffect.rectangular(height: 200),
+      //     // child: Shimmer.fromColors(
+      //     //   baseColor: Colors.grey,
+      //     //   highlightColor: Colors.grey[600]!,
+      //     //   period: const Duration(seconds: 2),
+      //     //   child: const Icon(
+      //     //     Icons.videocam_outlined,
+      //     //     size: 70,
+      //     //   ),
+      //     // ),
+      //   ),
+      // );
+    }
   }
 }
 

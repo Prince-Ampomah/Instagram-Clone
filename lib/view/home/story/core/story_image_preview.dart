@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:instagram_clone/view/layout/app_layout.dart';
 
 import '../../../../controller/story_controller/story_controller.dart';
 import '../../../../core/constants/constants.dart';
@@ -48,7 +49,18 @@ class StoryImagePreview extends StatelessWidget {
             GestureDetector(
               onTap: () {
                 StoryController.instance.addNewStory(Const.imageStoryType);
-                popUntil(context, 2);
+                noReturnPushReplacement(
+                  context,
+                  const AppLayoutView(pageIndex: 0),
+                );
+
+                showFlushBar(
+                  context,
+                  message: 'Story Updated',
+                  bgColor: Colors.white,
+                  messageColor: Colors.black,
+                  titleColor: Colors.black,
+                );
               },
               child: Container(
                 padding: const EdgeInsets.symmetric(

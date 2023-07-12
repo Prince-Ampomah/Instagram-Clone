@@ -3,6 +3,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:instagram_clone/controller/reel_controller/reel_controller.dart';
+import 'package:instagram_clone/core/constants/constants.dart';
+import 'package:instagram_clone/core/widgets/cus_list_tile.dart';
+import 'package:instagram_clone/core/widgets/cus_primary_button.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../core/theme/app_colors.dart';
@@ -70,67 +73,87 @@ class _AddNewReelState extends State<AddNewReel> {
           )
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
-        child: ListView(
+      body: SingleChildScrollView(
+        child: Column(
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: SizedBox(
-                height: size.height * 0.5,
-                child: CustomOriginalVideoPlayer(
-                  videoPath: ReelController.instance.media.first,
-                  aspectRatio: videoPlayerController?.value.aspectRatio ?? 1,
-                  onInitController: (controller) {
-                    setState(() {
-                      videoPlayerController = controller;
-                    });
-                  },
-                ),
-              ),
-            ),
-            Expanded(
-              flex: 5,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 4,
-                ),
-                child: TextFormField(
-                  controller: ReelController.captionController,
-                  maxLines: 20,
-                  minLines: 1,
-                  textInputAction: TextInputAction.newline,
-                  cursorColor: AppColors.blackColor,
-                  decoration: const InputDecoration(
-                    border: InputBorder.none,
-                    hintText: 'Write a caption...',
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: size.width * 0.5,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: CustomOriginalVideoPlayer(
+                      videoPath: ReelController.instance.media.first,
+                      aspectRatio:
+                          videoPlayerController?.value.aspectRatio ?? 1,
+                      onInitController: (controller) {
+                        setState(() {
+                          videoPlayerController = controller;
+                        });
+                      },
+                    ),
                   ),
-                  onSaved: (value) {
-                    ReelController.captionController.text = value!.trim();
-                  },
                 ),
-              ),
+                10.ph,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: TextFormField(
+                    controller: ReelController.captionController,
+                    maxLines: 20,
+                    minLines: 1,
+                    textInputAction: TextInputAction.newline,
+                    cursorColor: AppColors.blackColor,
+                    decoration: const InputDecoration(
+                      border: InputBorder.none,
+                      hintText: 'Write a caption...',
+                    ),
+                    onSaved: (value) {
+                      ReelController.captionController.text = value!.trim();
+                    },
+                  ),
+                ),
+              ],
             ),
-            Container(
-              padding: const EdgeInsets.all(5),
-              child: const Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Divider(),
-                  SizedBox(height: 10),
-                  Text('Tag People'),
-                  SizedBox(height: 10),
-                  Divider(),
-                  SizedBox(height: 10),
-                  Text('Add location'),
-                  SizedBox(height: 10),
-                  Divider(),
-                  SizedBox(height: 10),
-                  Text('Add music')
-                ],
-              ),
+            const Divider(),
+            const Column(
+              children: [
+                CustomListTile(
+                  title: 'Tag people',
+                  titleStyle: TextStyle(fontWeight: FontWeight.bold),
+                  leading: Icon(Icons.perm_contact_calendar_outlined),
+                  trailing: Icon(
+                    Icons.arrow_forward_ios,
+                    size: 20,
+                  ),
+                ),
+                CustomListTile(
+                  title: 'Add topics',
+                  titleStyle: TextStyle(fontWeight: FontWeight.bold),
+                  leading: Icon(Icons.tag_outlined),
+                  trailing: Icon(
+                    Icons.arrow_forward_ios,
+                    size: 20,
+                  ),
+                ),
+              ],
             ),
+            const Divider(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                PrimaryOutlinedButton(
+                  onPressed: () {},
+                  title: 'Save draft',
+                ),
+                PrimaryButton(
+                  onPressed: () {},
+                  title: 'Next',
+                  borderRadius: 10,
+                  bgColor: AppColors.buttonColor,
+                ),
+              ],
+            )
           ],
         ),
       ),

@@ -68,11 +68,7 @@ class _PostVideoViewState extends State<PostVideoView>
       return;
     }
     videoPlayerController = videoPlayerController!
-      ..initialize().then(
-        (value) => setState(() {
-          // videoPlayerController!.play();
-        }),
-      );
+      ..initialize().then((value) {});
   }
 
   void initAnimationController() {
@@ -104,7 +100,7 @@ class _PostVideoViewState extends State<PostVideoView>
   void dispose() {
     timer?.cancel();
     _heartAnimationController.dispose();
-    // videoPlayerController?.dispose();
+
     super.dispose();
   }
 

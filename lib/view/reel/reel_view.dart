@@ -35,7 +35,6 @@ class ReelView extends StatelessWidget {
         }
 
         if (snapshot.hasData) {
-          // saveDataOffline(snapshot, postBox);
           return ReelListItem(snapshot: snapshot);
         }
 
