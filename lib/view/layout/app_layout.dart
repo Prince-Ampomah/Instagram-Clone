@@ -7,12 +7,10 @@ import '../home/home_view.dart';
 import '../profile/current_user_profile/profile_view.dart';
 import '../reel/reel_view.dart';
 import '../search/search_view.dart';
-import '../shop/shop_view.dart';
 import 'app_bar/home_appbar.dart';
 import 'app_bar/profile_appbar.dart';
 import 'app_bar/reels_appbar.dart';
 import 'app_bar/search_appbar.dart';
-import 'app_bar/shop_appbar.dart';
 
 class AppLayoutView extends StatefulWidget {
   const AppLayoutView({super.key, this.pageIndex = 0});
@@ -40,7 +38,7 @@ class _AppLayoutViewState extends State<AppLayoutView> {
       HomeView(),
       SearchView(),
       ReelView(),
-      ShopView(),
+      // ShopView(),
       ProfileView(),
     ];
 
@@ -53,8 +51,8 @@ class _AppLayoutViewState extends State<AppLayoutView> {
           return const SearchAppBar();
         case 2:
           return const ReelsAppBar();
-        case 3:
-          return const ShopAppBar();
+        // case 3:
+        //   return const ShopAppBar();
         default:
           return const ProfileAppBar();
       }

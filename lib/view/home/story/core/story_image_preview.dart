@@ -57,7 +57,7 @@ class StoryImagePreview extends StatelessWidget {
                 showFlushBar(
                   context,
                   message: 'Story Updated',
-                  bgColor: Colors.white,
+                  bgColor: const Color.fromARGB(255, 193, 193, 193),
                   messageColor: Colors.black,
                   titleColor: Colors.black,
                 );

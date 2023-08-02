@@ -4,6 +4,8 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:instagram_clone/app_state.dart';
+import 'package:instagram_clone/controller/reel_controller/reel_like_controller.dart';
 import 'package:instagram_clone/core/widgets/cus_video_player.dart';
 import 'package:instagram_clone/model/reel_model/reel_model.dart';
 import 'package:video_player/video_player.dart';
@@ -12,6 +14,7 @@ import '../../core/constants/constants.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/theme.dart';
 import '../../core/widgets/cus_circular_image.dart';
+import '../../model/user_model/user_model.dart';
 
 String vd =
     'https://firebasestorage.googleapis.com/v0/b/instagram-clone-b31aa.appspot.com/o/reels%2FurraCrHDeY0V4D0gcnF7%2FREC1820518638010963750.mp4?alt=media&token=00bbaa2f-46fa-4f76-a233-a4c1fd3096bd';
@@ -55,7 +58,8 @@ class _ReelVideoState extends State<ReelVideo> with WidgetsBindingObserver {
   void initState() {
     super.initState();
 
-    muteAndUnmuteSound();
+    // muteAndUnmuteSound();
+    initVideoPlayerController();
   }
 
   initVideoPlayerController() async {
@@ -94,7 +98,6 @@ class _ReelVideoState extends State<ReelVideo> with WidgetsBindingObserver {
   @override
   void dispose() {
     timer?.cancel();
-
     super.dispose();
   }
 
@@ -102,22 +105,22 @@ class _ReelVideoState extends State<ReelVideo> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
 
-    return SizedBox(
-      height: size.height,
-      width: size.width,
-      child: GestureDetector(
-        onTap: () {
-          setState(() {
-            if (videoPlayerController != null &&
-                videoPlayerController!.value.volume == 1.0) {
-              videoPlayerController!.setVolume(0.0);
-            } else {
-              videoPlayerController!.setVolume(1.0);
-            }
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          if (videoPlayerController != null &&
+              videoPlayerController!.value.volume == 1.0) {
+            videoPlayerController!.setVolume(0.0);
+          } else {
+            videoPlayerController!.setVolume(1.0);
+          }
 
-            showVolumeIcon = !showVolumeIcon;
-          });
-        },
+          showVolumeIcon = !showVolumeIcon;
+        });
+      },
+      child: SizedBox(
+        height: size.height,
+        width: size.width,
         child: Stack(
           children: [
             CustomOriginalVideoPlayer(
@@ -133,24 +136,24 @@ class _ReelVideoState extends State<ReelVideo> with WidgetsBindingObserver {
                 });
               },
             ),
-            Align(
-              alignment: Alignment.center,
-              child: Container(
-                padding: const EdgeInsets.all(8),
-                margin: const EdgeInsets.fromLTRB(15, 10, 0, 0),
-                decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(0.4),
-                  shape: BoxShape.circle,
-                ),
-                child: Icon(
-                  showVolumeIcon
-                      ? Icons.volume_up_outlined
-                      : Icons.volume_off_outlined,
-                  color: Colors.white,
-                  size: 50,
-                ),
-              ),
-            ),
+            // Align(
+            //   alignment: Alignment.center,
+            //   child: Container(
+            //     padding: const EdgeInsets.all(8),
+            //     margin: const EdgeInsets.fromLTRB(15, 10, 0, 0),
+            //     decoration: BoxDecoration(
+            //       color: Colors.black.withOpacity(0.4),
+            //       shape: BoxShape.circle,
+            //     ),
+            //     child: Icon(
+            //       showVolumeIcon
+            //           ? Icons.volume_up_outlined
+            //           : Icons.volume_off_outlined,
+            //       color: Colors.white,
+            //       size: 50,
+            //     ),
+            //   ),
+            // ),
             // const Align(
             //   alignment: Alignment.center,
             //   child: Icon(
@@ -159,7 +162,7 @@ class _ReelVideoState extends State<ReelVideo> with WidgetsBindingObserver {
             //     size: 100,
             //   ),
             // ),
-            const ReelReactionButtons(),
+            ReelReactionButtons(reelModel: widget.reelModel),
             const ReelUserProfile(),
           ],
         ),
@@ -168,10 +171,83 @@ class _ReelVideoState extends State<ReelVideo> with WidgetsBindingObserver {
   }
 }
 
-class ReelReactionButtons extends StatelessWidget {
+class ReelReactionButtons extends StatefulWidget {
   const ReelReactionButtons({
     super.key,
+    required this.reelModel,
   });
+
+  final ReelModel reelModel;
+
+  @override
+  State<ReelReactionButtons> createState() => _ReelReactionButtonsState();
+}
+
+class _ReelReactionButtonsState extends State<ReelReactionButtons>
+    with TickerProviderStateMixin {
+  late Animation _heartAnimation;
+  late AnimationController _heartAnimationController;
+
+  late UserModel userModel;
+
+  Timer? timer;
+
+  bool showLikeIcon = false;
+
+  void likeIconVisibiltyTimer() {
+    setState(() {
+      showLikeIcon = true;
+      _heartAnimationController.forward();
+    });
+
+    timer?.cancel();
+    timer = Timer(const Duration(milliseconds: 1000), () {
+      setState(() {
+        showLikeIcon = false;
+        _heartAnimationController.stop();
+      });
+    });
+  }
+
+  void initAnimationController() {
+    _heartAnimationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1500),
+      reverseDuration: const Duration(milliseconds: 400),
+    );
+    _heartAnimation = Tween(begin: 90.0, end: 100.0).animate(
+      CurvedAnimation(
+        curve: Curves.elasticOut,
+        reverseCurve: Curves.ease,
+        parent: _heartAnimationController,
+      ),
+    );
+
+    _heartAnimationController.addStatusListener(
+      (AnimationStatus status) {
+        if (status == AnimationStatus.completed) {
+          _heartAnimationController.reverse();
+        } else if (status == AnimationStatus.dismissed) {
+          _heartAnimationController.forward();
+        }
+      },
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    initAnimationController();
+
+    userModel = AppState.currentUser!;
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    _heartAnimationController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -184,42 +260,54 @@ class ReelReactionButtons extends StatelessWidget {
           children: [
             Column(
               children: [
-                SizedBox(
-                  height: 30,
-                  child: Image.asset(
-                    Const.instragramfavoriteIcon,
-                    color: Colors.white,
+                GestureDetector(
+                  onTap: () => ReelLikeController.instance
+                      .toggleLike(widget.reelModel.id!),
+                  child: Icon(
+                    widget.reelModel.isLikedBy!.contains(userModel.userId)
+                        ? Icons.favorite
+                        : Icons.favorite_outline_rounded,
+                    size: 35,
+                    color:
+                        widget.reelModel.isLikedBy!.contains(userModel.userId)
+                            ? Colors.red
+                            : Colors.white,
                   ),
                 ),
                 const SizedBox(height: 5),
-                Text(
-                  '20k',
-                  style: Theme.of(context)
-                      .textTheme
-                      .labelMedium!
-                      .copyWith(color: AppColors.whiteColor),
-                ),
+                if (widget.reelModel.isLikedBy!.isNotEmpty)
+                  Text(
+                    widget.reelModel.isLikedBy!.length.toString(),
+                    style: Theme.of(context)
+                        .textTheme
+                        .labelMedium!
+                        .copyWith(color: AppColors.whiteColor),
+                  ),
               ],
             ),
             const SizedBox(height: 20),
-            Column(
-              children: [
-                SizedBox(
-                  height: 25,
-                  child: Image.asset(
-                    Const.instragramCommentIcon,
-                    color: Colors.white,
+            GestureDetector(
+              onTap: () {},
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 25,
+                    child: Image.asset(
+                      Const.instragramCommentIcon,
+                      color: Colors.white,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 5),
-                Text(
-                  '320',
-                  style: Theme.of(context)
-                      .textTheme
-                      .labelMedium!
-                      .copyWith(color: AppColors.whiteColor),
-                ),
-              ],
+                  const SizedBox(height: 5),
+                  if (widget.reelModel.comment != 0)
+                    Text(
+                      widget.reelModel.comment.toString(),
+                      style: Theme.of(context)
+                          .textTheme
+                          .labelMedium!
+                          .copyWith(color: AppColors.whiteColor),
+                    ),
+                ],
+              ),
             ),
             const SizedBox(height: 20),
             SizedBox(
@@ -229,21 +317,10 @@ class ReelReactionButtons extends StatelessWidget {
                 color: Colors.white,
               ),
             ),
-            // const Icon(
-            //   Icons.near_me_outlined,
-            //   size: 35,
-            //   color: Colors.white,
-            // ),
             const SizedBox(height: 20),
             const Icon(
               Icons.more_vert_outlined,
-              size: 35,
-              color: Colors.white,
-            ),
-            const SizedBox(height: 20),
-            const Icon(
-              Icons.music_note_outlined,
-              size: 30,
+              size: 33,
               color: Colors.white,
             ),
           ],

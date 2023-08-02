@@ -8,13 +8,24 @@ import '../../../core/widgets/cus_circular_progressbar.dart';
 import '../../../model/post_model/post_model.dart';
 import 'post_list_item.dart';
 
-class PostList extends StatelessWidget {
+class PostList extends StatefulWidget {
   const PostList({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    Box<PostModel> postBox = HiveServices.getPosts();
+  State<PostList> createState() => _PostListState();
+}
 
+class _PostListState extends State<PostList> {
+  late Box<PostModel> postBox;
+
+  @override
+  void initState() {
+    super.initState();
+    postBox = HiveServices.getPosts();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     // use stream builder for the mean time
     return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
       stream: FirebaseFirestore.instance

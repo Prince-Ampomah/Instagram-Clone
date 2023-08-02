@@ -122,18 +122,18 @@ class CusDefaultBottomNav extends StatelessWidget {
         label: '',
         tooltip: 'Reel',
       ),
-      const BottomNavigationBarItem(
-        icon: Icon(
-          // FontAwesomeIcons.bagShopping,
-          Icons.shopping_bag_outlined,
-        ),
-        activeIcon: Icon(
-          // FontAwesomeIcons.bagShopping,
-          Icons.shopping_bag,
-        ),
-        label: '',
-        tooltip: 'Shop',
-      ),
+      // const BottomNavigationBarItem(
+      //   icon: Icon(
+      //     // FontAwesomeIcons.bagShopping,
+      //     Icons.shopping_bag_outlined,
+      //   ),
+      //   activeIcon: Icon(
+      //     // FontAwesomeIcons.bagShopping,
+      //     Icons.shopping_bag,
+      //   ),
+      //   label: '',
+      //   tooltip: 'Shop',
+      // ),
       BottomNavigationBarItem(
         icon: userModel?.profileImage != null
             ? Container(

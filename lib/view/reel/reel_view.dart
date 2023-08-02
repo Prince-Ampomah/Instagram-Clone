@@ -1,29 +1,39 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:instagram_clone/model/reel_model/reel_model.dart';
 import 'package:instagram_clone/view/reel/reel_list_item.dart';
 
 import '../../../core/constants/constants.dart';
 import '../../../core/widgets/cus_circular_progressbar.dart';
-import '../../../model/post_model/post_model.dart';
+import '../../core/services/hive_services.dart';
 
-class ReelView extends StatelessWidget {
+class ReelView extends StatefulWidget {
   const ReelView({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    // Box<PostModel> postBox = HiveServices.getPosts();
+  State<ReelView> createState() => _ReelViewState();
+}
 
-    return FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
-      future: FirebaseFirestore.instance
+class _ReelViewState extends State<ReelView> {
+  late Box<ReelModel> reelBox;
+
+  @override
+  void initState() {
+    super.initState();
+    reelBox = HiveServices.getReels();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+      stream: FirebaseFirestore.instance
           .collection(Const.reelCollection)
           .orderBy('timePosted', descending: true)
-          .get(),
+          .snapshots(),
       builder: (BuildContext context, snapshot) {
         if (snapshot.hasError) {
-          return Center(
-            child: Text(snapshot.error.toString()),
-          );
+          return Center(child: Text(snapshot.error.toString()));
         }
 
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -35,6 +45,7 @@ class ReelView extends StatelessWidget {
         }
 
         if (snapshot.hasData) {
+          saveDataOffline(snapshot, reelBox);
           return ReelListItem(snapshot: snapshot);
         }
 
@@ -54,24 +65,22 @@ class ReelView extends StatelessWidget {
     );
   }
 
-  saveDataOffline(snapshot, Box<PostModel> postBox) async {
-    Map<String, PostModel> postChanges = {};
-    List<String> postsRemoved = [];
+  saveDataOffline(snapshot, Box<ReelModel> reelBox) async {
+    Map<String, ReelModel> reelChanges = {};
+    List<String> reelsRemoved = [];
 
     for (var docRef in snapshot.data!.docChanges) {
       if (docRef.type == DocumentChangeType.removed) {
-        postsRemoved.add(docRef.doc.id);
+        reelsRemoved.add(docRef.doc.id);
       } else {
-        postChanges[docRef.doc.id] = PostModel.fromJson({
+        reelChanges[docRef.doc.id] = ReelModel.fromJson({
           ...docRef.doc.data()!,
         });
       }
     }
-    // save post offline
-    await postBox.putAll(postChanges);
 
-    // delete all post data from offline db
-    //that has been deleted online
-    await postBox.deleteAll(postsRemoved);
+    await reelBox.putAll(reelChanges);
+
+    await reelBox.deleteAll(reelsRemoved);
   }
 }
