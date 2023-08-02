@@ -5,17 +5,20 @@ class CustomReadMore extends StatelessWidget {
   const CustomReadMore({
     super.key,
     required this.text,
-    this.trimLines = 2,
     this.textStyle,
     this.moreStyle = const TextStyle(color: Colors.grey),
     this.lessStyle = const TextStyle(color: Colors.grey),
     this.readMoreText = ' more',
     this.readLessText = ' less',
+    this.trimLines = 2,
+    this.trimeLength = 2,
+    this.trimMode = TrimMode.Line,
   });
 
   final String text;
   final String? readMoreText, readLessText;
-  final int? trimLines;
+  final int? trimLines, trimeLength;
+  final TrimMode trimMode;
   final TextStyle? textStyle, moreStyle, lessStyle;
 
   @override
@@ -23,8 +26,9 @@ class CustomReadMore extends StatelessWidget {
     return ReadMoreText(
       text,
       style: textStyle,
-      trimLines: 2,
-      trimMode: TrimMode.Line,
+      trimLines: trimLines!,
+      trimLength: trimeLength!,
+      trimMode: trimMode,
       trimCollapsedText: readMoreText!,
       trimExpandedText: readLessText!,
       moreStyle: moreStyle,

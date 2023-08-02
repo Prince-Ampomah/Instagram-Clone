@@ -95,6 +95,7 @@ class PrimaryOutlinedButton extends StatelessWidget {
     required this.title,
     this.bgColor,
     this.foregroundColor = Colors.black,
+    this.borderSideColor = Colors.black45,
     this.textColor,
     this.iconData,
     this.isLoading,
@@ -108,7 +109,7 @@ class PrimaryOutlinedButton extends StatelessWidget {
   });
 
   final String title;
-  final Color? foregroundColor, bgColor, textColor;
+  final Color? foregroundColor, bgColor, textColor, borderSideColor;
   final Widget? iconData;
   final bool? isLoading, disabled;
   final double? fontSize,
@@ -136,7 +137,7 @@ class PrimaryOutlinedButton extends StatelessWidget {
                   ),
                 ),
                 side: MaterialStateProperty.all<BorderSide?>(
-                  const BorderSide(color: Colors.black45),
+                  BorderSide(color: borderSideColor!),
                 ),
               ),
               icon: iconData!,
@@ -161,7 +162,7 @@ class PrimaryOutlinedButton extends StatelessWidget {
                   ),
                 ),
                 side: MaterialStateProperty.all<BorderSide?>(
-                  const BorderSide(color: Colors.black45),
+                  BorderSide(color: borderSideColor!),
                 ),
               ),
               child: Text(

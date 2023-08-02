@@ -70,8 +70,14 @@ class _AppLayoutViewState extends State<AppLayoutView> {
         ),
         bottomNavigationBar: CusDefaultBottomNav(
           currentIndex: appLayoutCtrl.pageIndex,
-          elevation: 10.0,
           onTap: appLayoutCtrl.changePageIndex,
+          elevation: 5.0,
+          backgroudColor: appLayoutCtrl.pageIndex == 2 ? Colors.black : null,
+          selectedItemColor:
+              appLayoutCtrl.pageIndex != 2 ? Colors.black : Colors.white,
+          unselectedItemColor: appLayoutCtrl.pageIndex != 2
+              ? null
+              : const Color.fromARGB(255, 189, 189, 189),
         ),
         body: pages[appLayoutCtrl.pageIndex],
       ),

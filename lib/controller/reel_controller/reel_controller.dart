@@ -30,6 +30,16 @@ class ReelController extends GetxController {
 
   String reelId = FirestoreDBImpl.generateFirestoreId(Const.reelCollection);
 
+  Future<UserModel> getReelUserData({required String userId}) async {
+    var document = await firestoreDB.getDocById(Const.usersCollection, userId);
+
+    if (document.exists) {
+      return UserModel.fromJson(document.data() as Map<String, dynamic>);
+    }
+
+    return UserModel();
+  }
+
   addNewReel() async {
     UserModel? userModel = HiveServices.getUserBox().get(Const.currentUser);
 

@@ -83,9 +83,14 @@ class CusDefaultBottomNav extends StatelessWidget {
     this.onTap,
     this.bottomType = BottomNavigationBarType.fixed,
     this.iconSize = 30,
+    this.unselectedItemColor,
+    this.fixedColor,
   });
 
-  final Color? backgroudColor, selectedItemColor;
+  final Color? backgroudColor,
+      selectedItemColor,
+      unselectedItemColor,
+      fixedColor;
   final int currentIndex;
   final double? height, elevation, iconSize;
   final Function(int)? onTap;
@@ -103,12 +108,8 @@ class CusDefaultBottomNav extends StatelessWidget {
         tooltip: 'Home',
       ),
       const BottomNavigationBarItem(
-        icon: Icon(
-          Icons.search_outlined,
-        ),
-        activeIcon: Icon(
-          Icons.search,
-        ),
+        icon: Icon(Icons.search_outlined),
+        activeIcon: Icon(Icons.search),
         label: '',
         tooltip: 'Search',
       ),
@@ -197,7 +198,9 @@ class CusDefaultBottomNav extends StatelessWidget {
       onTap: onTap,
       elevation: elevation,
       selectedItemColor: selectedItemColor,
-      fixedColor: Colors.black,
+      unselectedItemColor: unselectedItemColor,
+      backgroundColor: backgroudColor,
+      fixedColor: fixedColor,
       type: bottomType,
       iconSize: iconSize!,
     );

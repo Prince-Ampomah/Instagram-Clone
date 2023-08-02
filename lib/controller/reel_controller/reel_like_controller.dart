@@ -7,7 +7,6 @@ import 'package:instagram_clone/model/reel_model/reel_model.dart';
 
 import '../../core/constants/constants.dart';
 import '../../core/services/hive_services.dart';
-import '../../model/post_model/post_model.dart';
 import '../../repository/repository_abstract/database_abstract.dart';
 import '../../repository/respository_implementation/database_implementation.dart';
 
@@ -76,30 +75,21 @@ class ReelLikeController extends GetxController {
     }
   }
 
-  likePostOnly(String postId) async {
+  likePostOnly(String reelId) async {
     try {
       String? userId = HiveServices.getUserBox().get(Const.currentUser)!.userId;
 
-      // query the post from offline db
-      PostModel? postModel = HiveServices.getPosts().get(postId);
+      ReelModel? reelModel = HiveServices.getReels().get(reelId);
 
-      if (!postModel!.isLikedBy!.contains(userId)) {
+      if (!reelModel!.isLikedBy!.contains(userId)) {
         // add user to the liked list and increase the like
         await firestoreDB.updateDoc(
-          Const.postsCollection,
-          postId,
+          Const.reelCollection,
+          reelId,
           {
             'isLikedBy': FieldValue.arrayUnion([userId]),
-            'like': FieldValue.increment(1),
           },
         );
-
-        // _showLikeIcon = true;
-        // _likeIconTimer?.cancel();
-        // _likeIconTimer = Timer(const Duration(milliseconds: 500), () {
-        //   _showLikeIcon = false;
-        //   update();
-        // });
       }
     } catch (e) {
       Utils.showErrorMessage(e.toString());
