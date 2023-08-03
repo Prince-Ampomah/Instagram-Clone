@@ -33,7 +33,16 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
+
+  # font & icons
+  google_fonts: ^4.0.3
+  font_awesome_flutter: ^10.3.0
   cupertino_icons: ^1.0.2
+  ionicons: ^0.2.2
+  fluttericon: ^2.0.0
+
+  # emjoi
+  emoji_picker_flutter: ^1.6.1
 
   focused_menu: ^1.0.5
   # flutter toast
@@ -62,10 +71,6 @@ dependencies:
   get: ^4.6.5
   provider: ^6.0.5
   path_provider: ^2.0.14
-
-  # font & icons
-  google_fonts: ^4.0.3
-  font_awesome_flutter: ^10.3.0
 
   # shimmer
   shimmer: ^2.0.0

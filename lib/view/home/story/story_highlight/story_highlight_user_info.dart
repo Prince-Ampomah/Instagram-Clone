@@ -64,7 +64,7 @@ class _UserInfoState extends State<UserInfo> {
 
   @override
   Widget build(BuildContext context) {
-    // Size size = MediaQuery.of(context).size;
+    // Size size = MediaQuery.sizeOf(context);
 
     return Padding(
       padding: const EdgeInsets.only(top: 25, left: 10, right: 10),

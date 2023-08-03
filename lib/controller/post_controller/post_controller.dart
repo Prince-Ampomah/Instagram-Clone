@@ -100,10 +100,10 @@ class PostController extends GetxController {
 
   deletePostComment(String postId) {
     firestoreDB
-        .getDocByField(Const.commentsCollection, 'postId', postId)
+        .getDocByField(Const.postCommentCollection, 'postId', postId)
         .then((value) {
       for (var doc in value.docs) {
-        firestoreDB.deleteDoc(Const.commentsCollection, doc.id);
+        firestoreDB.deleteDoc(Const.postCommentCollection, doc.id);
       }
     });
   }

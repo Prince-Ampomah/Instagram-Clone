@@ -173,6 +173,20 @@ class FirestoreDBImpl implements FirestoreDB {
     return userModel;
   }
 
+  static Future<List<QueryDocumentSnapshot<Map<String, dynamic>>>>
+      getAllUsers() async {
+    try {
+      QuerySnapshot<Map<String, dynamic>> doc = await FirebaseFirestore.instance
+          .collection(Const.usersCollection)
+          .get();
+      return doc.docs.toList();
+    } catch (e) {
+      Utils.showErrorMessage(e.toString());
+    }
+
+    return [];
+  }
+
   static Future<List<UserModel>> getEitherFollowersOrFollowingUsersData(
       List usersId) async {
     List<UserModel> usersData = [];

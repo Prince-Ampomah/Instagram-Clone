@@ -87,7 +87,7 @@ class _PostImageState extends State<PostImage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.sizeOf(context);
 
     return GetBuilder<PostImageController>(
       builder: (controller) {
@@ -100,40 +100,6 @@ class _PostImageState extends State<PostImage> with TickerProviderStateMixin {
           },
           child: Stack(
             children: [
-              // CustomImageSlider(
-              //   autoplay: false,
-              //   aspectRatio: 1.0,
-              //   items: List.generate(
-              //     widget.images!.length,
-              //     (index) {
-              //       return Stack(
-              //         children: [
-              //           CustomCachedImge(
-              //             imageUrl: widget.images![index],
-              //             width: size.width,
-              //             shimmerHeight: size.height * 0.70,
-              //             fit: BoxFit.fitWidth,
-              //           ),
-              //           if (showLikeIcon)
-              //             AnimatedBuilder(
-              //               animation: _heartAnimationController,
-              //               builder: (context, child) {
-              //                 return Align(
-              //                   alignment: Alignment.center,
-              //                   child: Icon(
-              //                     Icons.favorite,
-              //                     size: _heartAnimation.value,
-              //                     color: Colors.white,
-              //                   ),
-              //                 );
-              //               },
-              //             ),
-              //         ],
-              //       );
-              //     },
-              //   ),
-              // ),
-
               SizedBox(
                 height: size.height * 0.50,
                 width: size.width,

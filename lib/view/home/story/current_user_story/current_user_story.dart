@@ -5,7 +5,7 @@ import 'package:instagram_clone/view/home/story/current_user_story/active_story.
 import '../../../../core/constants/constants.dart';
 import '../../../../core/services/hive_services.dart';
 import '../../../../model/story_model/story_model.dart';
-import 'non_active_story.dart';
+import 'non_updated_story.dart';
 
 class CurrentUserStory extends StatelessWidget {
   const CurrentUserStory({
@@ -30,7 +30,7 @@ class CurrentUserStory extends StatelessWidget {
 
           return ActiveCurrentStory(storyModel: storyModel);
         } else {
-          return const NonActiveStory();
+          return const NonUpdatedStory();
         }
       },
     );

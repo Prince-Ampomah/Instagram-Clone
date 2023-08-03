@@ -61,7 +61,7 @@ class _SignUpViewState extends State<SignUpView>
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.sizeOf(context);
 
     return Scaffold(
       body: SingleChildScrollView(

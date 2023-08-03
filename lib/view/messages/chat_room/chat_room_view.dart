@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/controller/chat_controller/chat_controller.dart';
-import '../../../core/constants/constants.dart';
 
+import '../../../core/constants/constants.dart';
 import '../../../core/services/hive_services.dart';
 import '../../../model/user_model/user_model.dart';
 import 'chat_messages_list.dart';
@@ -30,11 +30,6 @@ class _ChatRoomViewState extends State<ChatRoomView> {
 
     generateAndSaveChatId();
     saveReceiverModel();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 
   generateAndSaveChatId() async {
@@ -67,7 +62,9 @@ class _ChatRoomViewState extends State<ChatRoomView> {
         children: [
           // Expanded(
           //   child: SingleChildScrollView(
+          //     // reverse: true,
           //     child: Column(
+          //       // mainAxisAlignment: MainAxisAlignment.spaceBetween,
           //       children: [
           //         UserProfileHeader(userModel: widget.userModel),
           //         20.ph,

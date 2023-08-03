@@ -129,7 +129,7 @@
 //   }
 
 //   void _onTapDown(TapDownDetails details, Story story) {
-//     final double screenWidth = MediaQuery.of(context).size.width;
+//     final double screenWidth = MediaQuery.sizeOf(context).width;
 //     final double dx = details.globalPosition.dx;
 //     if (dx < screenWidth / 3) {
 //       setState(() {

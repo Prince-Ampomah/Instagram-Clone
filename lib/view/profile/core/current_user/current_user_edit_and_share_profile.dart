@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../core/theme/app_colors.dart';
-import '../../../../core/widgets/cus_main_button.dart';
+import '../../../../core/widgets/cus_primary_button.dart';
 import '../../../../model/user_model/user_model.dart';
 import '../../edit_profile/edit_profile_view.dart';
 

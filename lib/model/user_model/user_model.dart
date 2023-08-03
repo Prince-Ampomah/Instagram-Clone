@@ -1,6 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hive/hive.dart';
 import 'package:instagram_clone/core/constants/constants.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 part 'user_model.g.dart';
 
@@ -33,11 +33,11 @@ class UserModel extends HiveObject {
   @HiveField(8)
   bool? isEmailVerified;
 
-  @HiveField(9)
-  num numberOfFollowers;
+  // @HiveField(9)
+  // num numberOfFollowers;
 
-  @HiveField(10)
-  num numberOfFollowing;
+  // @HiveField(10)
+  // num numberOfFollowing;
 
   @HiveField(11)
   num numberOfPost;
@@ -59,8 +59,8 @@ class UserModel extends HiveObject {
     this.isEmailVerified = false,
     this.bio,
     this.numberOfPost = 0,
-    this.numberOfFollowers = 0,
-    this.numberOfFollowing = 0,
+    // this.numberOfFollowers = 0,
+    // this.numberOfFollowing = 0,
     this.listOfFollowers = const [],
     this.listOfFollowing = const [],
   });
@@ -78,8 +78,8 @@ class UserModel extends HiveObject {
     map['createdAt'] = createdAt;
     map['bio'] = bio;
     map['numberOfPost'] = numberOfPost;
-    map['numberOfFollowers'] = numberOfFollowers;
-    map['numberOfFollowing'] = numberOfFollowing;
+    // map['numberOfFollowers'] = numberOfFollowers;
+    // map['numberOfFollowing'] = numberOfFollowing;
     map['listOfFollowers'] = listOfFollowers;
     map['listOfFollowing'] = listOfFollowing;
 
@@ -97,8 +97,8 @@ class UserModel extends HiveObject {
       isEmailVerified: json['isEmailVerified'],
       bio: json['bio'],
       numberOfPost: json['numberOfPost'],
-      numberOfFollowers: json['numberOfFollowers'],
-      numberOfFollowing: json['numberOfFollowing'],
+      // numberOfFollowers: json['numberOfFollowers'],
+      // numberOfFollowing: json['numberOfFollowing'],
       listOfFollowers: json['listOfFollowers'],
       listOfFollowing: json['listOfFollowing'],
       createdAt: (json['createdAt'] is Timestamp)

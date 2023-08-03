@@ -1,10 +1,13 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:instagram_clone/controller/reel_controller/reel_controller.dart';
+import 'package:instagram_clone/controller/story_controller/story_controller.dart';
 import 'package:instagram_clone/core/theme/ui_layout_preference.dart';
 
 import '../../controller/camera_controller/app_camera_controller.dart';
 import '../../controller/post_controller/new_post_controller.dart';
+import '../../core/constants/constants.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/widgets/cus_circular_progressbar.dart';
 import '../camera/core/camera_close_button.dart';
@@ -58,20 +61,23 @@ class _NewPostCameraViewState extends State<NewPostCameraView>
         break;
 
       default:
-        false;
+        AppCameraController.instance.cameraController.dispose();
+        !AppCameraController.instance.cameraController.value.isInitialized;
     }
     super.didChangeAppLifecycleState(state);
   }
 
+  int currentIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.transparent,
+      backgroundColor: Colors.black.withOpacity(0.8),
       body: SafeArea(
         child: GetBuilder<AppCameraController>(
           builder: (controller) {
             return Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(
                   child: FutureBuilder(
@@ -89,15 +95,46 @@ class _NewPostCameraViewState extends State<NewPostCameraView>
                                   if (!controller.isRecording) {
                                     XFile imageFile =
                                         await controller.takePhoto();
-                                    NewPostController.instance
-                                        .getImageAndPreview(imageFile.path);
+
+                                    switch (currentIndex) {
+                                      case 0:
+                                        NewPostController.instance
+                                            .getImageAndPreview(imageFile.path);
+                                        break;
+
+                                      case 1:
+                                        StoryController.instance
+                                            .getImageAndPreview(imageFile.path);
+                                        break;
+
+                                      default:
+                                        false;
+                                    }
                                   }
                                 },
                                 onLongPressUp: () async {
                                   XFile videoFile =
                                       await controller.stopAndSaveVideo();
-                                  NewPostController.instance
-                                      .getVideoAndPreview(videoFile.path);
+
+                                  switch (currentIndex) {
+                                    case 0:
+                                      NewPostController.instance
+                                          .getVideoAndPreview(videoFile.path);
+                                      break;
+
+                                    case 1:
+                                      StoryController.instance
+                                          .getVideoAndPreview(videoFile.path);
+                                      break;
+
+                                    case 2:
+                                      ReelController.instance
+                                          .getVideoAndPreview(videoFile.path);
+                                      break;
+
+                                    default:
+                                      false;
+                                  }
                                 },
                                 onLongPressed: () async {
                                   await controller.recordVideo();
@@ -116,6 +153,7 @@ class _NewPostCameraViewState extends State<NewPostCameraView>
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  // mainAxisSize: MainAxisSize.min,
                   children: [
                     // gallery image
                     Padding(
@@ -126,13 +164,77 @@ class _NewPostCameraViewState extends State<NewPostCameraView>
                       ),
                       child: IconButton(
                         onPressed: () async {
-                          await NewPostController.instance
-                              .pickMediaFromDevice();
+                          switch (currentIndex) {
+                            case 0:
+                              await NewPostController.instance
+                                  .pickMediaFromDevice();
+                              break;
+
+                            case 1:
+                              await StoryController.instance
+                                  .pickMediaFromDevice();
+                              break;
+
+                            default:
+                              false;
+                          }
                         },
                         icon: const Icon(
                           Icons.image,
                           color: Colors.white,
                           size: 35,
+                        ),
+                      ),
+                    ),
+
+                    // post type (post, story, reel)
+                    Expanded(
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Container(
+                          alignment: Alignment.center,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 50,
+                            vertical: 10,
+                          ),
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(255, 0, 0, 0)
+                                .withOpacity(0.2),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Row(
+                            children: List.generate(
+                              Const.contentTypes.length,
+                              (index) {
+                                return GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      currentIndex = index;
+                                    });
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 10.0,
+                                    ),
+                                    child: Text(
+                                      Const.contentTypes[index],
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        color: index == currentIndex
+                                            ? Colors.white
+                                            : const Color.fromARGB(
+                                                255,
+                                                138,
+                                                138,
+                                                138,
+                                              ),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
                         ),
                       ),
                     ),

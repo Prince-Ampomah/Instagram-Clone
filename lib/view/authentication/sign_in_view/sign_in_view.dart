@@ -36,7 +36,7 @@ class _SignInViewState extends State<SignInView> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.sizeOf(context);
 
     return Scaffold(
       body: SizedBox(

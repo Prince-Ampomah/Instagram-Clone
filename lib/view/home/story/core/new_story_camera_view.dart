@@ -53,6 +53,8 @@ class _NewStoryPostCameraViewState extends State<NewStoryPostCameraView>
         break;
 
       default:
+        AppCameraController.instance.cameraController.dispose();
+        !AppCameraController.instance.cameraController.value.isInitialized;
         false;
     }
     super.didChangeAppLifecycleState(state);

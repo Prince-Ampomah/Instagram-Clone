@@ -30,7 +30,7 @@ class _ProfileViewGalleryState extends State<ProfileViewGallery>
   @override
   void initState() {
     tabController = TabController(length: 2, vsync: this);
-    // Get.put(PostProfileController());
+
     super.initState();
   }
 
@@ -110,7 +110,7 @@ class ListPostProfileItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.sizeOf(context);
     return GridView.count(
       crossAxisCount: 3,
       mainAxisSpacing: 1.0,

@@ -5,7 +5,7 @@ import '../../../controller/models_controller/models_controller.dart';
 import '../../../core/utils/helper_functions.dart';
 import '../../../core/widgets/cus_cached_image.dart';
 import '../../../core/widgets/cus_circular_image.dart';
-import '../../../core/widgets/cus_main_button.dart';
+import '../../../core/widgets/cus_primary_button.dart';
 import '../../../model/user_model/user_model.dart';
 import '../../profile/users_profile/users_profile_view.dart';
 
@@ -84,7 +84,7 @@ class UserProfileHeader extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                '${userModel.numberOfFollowers} ${userModel.numberOfFollowers > 1 ? 'followers' : 'follower'}',
+                '${userModel.listOfFollowers!.length} ${userModel.listOfFollowers!.length > 1 ? 'followers' : 'follower'}',
                 style: const TextStyle(
                   fontWeight: FontWeight.normal,
                   fontSize: 16,

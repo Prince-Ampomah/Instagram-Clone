@@ -28,22 +28,23 @@ class CommentListItemView extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              commentModel.userProfileImage != null
-                  ? ClipRRect(
-                      borderRadius: BorderRadius.circular(100),
-                      child: CustomCachedImage(
-                        height: 40,
-                        width: 40,
-                        imageUrl: commentModel.userProfileImage!,
-                        fit: BoxFit.cover,
-                      ),
-                    )
-                  : CircularImageContainer(
-                      height: 0.045,
-                      width: 0.045,
-                      border: Border.all(width: .2),
-                      image: Const.userImage,
-                    ),
+              if (commentModel.userProfileImage != null)
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(100),
+                  child: CustomCachedImage(
+                    height: 40,
+                    width: 40,
+                    imageUrl: commentModel.userProfileImage!,
+                    fit: BoxFit.cover,
+                  ),
+                )
+              else
+                CircularImageContainer(
+                  height: 0.045,
+                  width: 0.045,
+                  border: Border.all(width: .2),
+                  image: Const.userImage,
+                ),
               const SizedBox(width: 20),
               Expanded(
                 child: Column(

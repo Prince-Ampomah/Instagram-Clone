@@ -4,12 +4,12 @@ import '../../controller/post_controller/new_post_controller.dart';
 import '../../core/widgets/cus_appbar.dart';
 import '../../core/widgets/cus_cached_image.dart';
 
-class NewPostPreview extends StatelessWidget {
-  const NewPostPreview({super.key});
+class PreivewImage extends StatelessWidget {
+  const PreivewImage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.sizeOf(context);
 
     return Scaffold(
       appBar: CustomAppBar(

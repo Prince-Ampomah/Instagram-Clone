@@ -8,7 +8,9 @@ FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 class Authimplementation implements AuthContract {
   @override
   Future<UserCredential> signUpWithEmailAndPassword(
-      String email, String password) async {
+    String email,
+    String password,
+  ) async {
     try {
       return await firebaseAuth.createUserWithEmailAndPassword(
         email: email,

@@ -13,7 +13,7 @@ class CustomBottomSheetContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.sizeOf(context);
     return Container(
       height: size.height * height!,
       width: size.width,

@@ -71,7 +71,7 @@ class CustomImagePicker extends StatelessWidget {
   }
 
   buildBottomItems(context, height, Orientation orientation) {
-    double height = MediaQuery.of(context).size.height;
+    double height = MediaQuery.sizeOf(context).height;
     return SizedBox(
       height:
           orientation == Orientation.portrait ? height * 0.23 : height * 0.50,

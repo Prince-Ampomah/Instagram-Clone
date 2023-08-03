@@ -7,7 +7,7 @@ import '../../core/utils/helper_functions.dart';
 import '../../core/widgets/cus_appbar.dart';
 import '../../core/widgets/cus_cached_image.dart';
 import '../../core/widgets/cus_video_player.dart';
-import 'add_new_post_preview.dart';
+import 'preview_image.dart';
 
 class AddNewPost extends StatelessWidget {
   const AddNewPost({super.key, this.isAVideoFile = false});
@@ -16,7 +16,7 @@ class AddNewPost extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.sizeOf(context);
 
     return Scaffold(
       appBar: CustomAppBar(
@@ -48,43 +48,42 @@ class AddNewPost extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  isAVideoFile!
-                      ? SizedBox(
-                          height: size.height * 0.12,
-                          width: 150,
-                          child: CusVideoPlayer(
-                            videoPath: NewPostController.instance.media.first,
-                            showControllBar: false,
-                            showSettingsButton: false,
+                  if (isAVideoFile!)
+                    SizedBox(
+                      height: size.height * 0.12,
+                      width: 150,
+                      child: CusVideoPlayer(
+                        videoPath: NewPostController.instance.media.first,
+                        showControllBar: false,
+                        showSettingsButton: false,
+                      ),
+                    )
+                  else
+                    GestureDetector(
+                      onTap: () => sendToPage(context, const PreivewImage()),
+                      child: Stack(
+                        children: [
+                          CustomCachedImage(
+                            imageUrl: NewPostController.instance.media.first,
+                            height: size.height * 0.12,
+                            width: 150,
+                            fit: BoxFit.cover,
                           ),
-                        )
-                      : GestureDetector(
-                          onTap: () =>
-                              sendToPage(context, const NewPostPreview()),
-                          child: Stack(
-                            children: [
-                              CustomCachedImage(
-                                imageUrl:
-                                    NewPostController.instance.media.first,
-                                height: size.height * 0.12,
-                                width: 150,
-                                fit: BoxFit.cover,
-                              ),
-                              if (NewPostController.instance.media.length != 1)
-                                const Align(
-                                  alignment: Alignment.topRight,
-                                  child: Padding(
-                                    padding: EdgeInsets.all(8.0),
-                                    child: Icon(
-                                      Icons.bookmarks,
-                                      color: Colors.white,
-                                      size: 20,
-                                    ),
-                                  ),
+                          if (NewPostController.instance.media.length != 1)
+                            const Align(
+                              alignment: Alignment.topRight,
+                              child: Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Icon(
+                                  Icons.bookmarks,
+                                  color: Colors.white,
+                                  size: 20,
                                 ),
-                            ],
-                          ),
-                        ),
+                              ),
+                            ),
+                        ],
+                      ),
+                    ),
                   Expanded(
                     flex: 5,
                     child: Padding(

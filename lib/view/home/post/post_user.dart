@@ -47,17 +47,18 @@ class PostUser extends StatelessWidget {
           children: [
             Row(
               children: [
-                userModel!.profileImage != null
-                    ? ClipRRect(
-                        borderRadius: BorderRadius.circular(100),
-                        child: CustomCachedImage(
-                          height: 40,
-                          width: 40,
-                          imageUrl: userModel!.profileImage!,
-                          fit: BoxFit.cover,
-                        ),
-                      )
-                    : const CircularImageContainer(image: Const.userImage),
+                if (userModel!.profileImage != null)
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(100),
+                    child: CustomCachedImage(
+                      height: 40,
+                      width: 40,
+                      imageUrl: userModel!.profileImage!,
+                      fit: BoxFit.cover,
+                    ),
+                  )
+                else
+                  const CircularImageContainer(image: Const.userImage),
                 const SizedBox(width: 10),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -79,7 +80,7 @@ class PostUser extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const Text('location'),
+                    // const Text('location'),
                   ],
                 ),
               ],

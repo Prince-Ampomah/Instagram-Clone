@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Instagram Clone',
         theme: AppTheme.lightTheme(context),
-        home: AppState.user?.userId != null
+        home: AppState.currentUser?.userId != null
             ? const AppLayoutView()
             : const SignInView(),
       ),

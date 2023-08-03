@@ -4,6 +4,8 @@ import 'package:instagram_clone/controller/chat_controller/chat_controller.dart'
 import 'package:instagram_clone/controller/follow_controller/follow_controller.dart';
 import 'package:instagram_clone/controller/notification_controller/notification_controller.dart';
 import 'package:instagram_clone/controller/post_controller/comment_controller.dart';
+import 'package:instagram_clone/controller/reel_controller/reel_controller.dart';
+import 'package:instagram_clone/controller/reel_controller/reel_like_controller.dart';
 import 'package:instagram_clone/controller/story_controller/story_controller.dart';
 
 import 'controller/auth_controller/auth_controller.dart';
@@ -17,12 +19,15 @@ import 'core/services/hive_services.dart';
 import 'model/user_model/user_model.dart';
 
 class AppState {
-  static UserModel? user = HiveServices.getUserBox().get(Const.currentUser);
+  static UserModel? currentUser =
+      HiveServices.getUserBox().get(Const.currentUser);
 
   static injectControllers() {
     Get.put(AuthController());
     Get.put(PostController());
+    Get.put(ReelController());
     Get.put(LikeController());
+    Get.put(ReelLikeController());
     Get.put(CommentController());
     Get.put(EditProfileController());
     Get.put(SavePostController());

@@ -50,19 +50,20 @@ class _ChatVideoBubbleDetailsState extends State<ChatVideoBubbleDetails> {
         ),
         title: Row(
           children: [
-            userModel.profileImage != null
-                ? ClipRRect(
-                    borderRadius: BorderRadius.circular(100),
-                    child: CustomCachedImage(
-                      height: 35,
-                      width: 35,
-                      imageUrl: userModel.profileImage!,
-                      fit: BoxFit.cover,
-                    ),
-                  )
-                : CircularImageContainer(
-                    border: Border.all(width: 1.0),
-                  ),
+            if (userModel.profileImage != null)
+              ClipRRect(
+                borderRadius: BorderRadius.circular(100),
+                child: CustomCachedImage(
+                  height: 35,
+                  width: 35,
+                  imageUrl: userModel.profileImage!,
+                  fit: BoxFit.cover,
+                ),
+              )
+            else
+              CircularImageContainer(
+                border: Border.all(width: 1.0),
+              ),
             10.pw,
             Expanded(
               child: Column(

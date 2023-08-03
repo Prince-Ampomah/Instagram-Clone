@@ -24,7 +24,7 @@ class _PasswordResetViewState extends State<PasswordResetView> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.sizeOf(context);
 
     return Scaffold(
       appBar: CustomAppBar(

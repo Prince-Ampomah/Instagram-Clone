@@ -39,22 +39,22 @@ class MessageListItem extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
             child: Row(
               children: [
-                recentChatModel.receiverModel!.profileImage != null
-                    ? ClipRRect(
-                        borderRadius: BorderRadius.circular(100),
-                        child: CustomCachedImage(
-                          height: 57,
-                          width: 57,
-                          imageUrl:
-                              recentChatModel.receiverModel!.profileImage!,
-                          fit: BoxFit.cover,
-                        ),
-                      )
-                    : CircularImageContainer(
-                        height: 0.07,
-                        width: 0.07,
-                        border: Border.all(width: 1.0),
-                      ),
+                if (recentChatModel.receiverModel!.profileImage != null)
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(100),
+                    child: CustomCachedImage(
+                      height: 57,
+                      width: 57,
+                      imageUrl: recentChatModel.receiverModel!.profileImage!,
+                      fit: BoxFit.cover,
+                    ),
+                  )
+                else
+                  CircularImageContainer(
+                    height: 0.07,
+                    width: 0.07,
+                    border: Border.all(width: 1.0),
+                  ),
                 20.pw,
                 Expanded(
                   child: Column(

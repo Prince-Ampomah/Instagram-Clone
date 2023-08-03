@@ -12,14 +12,17 @@ class CusBottomSheetIcons extends StatelessWidget {
     this.iconSize = 30,
     this.circleWidth = 0.2,
     this.textSize = 14.0,
+    this.bgColor,
+    this.border,
   }) : super(key: key);
 
   final IconData icons;
-  final Color? color;
+  final Color? color, bgColor;
   final String text;
   final double? height, width, textSize;
   final double circleWidth, iconSize;
   final void Function()? onTap;
+  final BoxBorder? border;
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +35,13 @@ class CusBottomSheetIcons extends StatelessWidget {
             width: width,
             margin: const EdgeInsets.all(10),
             decoration: BoxDecoration(
+              color: bgColor,
               borderRadius: BorderRadius.circular(50),
-              border: Border.all(
-                  color: const Color(0xFF3D3D3D), width: circleWidth),
+              border: border ??
+                  Border.all(
+                    color: const Color(0xFF3D3D3D),
+                    width: circleWidth,
+                  ),
             ),
             child: InkWell(
               onTap: onTap,
