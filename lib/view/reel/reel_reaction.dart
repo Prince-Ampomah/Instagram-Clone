@@ -6,6 +6,8 @@ import 'package:instagram_clone/core/theme/app_colors.dart';
 import 'package:instagram_clone/model/reel_model/reel_model.dart';
 import 'package:instagram_clone/model/user_model/user_model.dart';
 import 'package:instagram_clone/view/reel/reel_comment.dart';
+import 'package:instagram_clone/view/reel/reel_more_option_activity.dart';
+import 'package:ionicons/ionicons.dart';
 
 import '../../controller/reel_controller/reel_controller.dart';
 
@@ -114,19 +116,28 @@ class _ReelReactionButtonsState extends State<ReelReactionButtons> {
             const SizedBox(height: 20),
             GestureDetector(
               onTap: () {},
-              child: SizedBox(
-                height: 25,
-                child: Image.asset(
-                  Const.instragramSendIcon,
-                  color: Colors.white,
-                ),
+              child: const Icon(
+                Ionicons.paper_plane_outline,
+                size: 30,
+                color: Colors.white,
               ),
             ),
             const SizedBox(height: 20),
-            const Icon(
-              Icons.more_vert_outlined,
-              size: 33,
-              color: Colors.white,
+            GestureDetector(
+              onTap: () {
+                showModalBottomSheet(
+                  isScrollControlled: true,
+                  backgroundColor: Colors.white,
+                  barrierColor: Colors.transparent,
+                  context: context,
+                  builder: (context) => ReelActivity(userModel: userModel),
+                );
+              },
+              child: const Icon(
+                Icons.more_vert_outlined,
+                size: 30,
+                color: Colors.white,
+              ),
             ),
           ],
         ),
