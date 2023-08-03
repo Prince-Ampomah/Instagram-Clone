@@ -61,7 +61,8 @@ class Const {
   static const String postsCollection = 'posts';
   static const String reelCollection = 'reels';
   static const String storyCollection = 'stories';
-  static const String commentsCollection = 'comments';
+  static const String postCommentCollection = 'postComments';
+  static const String reelCommentCollection = 'reelComments';
   static const String likesCollection = 'likes';
   static const String notificationCollection = 'notifications';
   static const String followAndUnfollowCollection = 'followAndUnfollow';

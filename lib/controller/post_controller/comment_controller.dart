@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:instagram_clone/model/reel_model/reel_comment.dart';
 
 import '../../core/constants/constants.dart';
 import '../../core/services/hive_services.dart';
@@ -37,10 +38,6 @@ class CommentController extends GetxController {
       _setCommentList;
   String get getTextState => _setTextState;
 
-  // CommentController() {
-  //   fetchComments();
-  // }
-
   @override
   void dispose() {
     commentTextFieldController.dispose();
@@ -51,7 +48,7 @@ class CommentController extends GetxController {
 
   fetchComments() async {
     _streamSubscription = FirebaseFirestore.instance
-        .collection(Const.commentsCollection)
+        .collection(Const.postCommentCollection)
         .orderBy('time', descending: true)
         .snapshots()
         .listen((data) {
@@ -73,7 +70,7 @@ class CommentController extends GetxController {
     });
   }
 
-  Future<void> sendComment() async {
+  Future<void> sendPostComment() async {
     try {
       // get the post id from local db
       String postId = HiveServices.getPostId();
@@ -82,7 +79,7 @@ class CommentController extends GetxController {
         UserModel? userModel = HiveServices.getUserBox().get(Const.currentUser);
 
         CommentModel commentModel = CommentModel(
-          id: FirestoreDBImpl.generateFirestoreId(Const.commentsCollection),
+          id: FirestoreDBImpl.generateFirestoreId(Const.postCommentCollection),
           postId: postId,
           message: commentTextFieldController.text,
           userHandle: userModel!.userHandle,
@@ -93,7 +90,7 @@ class CommentController extends GetxController {
         commentTextFieldController.clear();
 
         await firestoreDB.addDocWithId(
-          Const.commentsCollection,
+          Const.postCommentCollection,
           commentModel.id!,
           {
             ...commentModel.toJson(),
@@ -101,7 +98,7 @@ class CommentController extends GetxController {
           },
         );
 
-        updateCommentValue(postId);
+        updateCommentValue(Const.postsCollection, postId);
       } else {
         showToast(msg: 'Add a comment');
       }
@@ -110,10 +107,44 @@ class CommentController extends GetxController {
     }
   }
 
-  updateCommentValue(String postId) async {
+  Future<void> sendReelComment(String reelId) async {
+    try {
+      if (commentTextFieldController.text.trim().isNotEmpty) {
+        UserModel? userModel = HiveServices.getUserBox().get(Const.currentUser);
+
+        ReelCommentModel reelCommentModel = ReelCommentModel(
+          id: FirestoreDBImpl.generateFirestoreId(Const.reelCommentCollection),
+          reelId: reelId,
+          message: commentTextFieldController.text,
+          userHandle: userModel!.userHandle,
+          userProfileImage: userModel.profileImage,
+          time: DateTime.now(),
+        );
+
+        commentTextFieldController.clear();
+
+        await firestoreDB.addDocWithId(
+          Const.reelCommentCollection,
+          reelCommentModel.id!,
+          {
+            ...reelCommentModel.toJson(),
+            'time': FieldValue.serverTimestamp(),
+          },
+        );
+
+        updateCommentValue(Const.reelCollection, reelId);
+      } else {
+        showToast(msg: 'Add a comment');
+      }
+    } catch (e) {
+      Utils.showErrorMessage(e.toString());
+    }
+  }
+
+  updateCommentValue(String collection, String docId) async {
     return await firestoreDB.updateDoc(
-      Const.postsCollection,
-      postId,
+      collection,
+      docId,
       {
         'comment': FieldValue.increment(1),
       },

@@ -35,6 +35,9 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
 
+  # emjoi
+  emoji_picker_flutter: ^1.6.1
+
   focused_menu: ^1.0.5
   # flutter toast
   fluttertoast: ^8.1.3

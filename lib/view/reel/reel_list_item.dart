@@ -4,13 +4,13 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-import 'package:instagram_clone/core/widgets/cus_video_player.dart';
 import 'package:instagram_clone/model/reel_model/reel_model.dart';
 import 'package:instagram_clone/view/reel/reel_reaction.dart';
 import 'package:instagram_clone/view/reel/reel_user_profile.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../controller/reel_controller/reel_like_controller.dart';
+import '../../core/widgets/cus_video_player.dart';
 
 String vd =
     'https://firebasestorage.googleapis.com/v0/b/instagram-clone-b31aa.appspot.com/o/reels%2FurraCrHDeY0V4D0gcnF7%2FREC1820518638010963750.mp4?alt=media&token=00bbaa2f-46fa-4f76-a233-a4c1fd3096bd';
@@ -48,13 +48,12 @@ class _ReelVideoState extends State<ReelVideo>
   VideoPlayerController? videoPlayerController;
 
   bool showVolumeIcon = false;
+  bool showLikeIcon = false;
 
   Timer? timer;
 
   late Animation _heartAnimation;
   late AnimationController _heartAnimationController;
-
-  bool showLikeIcon = false;
 
   void likeIconVisibiltyTimer() {
     setState(() {
@@ -96,15 +95,6 @@ class _ReelVideoState extends State<ReelVideo>
     );
   }
 
-  @override
-  void initState() {
-    super.initState();
-
-    // muteAndUnmuteSound();
-    initVideoPlayerController();
-    initAnimationController();
-  }
-
   initVideoPlayerController() async {
     bool isValidURL = Uri.parse(widget.reelModel.media).isAbsolute;
 
@@ -136,6 +126,15 @@ class _ReelVideoState extends State<ReelVideo>
         showVolumeIcon = false;
       });
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    // muteAndUnmuteSound();
+    initVideoPlayerController();
+    initAnimationController();
   }
 
   @override
@@ -230,7 +229,9 @@ class _ReelVideoState extends State<ReelVideo>
           //   ),
           // ),
 
-          ReelReactionButtons(reelModel: widget.reelModel),
+          ReelReactionButtons(
+            reelModel: widget.reelModel,
+          ),
           ReelUserProfile(
             userId: widget.reelModel.userId!,
             reelCaption: widget.reelModel.caption,

@@ -5,6 +5,9 @@ import 'package:instagram_clone/core/constants/constants.dart';
 import 'package:instagram_clone/core/theme/app_colors.dart';
 import 'package:instagram_clone/model/reel_model/reel_model.dart';
 import 'package:instagram_clone/model/user_model/user_model.dart';
+import 'package:instagram_clone/view/reel/reel_comment.dart';
+
+import '../../controller/reel_controller/reel_controller.dart';
 
 class ReelReactionButtons extends StatefulWidget {
   const ReelReactionButtons({
@@ -20,11 +23,19 @@ class ReelReactionButtons extends StatefulWidget {
 
 class _ReelReactionButtonsState extends State<ReelReactionButtons> {
   late UserModel userModel;
+  UserModel reelUser = UserModel();
+
+  getReelUserData() async {
+    reelUser = await ReelController.instance.getReelUserData(
+      userId: widget.reelModel.userId!,
+    );
+  }
 
   @override
   void initState() {
     super.initState();
     userModel = AppState.currentUser!;
+    getReelUserData();
   }
 
   @override
@@ -65,7 +76,20 @@ class _ReelReactionButtonsState extends State<ReelReactionButtons> {
             ),
             const SizedBox(height: 20),
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                showModalBottomSheet(
+                  isScrollControlled: true,
+                  backgroundColor: Colors.white,
+                  barrierColor: Colors.transparent,
+                  context: context,
+                  builder: (context) => ReelCommentBottomSheet(
+                    reelUser: reelUser,
+                    reelId: widget.reelModel.id!,
+                    reelCaption: widget.reelModel.caption,
+                    reelPostedTime: widget.reelModel.timePosted,
+                  ),
+                );
+              },
               child: Column(
                 children: [
                   SizedBox(
@@ -88,11 +112,14 @@ class _ReelReactionButtonsState extends State<ReelReactionButtons> {
               ),
             ),
             const SizedBox(height: 20),
-            SizedBox(
-              height: 25,
-              child: Image.asset(
-                Const.instragramSendIcon,
-                color: Colors.white,
+            GestureDetector(
+              onTap: () {},
+              child: SizedBox(
+                height: 25,
+                child: Image.asset(
+                  Const.instragramSendIcon,
+                  color: Colors.white,
+                ),
               ),
             ),
             const SizedBox(height: 20),

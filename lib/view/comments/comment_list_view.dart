@@ -15,15 +15,13 @@ class CommentListView extends StatelessWidget {
 
     return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
       stream: FirebaseFirestore.instance
-          .collection(Const.commentsCollection)
+          .collection(Const.postCommentCollection)
           .where('postId', isEqualTo: postId)
           .orderBy('time', descending: true)
           .snapshots(),
       builder: (BuildContext context, snapshot) {
         if (snapshot.hasError) {
-          return Center(
-            child: Text(snapshot.error.toString()),
-          );
+          return Center(child: Text(snapshot.error.toString()));
         }
 
         if (snapshot.connectionState == ConnectionState.waiting) {
