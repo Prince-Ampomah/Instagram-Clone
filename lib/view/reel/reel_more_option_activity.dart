@@ -37,12 +37,16 @@ class ReelActivity extends StatelessWidget {
                   icon: Icons.bookmark_outline,
                 ),
                 PostActivityCircularButton(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
                   text: 'Remix',
                   icon: Ionicons.add_outline,
                 ),
                 PostActivityCircularButton(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
                   text: 'Sequence',
                   icon: Ionicons.journal_outline,
                 ),
@@ -53,7 +57,6 @@ class ReelActivity extends StatelessWidget {
             const Divider(thickness: 0.7),
             10.ph,
 
-            //why you see the post
             CustomListTile(
               onTap: () {},
               minLeadingWidth: 20,
@@ -92,7 +95,7 @@ class ReelActivity extends StatelessWidget {
                 color: Colors.black,
                 size: 30,
               ),
-              title: "Not Interested",
+              title: 'Not Interested',
             ),
             10.ph,
 
@@ -118,7 +121,6 @@ class ReelActivity extends StatelessWidget {
                 size: 30,
               ),
               title: 'Manage suggested content',
-              // titleStyle: const TextStyle(color: Colors.red),
             ),
             10.ph,
           ],

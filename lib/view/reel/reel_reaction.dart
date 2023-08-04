@@ -10,6 +10,7 @@ import 'package:instagram_clone/view/reel/reel_more_option_activity.dart';
 import 'package:ionicons/ionicons.dart';
 
 import '../../controller/reel_controller/reel_controller.dart';
+import '../core/share_post.dart';
 
 class ReelReactionButtons extends StatefulWidget {
   const ReelReactionButtons({
@@ -115,7 +116,15 @@ class _ReelReactionButtonsState extends State<ReelReactionButtons> {
             ),
             const SizedBox(height: 20),
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                showModalBottomSheet(
+                  isScrollControlled: true,
+                  backgroundColor: Colors.white,
+                  barrierColor: Colors.transparent,
+                  context: context,
+                  builder: (context) => SharePost(userModel: userModel),
+                );
+              },
               child: const Icon(
                 Ionicons.paper_plane_outline,
                 size: 30,

@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:ionicons/ionicons.dart';
+
+import '../../../core/theme/app_colors.dart';
+import '../../../core/widgets/cus_text_field_container.dart';
 
 class SearchAppBar extends StatelessWidget {
   const SearchAppBar({
@@ -22,33 +26,26 @@ class SearchWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      // width: double.infinity,
-      // margin: const EdgeInsets.symmetric(horizontal: 0),
-      padding: const EdgeInsets.symmetric(
-        horizontal: 15,
-        vertical: 5,
-      ),
-      decoration: BoxDecoration(
-        color: Colors.grey[100],
-        borderRadius: BorderRadius.circular(5),
-      ),
-      child: Row(
-        children: [
-          const Icon(
-            Icons.search_outlined,
-            size: 20,
-            color: Color(0xFF515151),
+    return SizedBox(
+      height: 35,
+      child: TextFieldContainer(
+        margin: EdgeInsets.zero,
+        padding: EdgeInsets.zero,
+        color: AppColors.searchFieldColor,
+        child: TextFormField(
+          maxLines: 1,
+          minLines: 1,
+          textInputAction: TextInputAction.search,
+          cursorColor: AppColors.blackColor,
+          decoration: const InputDecoration(
+            border: InputBorder.none,
+            prefixIcon: Icon(
+              Ionicons.search_outline,
+            ),
+            hintText: 'Search',
+            hintStyle: TextStyle(color: Colors.grey),
           ),
-          const SizedBox(width: 15),
-          Text(
-            'search',
-            style: Theme.of(context)
-                .textTheme
-                .titleMedium!
-                .copyWith(color: Colors.grey),
-          ),
-        ],
+        ),
       ),
     );
   }
